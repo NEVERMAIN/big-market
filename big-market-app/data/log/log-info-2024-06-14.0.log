@@ -1,0 +1,8 @@
+24-06-14.23:43:41.327 [main            ] INFO  AwardDaoTest           - Starting AwardDaoTest using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 13932 (started by 666 in D:\workplace02\big-market\big-market-app)
+24-06-14.23:43:41.328 [main            ] INFO  AwardDaoTest           - The following 1 profile is active: "dev"
+24-06-14.23:43:43.649 [main            ] INFO  AwardDaoTest           - Started AwardDaoTest in 2.79 seconds (JVM running for 3.622)
+24-06-14.23:43:43.896 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-06-14.23:43:44.126 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-06-14.23:43:44.410 [main            ] INFO  AwardDaoTest           - 测试结果:[{"awardId":101},{"awardId":102},{"awardId":103},{"awardId":104},{"awardId":105},{"awardId":106},{"awardId":107},{"awardId":108},{"awardId":109}]
+24-06-14.23:43:44.422 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-06-14.23:43:44.436 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
