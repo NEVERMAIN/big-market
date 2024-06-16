@@ -1,4 +1,37 @@
+24-06-15.00:08:01.868 [main            ] INFO  StrategyAwardDaoTest   - Starting StrategyAwardDaoTest using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 19424 (started by 666 in D:\workplace02\big-market\big-market-app)
+24-06-15.00:08:01.869 [main            ] INFO  StrategyAwardDaoTest   - The following 1 profile is active: "dev"
+24-06-15.00:08:03.625 [main            ] INFO  StrategyAwardDaoTest   - Started StrategyAwardDaoTest in 2.14 seconds (JVM running for 2.841)
+24-06-15.00:08:03.828 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-06-15.00:08:03.988 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-06-15.00:08:04.170 [main            ] INFO  StrategyAwardDaoTest   - 测试结果:[{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001}]
+24-06-15.00:08:04.179 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-06-15.00:08:04.185 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-06-15.00:08:57.426 [main            ] INFO  StrategyDaoTest        - Starting StrategyDaoTest using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 22268 (started by 666 in D:\workplace02\big-market\big-market-app)
+24-06-15.00:08:57.427 [main            ] INFO  StrategyDaoTest        - The following 1 profile is active: "dev"
+24-06-15.00:08:59.161 [main            ] INFO  StrategyDaoTest        - Started StrategyDaoTest in 2.133 seconds (JVM running for 2.877)
+24-06-15.00:08:59.356 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-06-15.00:08:59.549 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-06-15.00:08:59.767 [main            ] INFO  StrategyDaoTest        - 测试结果:[{"strategyId":100001}]
+24-06-15.00:08:59.777 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-06-15.00:08:59.782 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-06-15.00:09:50.328 [main            ] INFO  StrategyRuleDaoTest    - Starting StrategyRuleDaoTest using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 22396 (started by 666 in D:\workplace02\big-market\big-market-app)
+24-06-15.00:09:50.329 [main            ] INFO  StrategyRuleDaoTest    - The following 1 profile is active: "dev"
+24-06-15.00:09:52.092 [main            ] INFO  StrategyRuleDaoTest    - Started StrategyRuleDaoTest in 2.15 seconds (JVM running for 2.87)
+24-06-15.00:09:52.297 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-06-15.00:09:52.471 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-06-15.00:09:52.661 [main            ] INFO  StrategyRuleDaoTest    - 测试结果:[{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001},{"strategyId":100001}]
+24-06-15.00:09:52.668 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-06-15.00:09:52.674 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-06-15.20:45:56.147 [main            ] INFO  ApiTest                - Starting ApiTest using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 17376 (started by 666 in D:\workplace02\big-market\big-market-app)
+24-06-15.20:45:56.148 [main            ] INFO  ApiTest                - The following 1 profile is active: "dev"
+24-06-15.20:45:57.094 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-06-15.20:45:57.097 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-06-15.20:45:57.128 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+24-06-15.20:45:58.341 [main            ] INFO  Version                - Redisson 3.23.4
 24-06-15.20:46:01.990 [main            ] WARN  GenericWebApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'redissonService': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'redissonClient' defined in class path resource [com/openicu/config/RedisClientConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.redisson.api.RedissonClient]: Factory method 'redissonClient' threw exception; nested exception is org.redisson.client.RedisConnectionException: Unable to connect to Redis server: 127.0.0.1/127.0.0.1:6379
+24-06-15.20:46:02.003 [main            ] INFO  ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
 24-06-15.20:46:02.028 [main            ] ERROR SpringApplication      - Application run failed
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'redissonService': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'redissonClient' defined in class path resource [com/openicu/config/RedisClientConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.redisson.api.RedissonClient]: Factory method 'redissonClient' threw exception; nested exception is org.redisson.client.RedisConnectionException: Unable to connect to Redis server: 127.0.0.1/127.0.0.1:6379
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
@@ -242,3 +275,14 @@ Caused by: java.util.concurrent.CompletionException: org.redisson.client.RedisEx
 	... 4 common frames omitted
 Caused by: org.redisson.client.RedisException: ERR Client sent AUTH, but no password is set. channel: [id: 0x55d4237e, L:/127.0.0.1:14998 - R:127.0.0.1/127.0.0.1:6379] command: (AUTH), params: (password masked)
 	... 23 common frames omitted
+24-06-15.20:48:04.976 [main            ] INFO  ApiTest                - Starting ApiTest using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 21408 (started by 666 in D:\workplace02\big-market\big-market-app)
+24-06-15.20:48:04.977 [main            ] INFO  ApiTest                - The following 1 profile is active: "dev"
+24-06-15.20:48:05.734 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-06-15.20:48:05.736 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-06-15.20:48:05.755 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+24-06-15.20:48:06.772 [main            ] INFO  Version                - Redisson 3.23.4
+24-06-15.20:48:07.262 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-06-15.20:48:07.272 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-06-15.20:48:08.915 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-06-15.20:48:08.983 [main            ] INFO  ApiTest                - Started ApiTest in 4.405 seconds (JVM running for 5.178)
+24-06-15.20:48:09.386 [main            ] INFO  ApiTest                - 测试完成
