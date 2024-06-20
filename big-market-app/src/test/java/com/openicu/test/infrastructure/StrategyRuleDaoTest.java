@@ -33,4 +33,14 @@ public class StrategyRuleDaoTest {
         log.info("测试结果:{}", JSON.toJSON(strategyRules));
     }
 
+    @Test
+    public void test_queryStrategyRuleValue(){
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setRuleModel("rule_blacklist");
+        strategyRule.setStrategyId(100001L);
+        String ruleValue = strategyRuleDao.queryStrategyRuleValue(strategyRule);
+        log.info("请求参数: {}",strategyRule);
+        log.info("测试结果: {}",ruleValue);
+    }
+
 }
