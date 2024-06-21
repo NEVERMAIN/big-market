@@ -1,7 +1,7 @@
 package com.openicu.domain.strategy.resposity;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
+import com.openicu.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
 
@@ -30,4 +30,5 @@ public interface IStrategyRepository {
 
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
 
+    StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
 }

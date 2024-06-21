@@ -2,15 +2,13 @@ package com.openicu.domain.strategy.service.rule.impl;
 
 import com.openicu.domain.strategy.model.entity.RuleActionEntity;
 import com.openicu.domain.strategy.model.entity.RuleMatterEntity;
-import com.openicu.domain.strategy.model.vo.RuleLogicCheckTypeVO;
+import com.openicu.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.annotation.LogicStrategy;
 import com.openicu.domain.strategy.service.rule.ILogicFilter;
 import com.openicu.domain.strategy.service.rule.factory.DefaultLogicFactory;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description:
+ * @description: 权重规则过滤
  * @author: 云奇迹
  * @date: 2024/6/19
  */

@@ -3,6 +3,7 @@ package com.openicu.infrastructure.persistent.repository;
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
+import com.openicu.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.infrastructure.persistent.dao.IStrategyAwardDao;
 import com.openicu.infrastructure.persistent.dao.IStrategyDao;
@@ -122,6 +123,15 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRule.setAwardId(awardId);
         strategyRule.setRuleModel(ruleModel);
         return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        String ruleModels =  strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 
 }

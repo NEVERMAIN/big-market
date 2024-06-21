@@ -11,6 +11,12 @@ import com.openicu.domain.strategy.model.entity.RuleMatterEntity;
 public interface ILogicFilter<T extends RuleActionEntity.RaffleEntity> {
 
 
+    /**
+     * 根据规则事项实体过滤规则动作实体。
+     *
+     * @param ruleMatterEntity 规则物料实体
+     * @return 过滤后的规则动作实体，该实体与传入的规则事项实体相匹配。
+     */
     RuleActionEntity<T> filter(RuleMatterEntity ruleMatterEntity);
 
 

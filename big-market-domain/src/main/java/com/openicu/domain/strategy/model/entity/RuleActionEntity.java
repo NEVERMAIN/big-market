@@ -1,6 +1,6 @@
 package com.openicu.domain.strategy.model.entity;
 
-import com.openicu.domain.strategy.model.vo.RuleLogicCheckTypeVO;
+import com.openicu.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import lombok.*;
 
 /**
@@ -23,7 +23,7 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     private T data;
 
 
-    static public class RaffleEntity{
+    static public class RaffleEntity {
 
     }
 
@@ -39,21 +39,37 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
         private String ruleWeightValueKey;
         /** 奖品 ID */
         private Integer awardId;
-    }
-
-    static public class RaffleCenterEntity extends RaffleEntity{
 
     }
 
+    @EqualsAndHashCode(callSuper = false)
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static public class RaffleCenterEntity extends RaffleEntity {
+        /** 策略 ID */
+        private Long strategyId;
+        /** 权重值 Key: 用于抽奖时可以选择权重抽奖 */
+        private String ruleWeightValueKey;
+        /** 奖品 ID */
+        private Integer awardId;
+
+    }
+
+    @EqualsAndHashCode(callSuper = false)
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     static public class RaffleAfterEntity extends RaffleEntity {
-
+        /** 策略 ID */
+        private Long strategyId;
+        /** 权重值 Key: 用于抽奖时可以选择权重抽奖 */
+        private String ruleWeightValueKey;
+        /** 奖品 ID */
+        private Integer awardId;
     }
-
-
-
-
-
-
 
 
 }

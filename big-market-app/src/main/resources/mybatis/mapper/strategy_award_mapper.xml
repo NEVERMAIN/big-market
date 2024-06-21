@@ -26,9 +26,17 @@
 
 
     <select id="queryStrategyAwardListByStrategyId" resultMap="dataMap">
-        select strategy_id,award_id,award_count_surplus,award_rate
+        select strategy_id,award_id,award_count,award_count_surplus,award_rate
             from strategy_award
         where strategy_id = #{strategyId}
+    </select>
+
+
+    <select id="queryStrategyAwardRuleModels" parameterType="com.openicu.infrastructure.persistent.po.StrategyAward" resultType="java.lang.String">
+        select rule_models
+        from strategy_award
+        where strategy_id = #{strategyId} and award_id = #{awardId};
+
     </select>
 
 </mapper>
