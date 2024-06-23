@@ -11,7 +11,7 @@ import com.openicu.domain.strategy.model.entity.RaffleFactorEntity;
 public interface IRaffleStrategy {
 
     /**
-     * 执行抽奖逻辑并返回抽奖结果。
+     * 执行抽奖；用抽奖因子入参，执行抽奖计算，返回奖品信息
      *
      * @param raffleFactorEntity 抽奖因子实体对象，包含了影响抽奖结果的各种因素，如抽奖次数、用户信息等。
      * @return RaffleAwardEntity 抽奖结果实体对象，包含了中奖信息，如奖品名称、奖品描述等。
