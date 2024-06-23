@@ -5,6 +5,8 @@ import com.openicu.domain.strategy.service.armory.IStrategyDispatch;
 import com.openicu.domain.strategy.service.rule.chain.AbstractLogicChain;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import java.util.List;
  * @date: 2024/6/21
  */
 @Slf4j
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component("rule_weight")
 public class RuleWeightLogicChain extends AbstractLogicChain {
 

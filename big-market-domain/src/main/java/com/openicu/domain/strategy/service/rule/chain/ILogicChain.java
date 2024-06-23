@@ -5,7 +5,7 @@ package com.openicu.domain.strategy.service.rule.chain;
  * @author: 云奇迹
  * @date: 2024/6/21
  */
-public interface ILogicChain extends ILogicChainArmory {
+public interface ILogicChain extends ILogicChainArmory,Cloneable {
 
     /**
      * 责任链接口

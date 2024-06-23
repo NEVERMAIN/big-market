@@ -57,6 +57,10 @@ public class DefaultLogicFactory {
          * 如果参与者命中了白名单，根据该规则他们会直接中奖一个奖品
          */
         RULE_WHITELIST("rule_whitelist","【抽奖前规则】白名单规则过滤,命中白名单则直接中奖一个奖品","before"),
+        /**
+         * 默认规则
+         */
+        RULE_DEFAULT("rule_default","【抽奖前规则】默认抽奖","before"),
 
         /**
          * 奖品锁定

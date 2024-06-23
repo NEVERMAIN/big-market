@@ -4,6 +4,8 @@ import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.rule.chain.AbstractLogicChain;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,6 +16,7 @@ import javax.annotation.Resource;
  * @date: 2024/6/21
  */
 @Slf4j
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component("rule_blacklist")
 public class BackListLogicChain extends AbstractLogicChain  {
 

@@ -3,6 +3,8 @@ package com.openicu.domain.strategy.service.rule.chain.impl;
 import com.openicu.domain.strategy.service.armory.IStrategyDispatch;
 import com.openicu.domain.strategy.service.rule.chain.AbstractLogicChain;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -13,6 +15,7 @@ import javax.annotation.Resource;
  * @date: 2024/6/22
  */
 @Slf4j
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Component("default")
 public class DefaultLogicChain extends AbstractLogicChain {
 
