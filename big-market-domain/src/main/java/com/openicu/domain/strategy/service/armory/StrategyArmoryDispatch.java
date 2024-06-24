@@ -6,6 +6,7 @@ import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
+import com.sun.xml.internal.bind.v2.TODO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @description: 策略装配库(兵工厂), 负责初始化策略计算
@@ -40,6 +40,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         String ruleWeight = strategyEntity.getRuleWeight();
         if(null == ruleWeight) return true;
 
+        // TODO queryStrategyRule 方法名称限定，只查询一个对象。目前可能造成别人调用查询list返回
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleWeight);
         if(null == strategyRuleEntity){
             throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(),ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
@@ -57,6 +58,13 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         return true;
     }
 
+    /**
+     * 计算公式；
+     * 1. 找到范围内最小的概率值，比如 0.1、0.02、0.003，需要找到的值是 0.003
+     * 2. 基于1找到的最小值，0.003 就可以计算出百分比、千分比的整数值。这里就是1000
+     * 3. 那么「概率 * 1000」分别占比100个、20个、3个，总计是123个
+     * 4. 后续的抽奖就用123作为随机数的范围值，生成的值100个都是0.1概率的奖品、20个是概率0.02的奖品、最后是3个是0.003的奖品。
+     */
 
     private void assembleLotteryStrategy(String key,List<StrategyAwardEntity> strategyAwardEntityList) {
 
@@ -85,7 +93,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
 
         // 5. 生成出 Map 集合,key 值 , 对应的就是后续的概率值,通过概率来获得对应的奖品ID
         Map<Integer,Integer> shuffleStrategyAwardSearchRateTables = new LinkedHashMap<>();
-        for(int i = 0 ; i < strategyAwardSearchRateTables.size() ; i ++){
+        for(int i = 0 ; i < strategyAwardSearchRateTables.size() ; i++){
             shuffleStrategyAwardSearchRateTables.put(i,strategyAwardSearchRateTables.get(i));
         }
 
@@ -120,9 +128,15 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
     @Override
     public Integer getRandomAwardId(Long strategyId, String ruleWeightValue) {
         String key = String.valueOf(strategyId).concat("_").concat(ruleWeightValue);
+        return getRandomAwardId(key);
+    }
+
+    @Override
+    public Integer getRandomAwardId(String key){
         // 1.分布式部署下,不一定为当前应用做的策略装配,也就是值不一定会保存到本应用,而是分布式应用,所以需要从 Redis 中获取
-        int rateRange = repository.getRateRange(key);
+        int rateRange = repository.getRateRange(String.valueOf(key));
         // 2.通过生成的随机值,获取概率值奖品查找表的结果
         return repository.getStrategyAwardAssemble(key,new SecureRandom().nextInt(rateRange));
     }
+
 }
