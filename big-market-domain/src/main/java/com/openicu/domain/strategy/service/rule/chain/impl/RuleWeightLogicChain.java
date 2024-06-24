@@ -45,10 +45,11 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
 
-        // 1.根据用户Id查询用户抽奖消耗的积分值
+        // 1.解析权重规则值 4000:102,103,104,105 拆解为；4000 -> 4000:102,103,104,105 便于比对判断
         Map<Long, String> analyticalValueGroup = getAnalyticalValue(ruleValue);
         if(null == analyticalValueGroup || analyticalValueGroup.isEmpty()){
-            return null;
+            log.warn("抽奖责任链-权重告警【策略配置权重,但 ruleValue 未配置相应值】 userId:{} strategyId:{} ruleModel:{}",userId,strategyId,ruleModel());
+            return next().logic(userId,strategyId);
         }
 
         // 转换 Keys 值,并默认排序

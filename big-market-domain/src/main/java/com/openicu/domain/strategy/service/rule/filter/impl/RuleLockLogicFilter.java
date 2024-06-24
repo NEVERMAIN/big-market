@@ -8,6 +8,7 @@ import com.openicu.domain.strategy.service.annotation.LogicStrategy;
 import com.openicu.domain.strategy.service.rule.ILogicFilter;
 import com.openicu.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -35,7 +36,19 @@ public class RuleLockLogicFilter implements ILogicFilter<RuleActionEntity.Raffle
 
         // 1. 查询规则配置值:当前奖品ID,抽奖中规则对应的校验值。如 1,2,6
         String ruleValue = repository.queryStrategyRuleValue(ruleMatterEntity.getStrategyId(), ruleMatterEntity.getAwardId(),ruleMatterEntity.getRuleModel());
-        long raffleCount = Long.parseLong(ruleValue);
+        // 2. 判断规则配置值是否为空,为空就直接放行
+        if(StringUtils.isBlank(ruleValue)){
+            return RuleActionEntity.<RuleActionEntity.RaffleCenterEntity>builder()
+                    .code(RuleLogicCheckTypeVO.ALLOW.getCode())
+                    .info(RuleLogicCheckTypeVO.ALLOW.getInfo())
+                    .build();
+        }
+        long raffleCount = 0L;
+        try{
+            raffleCount = Long.parseLong(ruleValue);
+        }catch (Exception e){
+            throw new RuntimeException("规则过滤-次数锁异常 ruleValue: " + ruleValue + " 配置不正确");
+        }
 
         // 2. 用户抽奖次数大于规则限定值,规则放行
         if(userRaffleCount >= raffleCount){
