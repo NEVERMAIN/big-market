@@ -26,7 +26,9 @@ public class StrategyEntity {
     private String ruleModels;
 
     public String[] ruleModels(){
-        if(StringUtils.isBlank(ruleModels)) return null;
+        if(StringUtils.isBlank(ruleModels)) {
+            return null;
+        }
         return ruleModels.split(Constants.SPLIT);
     }
 
@@ -34,7 +36,9 @@ public class StrategyEntity {
         String[] ruleModels = this.ruleModels();
         if(ruleModels != null){
             for (String ruleModel : ruleModels) {
-                if("rule_weight".equals(ruleModel)) return ruleModel;
+                if("rule_weight".equals(ruleModel)) {
+                    return ruleModel;
+                }
             }
         }
         return null;

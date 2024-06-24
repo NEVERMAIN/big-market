@@ -14,12 +14,6 @@ import java.util.List;
 @Mapper
 public interface IStrategyRuleDao {
 
-    /**
-     * 查询策略规则列表。
-     *
-     * @return 策略规则列表，包含所有可用的策略规则。
-     */
-    List<StrategyRule> queryStrategyRuleList();
 
     /**
      * 根据请求条件查询策略规则。

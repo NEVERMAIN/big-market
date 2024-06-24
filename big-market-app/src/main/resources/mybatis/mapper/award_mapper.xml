@@ -13,10 +13,4 @@
     </resultMap>
 
 
-    <select id="queryAwardList" resultMap="dataMap">
-        select award_id
-        from award
-        limit 10
-    </select>
-
 </mapper>

@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author 云奇迹
+ */
 @Configuration
 public class GuavaConfig {
 

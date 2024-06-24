@@ -1,5 +1,9 @@
 package com.openicu.types.common;
 
+/**
+ * @description: 常量值
+ * @author 云奇迹
+ */
 public class Constants {
 
     public final static String SPLIT = ",";

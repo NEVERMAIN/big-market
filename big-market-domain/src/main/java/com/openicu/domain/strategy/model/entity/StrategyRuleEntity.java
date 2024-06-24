@@ -42,7 +42,9 @@ public class StrategyRuleEntity {
      * @return
      */
     public Map<String, List<Integer>> getRuleWeightValues() {
-        if (!"rule_weight".equals(ruleModel)) return null;
+        if (!"rule_weight".equals(ruleModel)) {
+            return null;
+        }
         String[] ruleValueGroups = ruleValue.split(Constants.SPACE);
         Map<String, List<Integer>> resultMap = new HashMap<>();
         for (String ruleValueGroup : ruleValueGroups) {

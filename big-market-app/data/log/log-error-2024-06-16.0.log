@@ -1,2 +1,0 @@
-24-06-16.15:46:23.981 [HikariPool-1 housekeeper] WARN  HikariPool             - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m33s911ms848µs800ns).
-24-06-16.21:07:22.056 [HikariPool-1 housekeeper] WARN  HikariPool             - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47s285ms677µs500ns).
