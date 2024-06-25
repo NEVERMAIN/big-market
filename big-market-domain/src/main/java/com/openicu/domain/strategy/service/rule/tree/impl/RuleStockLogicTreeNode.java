@@ -39,6 +39,7 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
         if(status){
             log.info("规则过滤-库存扣减-成功 userId:{} strategyId:{} awardId:{}", userId, strategyId, awardId);
             // 写入延迟队列,延迟消费更新数据库记录【在 trigger 的 job:UpdateAwardStockJob 下消费队列，更新数据库记录】
+            // todo 将扣除奖品库存写入 redis 缓存队列中失败！！！！！！
             repository.awardStockConsumeSendQueue(StrategyAwardStockKeyVO.builder()
                     .strategyId(strategyId)
                     .awardId(awardId)
