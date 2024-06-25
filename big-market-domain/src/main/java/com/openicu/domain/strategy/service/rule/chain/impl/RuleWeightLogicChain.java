@@ -3,6 +3,7 @@ package com.openicu.domain.strategy.service.rule.chain.impl;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.armory.IStrategyDispatch;
 import com.openicu.domain.strategy.service.rule.chain.AbstractLogicChain;
+import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
      * 2. 解析数据格式；判断哪个范围符合用户的特定抽奖范围
      */
     @Override
-    public Integer logic(String userId, Long strategyId) {
+    public DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId) {
 
         log.info("抽奖责任链-权重开始 userId:{} strategyId: {} ruleModel: {}",userId,strategyId,ruleModel());
 
@@ -67,7 +67,10 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
         if(null != nextValue){
             Integer awardId = strategyDispatch.getRandomAwardId(strategyId, analyticalValueGroup.get(nextValue));
             log.info("抽奖责任链-权重接管 userId:{} strategyId:{} ruleModel:{} awardId:{}",userId,strategyId,ruleModel(),awardId);
-            return awardId;
+            return DefaultChainFactory.StrategyAwardVO.builder()
+                    .awardId(awardId)
+                    .logicModel(ruleModel())
+                    .build();
         }
 
         // 5. 过滤其他责任链

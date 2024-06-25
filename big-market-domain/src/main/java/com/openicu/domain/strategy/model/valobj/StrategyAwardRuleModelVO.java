@@ -1,6 +1,6 @@
 package com.openicu.domain.strategy.model.valobj;
 
-import com.openicu.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
+import com.openicu.domain.strategy.service.DefaultLogicFactory;
 import com.openicu.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

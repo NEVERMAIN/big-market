@@ -3,11 +3,8 @@ package com.openicu.domain.strategy.service.rule.chain.factory;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.rule.chain.ILogicChain;
-import com.openicu.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.openicu.domain.strategy.service.DefaultLogicFactory;
+import lombok.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +19,17 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class DefaultChainFactory {
 
-    // 原型模式获取对象
+    /**
+     * 原型模式获取对象
+     */
     private final ApplicationContext applicationContext;
-    // 仓储信息
+    /**
+     * 仓储信息
+     */
     protected IStrategyRepository repository;
-    // 存放策略链, 策略ID -> 责任链
+    /**
+     * 存放策略链, 策略ID -> 责任链
+     */
     private final Map<Long,ILogicChain> strategyChainGroup;
 
 
@@ -84,11 +87,25 @@ public class DefaultChainFactory {
          */
         private Integer awardId;
         /**
-         *
+         * 规则类型
          */
         private String logicModel;
     }
 
+    @Getter
+    @AllArgsConstructor
+    public enum LogicModel {
+
+        RULE_DEFAULT("rule_default", "默认抽奖"),
+        RULE_BLACKLIST("rule_blacklist", "黑名单抽奖"),
+        RULE_WEIGHT("rule_weight", "权重规则"),
+        RULE_WHITELIST("rule_whitelist","白名单抽奖"),
+        ;
+
+        private final String code;
+        private final String info;
+
+    }
 
 
 }

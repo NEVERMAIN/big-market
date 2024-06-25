@@ -1,5 +1,7 @@
 package com.openicu.domain.strategy.service.rule.chain;
 
+import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+
 /**
  * @description: 抽奖策略规则责任链接口
  * @author: 云奇迹
@@ -14,6 +16,6 @@ public interface ILogicChain extends ILogicChainArmory,Cloneable {
      * @param strategyId 策略ID
      * @return 奖品ID
      */
-    Integer logic(String userId,Long strategyId);
+    DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId);
 
 }

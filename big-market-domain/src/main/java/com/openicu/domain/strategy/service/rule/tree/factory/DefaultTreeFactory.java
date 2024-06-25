@@ -5,10 +5,7 @@ import com.openicu.domain.strategy.model.valobj.RuleTreeVO;
 import com.openicu.domain.strategy.service.rule.tree.ILogicTreeNode;
 import com.openicu.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import com.openicu.domain.strategy.service.rule.tree.factory.engine.impl.DecisionTreeEngine;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -57,6 +54,36 @@ public class DefaultTreeFactory {
         private String awardRuleValue;
 
     }
+
+    @Getter
+    @AllArgsConstructor
+    public enum LogicModel{
+
+        /**
+         * 奖品锁定
+         */
+        RULE_LOCK("rule_lock","奖品锁定规则过滤,满足抽奖次数后才能解锁"),
+
+        /**
+         * 奖品锁定
+         */
+        RULE_LUCK_AWARD("rule_luck_award","抽奖n次,对应奖品可解锁抽奖"),
+
+        /**
+         * 库存
+         */
+        RULE_STOCK("rule_stock","库存规则过滤")
+
+        ;
+
+
+        private final String code;
+        private final String info;
+
+
+
+        }
+
 
 
 }

@@ -2,6 +2,7 @@ package com.openicu.domain.strategy.service.rule.chain.impl;
 
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.rule.chain.AbstractLogicChain;
+import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -24,25 +25,28 @@ public class WhiteListLogicChain extends AbstractLogicChain {
     private IStrategyRepository repository;
 
     @Override
-    public Integer logic(String userId, Long strategyId) {
-        log.info("规则过滤-白名单开启 userId:{}, strategyId:{} , ruleModel:{}",userId,strategyId,ruleModel());
+    public DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId) {
+        log.info("规则过滤-白名单开启 userId:{}, strategyId:{} , ruleModel:{}", userId, strategyId, ruleModel());
 
         // 1. 查询规则值配置
-        String ruleValue = repository.queryStrategyRuleValue(strategyId, Integer.valueOf(userId),ruleModel());
+        String ruleValue = repository.queryStrategyRuleValue(strategyId, Integer.valueOf(userId), ruleModel());
         String[] splitRuleValue = ruleValue.split(Constants.COLON);
         Integer awardId = Integer.parseInt(splitRuleValue[0]);
 
         // 过滤
         String[] userWhiteIds = splitRuleValue[1].split(Constants.SPLIT);
-        for(String userWhiteId : userWhiteIds){
-            if(userId.equals(userWhiteId)){
-                log.info("规则过滤-白名单接管 userId:{} , strategyId:{} ruleModel:{} ",userId,strategyId,ruleModel());
-                return awardId;
+        for (String userWhiteId : userWhiteIds) {
+            if (userId.equals(userWhiteId)) {
+                log.info("规则过滤-白名单接管 userId:{} , strategyId:{} ruleModel:{} ", userId, strategyId, ruleModel());
+                return DefaultChainFactory.StrategyAwardVO.builder()
+                        .awardId(awardId)
+                        .logicModel(ruleModel())
+                        .build();
             }
         }
 
-        log.info("规则过滤-白名单放行 userId:{} strategyId:{} ruleModel:{} ",userId,strategyId,ruleModel());
-        return next().logic(userId,strategyId);
+        log.info("规则过滤-白名单放行 userId:{} strategyId:{} ruleModel:{} ", userId, strategyId, ruleModel());
+        return next().logic(userId, strategyId);
     }
 
 

@@ -1,6 +1,6 @@
 package com.openicu.domain.strategy.service.annotation;
 
-import com.openicu.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
+import com.openicu.domain.strategy.service.DefaultLogicFactory;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

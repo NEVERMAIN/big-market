@@ -1,23 +1,21 @@
-package com.openicu.domain.strategy.model.valobj;
+package com.openicu.infrastructure.persistent.po;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.Date;
 
 /**
- * @description: 决策树的树根
+ * @description: 规则树
  * @author: 云奇迹
  * @date: 2024/6/24
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class RuleTreeVO {
+public class RuleTree {
 
+    /** 自增ID */
+    private Long id;
     /** 规则树ID */
     private String treeId;
     /** 规则树名称 */
@@ -25,9 +23,11 @@ public class RuleTreeVO {
     /** 规则树描述 */
     private String treeDesc;
     /** 规则根节点 */
-    private String treeRootRuleNode;
-
-    /** 规则节点 */
-    private Map<String,RuleTreeNodeVO> treeNodeMap;
+    private String treeRootRuleKey;
+    /** 创建时间 */
+    private Date createTime;
+    /** 更新时间 */
+    private Date updateTime;
 
 }
+

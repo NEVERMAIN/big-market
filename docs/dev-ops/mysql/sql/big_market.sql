@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 24/06/2024 17:10:26
+ Date: 25/06/2024 10:08:34
 */
 
 SET NAMES utf8mb4;
@@ -51,61 +51,66 @@ INSERT INTO `award` VALUES (10, 100, 'user_credit_blacklist', '1', '黑名单积
 -- ----------------------------
 DROP TABLE IF EXISTS `rule_tree`;
 CREATE TABLE `rule_tree`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `tree_id` bigint(20) NOT NULL COMMENT '规则树ID',
-  `tree_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树名称',
-  `tree_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树描述',
-  `tree_root_rule_node` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树根节点',
+  `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `tree_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树ID',
+  `tree_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树名称',
+  `tree_desc` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则树描述',
+  `tree_node_rule_key` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树根入口规则',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uq_tree_id`(`tree_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rule_tree
 -- ----------------------------
-INSERT INTO `rule_tree` VALUES (1, 100000001, '决策树规则；增加dall-e-3画图模型', '决策树规则；增加dall-e-3画图模型', 'rule_lock', '2024-06-24 16:50:19', '2024-06-24 16:50:19');
+INSERT INTO `rule_tree` VALUES (1, 'tree_lock', '规则树', '规则树', 'rule_lock', '2024-01-27 10:01:59', '2024-02-03 10:39:54');
 
 -- ----------------------------
 -- Table structure for rule_tree_node
 -- ----------------------------
 DROP TABLE IF EXISTS `rule_tree_node`;
 CREATE TABLE `rule_tree_node`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `tree_id` bigint(20) NOT NULL COMMENT '规则树ID',
-  `rule_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则Key',
-  `rule_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则描述',
-  `rule_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则比值',
+  `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `tree_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树ID',
+  `rule_key` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则Key',
+  `rule_desc` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则描述',
+  `rule_value` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则比值',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rule_tree_node
 -- ----------------------------
-INSERT INTO `rule_tree_node` VALUES (1, 100000001, 'rule_lock', '限定用户已完成N次抽奖后解锁', '1');
-INSERT INTO `rule_tree_node` VALUES (2, 100000001, 'rule_luck_award', '限定用户已完成N次抽奖后解锁', '');
-INSERT INTO `rule_tree_node` VALUES (3, 100000001, 'rule_stock', '库存处理规则', NULL);
+INSERT INTO `rule_tree_node` VALUES (1, 'tree_lock', 'rule_lock', '限定用户已完成N次抽奖后解锁', '1', '2024-01-27 10:03:09', '2024-02-03 10:40:18');
+INSERT INTO `rule_tree_node` VALUES (2, 'tree_lock', 'rule_luck_award', '兜底奖品随机积分', '1,100', '2024-01-27 10:03:09', '2024-02-03 10:40:19');
+INSERT INTO `rule_tree_node` VALUES (3, 'tree_lock', 'rule_stock', '库存扣减规则', NULL, '2024-01-27 10:04:43', '2024-02-03 10:40:21');
 
 -- ----------------------------
 -- Table structure for rule_tree_node_line
 -- ----------------------------
 DROP TABLE IF EXISTS `rule_tree_node_line`;
 CREATE TABLE `rule_tree_node_line`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `tree_id` bigint(20) NOT NULL COMMENT '规则树Id',
-  `rule_node_from` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则key节点From',
-  `rule_node_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则key节点To',
-  `rule_limit_type` int(11) NOT NULL COMMENT '限定类型 1:= 2:> 3:< 4:>= 5:<= 6:enum',
-  `rule_limit_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '限定值',
+  `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `tree_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则树ID',
+  `rule_node_from` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则Key节点 From',
+  `rule_node_to` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则Key节点 To',
+  `rule_limit_type` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '限定类型；1:=;2:>;3:<;4:>=;5<=;6:enum[枚举范围];',
+  `rule_limit_value` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '限定值（到下个节点）',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rule_tree_node_line
 -- ----------------------------
-INSERT INTO `rule_tree_node_line` VALUES (1, 100000001, 'rule_lock', 'rule_luck_award', 1, '0001');
-INSERT INTO `rule_tree_node_line` VALUES (2, 100000001, 'rule_lock', 'rule_stock', 1, '0000');
-INSERT INTO `rule_tree_node_line` VALUES (3, 100000001, 'rule_lock', 'rule_luck_award', 1, '0001');
+INSERT INTO `rule_tree_node_line` VALUES (1, 'tree_lock', 'rule_lock', 'rule_stock', 'EQUAL', 'ALLOW', '2024-06-24 20:47:40', '2024-06-24 20:47:40');
+INSERT INTO `rule_tree_node_line` VALUES (2, 'tree_lock', 'rule_lock', 'rule_luck_award', 'EQUAL', 'TAKE_OVER', '2024-06-24 20:47:40', '2024-06-24 20:47:40');
+INSERT INTO `rule_tree_node_line` VALUES (3, 'tree_lock', 'rule_stock', 'rule_luck_award', 'EQUAL', 'TAKE_OVER', '2024-06-24 20:47:40', '2024-06-24 20:47:40');
 
 -- ----------------------------
 -- Table structure for strategy

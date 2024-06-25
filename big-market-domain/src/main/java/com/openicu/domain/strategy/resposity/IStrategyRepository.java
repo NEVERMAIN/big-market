@@ -1,6 +1,7 @@
 package com.openicu.domain.strategy.resposity;
 
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
+import com.openicu.domain.strategy.model.valobj.RuleTreeVO;
 import com.openicu.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
@@ -95,4 +96,14 @@ public interface IStrategyRepository {
      */
     String queryStrategyRuleValue(Long strategyId, String ruleModel);
 
+    /**
+     * 根据规则模型查询规则树树根节点
+     *
+     * @param ruleModels 规则模型或类型，用于指定查询的规则。
+     * @return 查询到的规则树视图对象。
+     */
+    RuleTreeVO queryRuleTreeVOByTreeId(String ruleModels);
+
+
+    Integer queryStrategyAwardSurplusCount(Long strategyId, Integer awardId);
 }

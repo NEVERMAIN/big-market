@@ -1,4 +1,4 @@
-package com.openicu.domain.strategy.service.rule.filter.factory;
+package com.openicu.domain.strategy.service;
 
 import com.openicu.domain.strategy.model.entity.RuleActionEntity;
 import com.openicu.domain.strategy.service.annotation.LogicStrategy;
@@ -19,21 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Service
 public class DefaultLogicFactory {
-
-    public Map<String, ILogicFilter<?>> logicFilterMap = new ConcurrentHashMap<>();
-
-    public DefaultLogicFactory(List<ILogicFilter<?>> logicFilters){
-        logicFilters.forEach(logic -> {
-            LogicStrategy strategy = AnnotationUtils.findAnnotation(logic.getClass(),LogicStrategy.class);
-            if(null != strategy){
-                logicFilterMap.put(strategy.logicMode().getCode(), logic);
-            }
-        });
-    }
-
-    public <T extends RuleActionEntity.RaffleEntity> Map<String, ILogicFilter<T>> openLogicFilter() {
-        return (Map<String, ILogicFilter<T>>) (Map<?, ?>) logicFilterMap;
-    }
 
 
     @AllArgsConstructor
