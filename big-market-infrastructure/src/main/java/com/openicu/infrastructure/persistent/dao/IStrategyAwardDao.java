@@ -18,4 +18,6 @@ public interface IStrategyAwardDao {
     String queryStrategyAwardRuleModels(StrategyAward strategyAward);
 
     Integer queryStrategyAwardSurplusCount(StrategyAward strategyAward);
+
+    void updateStrategyAwardStock(StrategyAward strategyAward);
 }

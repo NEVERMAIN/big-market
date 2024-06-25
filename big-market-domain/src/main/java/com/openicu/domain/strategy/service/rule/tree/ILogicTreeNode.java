@@ -17,6 +17,6 @@ public interface ILogicTreeNode {
      * @param awardId 奖品的唯一标识。用于指定分配哪种奖品。
      * @return 返回一个TreeActionEntity对象，该对象包含了操作的结果信息。
      */
-    DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId);
+    DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId,String ruleValue);
 
 }

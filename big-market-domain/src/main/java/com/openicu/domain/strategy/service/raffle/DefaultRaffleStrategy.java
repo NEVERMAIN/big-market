@@ -2,6 +2,7 @@ package com.openicu.domain.strategy.service.raffle;
 
 import com.openicu.domain.strategy.model.valobj.RuleTreeVO;
 import com.openicu.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import com.openicu.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.AbstractRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyDispatch;
@@ -60,4 +61,13 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
         return treeEngine.process(userId,strategyId,awardId);
     }
 
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return repository.takeQueueValue();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        repository.updateStrategyAwardStock(strategyId,awardId);
+    }
 }

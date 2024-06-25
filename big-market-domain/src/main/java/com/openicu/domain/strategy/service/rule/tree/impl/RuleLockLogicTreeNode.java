@@ -29,18 +29,9 @@ public class RuleLockLogicTreeNode implements ILogicTreeNode {
     private Long userRaffleCount = 0L;
 
     @Override
-    public DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId) {
+    public DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId,String ruleValue) {
 
         log.info("规则树过滤开始 - 次数锁 userId:{} strategyId:{} awardId:{}", userId, strategyId,awardId);
-
-        // 1. 查询规则配置值:当前奖品ID,抽奖中规则对应的校验值。如 1,2,6
-        String ruleValue = repository.queryStrategyRuleValue(strategyId, awardId, DefaultTreeFactory.LogicModel.RULE_LOCK.getCode());
-        // 2.判断规则配置值是否为空,为空直接放行
-        if(StringUtils.isBlank(ruleValue)){
-            return DefaultTreeFactory.TreeActionEntity.builder()
-                    .ruleLogicCheckType(RuleLogicCheckTypeVO.ALLOW)
-                    .build();
-        }
 
         long raffleCount = 0L;
         try{

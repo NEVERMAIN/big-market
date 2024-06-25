@@ -4,9 +4,9 @@ import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
+import com.openicu.types.common.Constants;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
-import com.sun.xml.internal.bind.v2.TODO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -33,22 +33,30 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
 
         // 1. 查询策略配置
         List<StrategyAwardEntity> strategyAwardEntityList = repository.queryStrategyAwardList(strategyId);
+
+        // 2.缓存奖品库存【用于decr扣减库存使用】
+        for (StrategyAwardEntity strategyAward : strategyAwardEntityList) {
+            Integer awardId = strategyAward.getAwardId();
+            Integer awardCount = strategyAward.getAwardCount();
+            cacheStrategyAwardCont(strategyId,awardId,awardCount);
+        }
+
+        // 3.1. 默认装配配置【全量抽奖概率】
         assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntityList);
 
-        // 2.权重策略配置,适用于 rule_weight 权重规则配置
+        // 3.2. 权重策略配置,适用于 rule_weight 权重规则配置
         StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
         String ruleWeight = strategyEntity.getRuleWeight();
         if(null == ruleWeight) return true;
 
-        // TODO queryStrategyRule 方法名称限定，只查询一个对象。目前可能造成别人调用查询list返回
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleWeight);
+        // 业务异常，策略规则中 rule_weight 权重规则已适用但未配置
         if(null == strategyRuleEntity){
             throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(),ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
         }
 
         Map<String, List<Integer>> ruleWeightValueMap = strategyRuleEntity.getRuleWeightValues();
-        Set<String> keys = ruleWeightValueMap.keySet();
-        for(String key : keys){
+        for(String key : ruleWeightValueMap.keySet()){
             List<Integer> ruleWeightValues = ruleWeightValueMap.get(key);
             ArrayList<StrategyAwardEntity> strategyAwardEntitiesClone = new ArrayList<>(strategyAwardEntityList);
             strategyAwardEntitiesClone.removeIf(entity -> !ruleWeightValues.contains(entity.getAwardId()));
@@ -115,6 +123,17 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         return max;
     }
 
+    /**
+     * 缓存奖品库存到 Redis
+     * @param strategyId 策略Id
+     * @param awardId 奖品ID
+     * @param awardCount 奖品库存
+     */
+    private void cacheStrategyAwardCont(Long strategyId,Integer awardId,Integer awardCount){
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + strategyId + Constants.UNDERLINE + awardId;
+        repository.cacheStrategyAwardCount(cacheKey,awardCount);
+    }
+
 
     @Override
     public Integer getRandomAwardId(Long strategyId) {
@@ -137,6 +156,12 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         int rateRange = repository.getRateRange(String.valueOf(key));
         // 2.通过生成的随机值,获取概率值奖品查找表的结果
         return repository.getStrategyAwardAssemble(key,new SecureRandom().nextInt(rateRange));
+    }
+
+    @Override
+    public Boolean subtractionAwardStock(Long strategyId, Integer awardId) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
+        return repository.subtractionAwardStock(cacheKey);
     }
 
 }

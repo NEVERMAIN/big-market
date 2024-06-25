@@ -17,13 +17,17 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <update id="updateStrategyAwardStock" parameterType="com.openicu.infrastructure.persistent.po.StrategyAward">
+        update strategy_award
+        set award_count_surplus = award_count_surplus - 1
+        where strategy_id = #{strategyId} and award_id = #{awardId} and award_count_surplus > 0 ;
+    </update>
 
     <select id="queryStrategyAwardListByStrategyId" resultMap="dataMap">
         select strategy_id,award_id,award_count,award_count_surplus,award_rate
             from strategy_award
         where strategy_id = #{strategyId}
     </select>
-
 
     <select id="queryStrategyAwardRuleModels" parameterType="com.openicu.infrastructure.persistent.po.StrategyAward" resultType="java.lang.String">
         select rule_models
@@ -36,7 +40,6 @@
         select award_count_surplus
         from strategy_award
         where strategy_id = #{strategyId} AND award_id = #{awardId};
-
     </select>
 
 </mapper>

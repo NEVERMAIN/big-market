@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.annotation.Resource;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @description:
@@ -35,7 +36,7 @@ public class RaffleStrategyTest {
     @Resource
     private RuleWeightLogicChain ruleWeightLogicChain;
 
-    @Test
+    @Before
     public void setUp(){
         // 策略装配 100001、100002、100003
         log.info("测试结果: {}",strategyArmory.assembleLotteryStrategy(100001L));
@@ -57,6 +58,21 @@ public class RaffleStrategyTest {
         log.info("请求参数: {}",JSON.toJSONString(raffleFactorEntity));
         log.info("测试结果: {}",JSON.toJSONString(raffleAwardEntity));
 
+    }
+
+    @Test
+    public void test_performRaffle02() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
+                    .userId("咸鱼12138")
+                    .strategyId(100006L)
+                    .build();
+            RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
+            log.info("请求参数：{}", JSON.toJSONString(raffleFactorEntity));
+            log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
+        }
+        // 等待 UpdateAwardStockJob 消费队列
+        new CountDownLatch(1).await();
     }
 
 

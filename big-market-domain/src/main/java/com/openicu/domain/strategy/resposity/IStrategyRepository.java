@@ -5,6 +5,7 @@ import com.openicu.domain.strategy.model.valobj.RuleTreeVO;
 import com.openicu.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
+import com.openicu.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 import java.util.List;
 import java.util.Map;
@@ -97,13 +98,54 @@ public interface IStrategyRepository {
     String queryStrategyRuleValue(Long strategyId, String ruleModel);
 
     /**
-     * 根据规则模型查询规则树树根节点
+     * 根据规则树ID，查询树结构信息
      *
      * @param ruleModels 规则模型或类型，用于指定查询的规则。
      * @return 查询到的规则树视图对象。
      */
     RuleTreeVO queryRuleTreeVOByTreeId(String ruleModels);
 
-
+    /**
+     * 根据策略ID和奖品ID查询剩余奖品数量。
+     * @param strategyId 策略ID
+     * @param awardId 奖品ID
+     * @return
+     */
     Integer queryStrategyAwardSurplusCount(Long strategyId, Integer awardId);
+
+    /**
+     * 缓存奖品库存
+     * @param cacheKey 缓存Key
+     * @param awardCount 奖品库存值
+     */
+    void cacheStrategyAwardCount(String cacheKey,Integer awardCount);
+
+    /**
+     * 缓存 Key,decr 方式扣减库存
+     * @param cacheKey 缓存Key
+     * @return 扣减结果
+     */
+    Boolean subtractionAwardStock(String cacheKey);
+
+    /**
+     * 写入奖品库存到消费队列
+     * @param strategyAwardStockKeyVO 对象值对象
+     */
+    void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO);
+
+    /**
+     * 获取奖品库存消费队列
+     * @return
+     * @throws InterruptedException
+     */
+    StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException;
+
+    /**
+     * 更新奖品库存消耗
+     * @param strategyId 策略ID
+     * @param awardId 奖品ID
+     */
+    void updateStrategyAwardStock(Long strategyId,Integer awardId);
+
+
 }
