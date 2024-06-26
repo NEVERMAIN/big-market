@@ -31,7 +31,7 @@ public class RuleLockLogicTreeNode implements ILogicTreeNode {
     @Override
     public DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId,String ruleValue) {
 
-        log.info("规则树过滤开始 - 次数锁 userId:{} strategyId:{} awardId:{}", userId, strategyId,awardId);
+        log.info("规则树过滤开始--次数锁--开始 userId:{} strategyId:{} awardId:{} ruleValue:{}", userId, strategyId,awardId,ruleValue);
 
         long raffleCount = 0L;
         try{
@@ -42,14 +42,14 @@ public class RuleLockLogicTreeNode implements ILogicTreeNode {
 
         // 3. 用户抽奖次数大于规则限定值,规则放行
         if(userRaffleCount >= raffleCount){
-            log.info("规则树过滤结束 - 次数锁 - 放行 userId:{} strategyId:{} awardId:{}", userId, strategyId,awardId);
+            log.info("规则树过滤结束--次数锁--放行 userId:{} strategyId:{} awardId:{}", userId, strategyId,awardId);
             return DefaultTreeFactory.TreeActionEntity.builder()
                     .ruleLogicCheckType(RuleLogicCheckTypeVO.ALLOW)
                     .build();
         }
 
         // 4. 用户抽奖次数小于规则限定值,规则拦截
-        log.info("规则树过滤结束 - 次数锁 - 接管 userId:{} strategyId:{} awardId:{}", userId, strategyId,awardId);
+        log.info("规则树过滤结束--次数锁--接管 userId:{} strategyId:{} awardId:{}", userId, strategyId,awardId);
         return DefaultTreeFactory.TreeActionEntity.builder()
                 .ruleLogicCheckType(RuleLogicCheckTypeVO.TAKE_OVER)
                 .build();

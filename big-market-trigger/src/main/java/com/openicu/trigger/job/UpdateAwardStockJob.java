@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @description:
+ * @description: 定时任务消费对列
  * @author: 云奇迹
  * @date: 2024/6/25
  */

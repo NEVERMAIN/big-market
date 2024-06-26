@@ -135,8 +135,8 @@ public interface IStrategyRepository {
 
     /**
      * 获取奖品库存消费队列
-     * @return
-     * @throws InterruptedException
+     * @return StrategyAwardStockKeyVO
+     * @throws InterruptedException 打断异常
      */
     StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException;
 

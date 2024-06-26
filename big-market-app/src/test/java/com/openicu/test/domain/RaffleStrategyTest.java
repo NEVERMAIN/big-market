@@ -6,6 +6,7 @@ import com.openicu.domain.strategy.model.entity.RaffleFactorEntity;
 import com.openicu.domain.strategy.service.IRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyArmory;
 import com.openicu.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
+import com.openicu.domain.strategy.service.rule.tree.impl.RuleLockLogicTreeNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,9 @@ public class RaffleStrategyTest {
     @Resource
     private RuleWeightLogicChain ruleWeightLogicChain;
 
+    @Resource
+    private RuleLockLogicTreeNode ruleLockLogicTreeNode;
+
     @Before
     public void setUp(){
         // 策略装配 100001、100002、100003
@@ -44,6 +48,8 @@ public class RaffleStrategyTest {
 
         // 通过反射 mock 规则中的值
         ReflectionTestUtils.setField(ruleWeightLogicChain,"userScore",4900L);
+        ReflectionTestUtils.setField(ruleLockLogicTreeNode,"userRaffleCount",10L);
+
 
     }
 
