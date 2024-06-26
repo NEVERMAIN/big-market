@@ -3,7 +3,6 @@ package com.openicu.domain.strategy.service.rule.chain.factory;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.rule.chain.ILogicChain;
-import com.openicu.domain.strategy.service.DefaultLogicFactory;
 import lombok.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,7 @@ public class DefaultChainFactory {
 
         // 如果未配置策略规则,则只装填一个默认责任链
         if(null == ruleModels || 0 == ruleModels.length){
-            ILogicChain ruleDefaultLogicChain = applicationContext.getBean(DefaultLogicFactory.LogicModel.RULE_DEFAULT.getCode(), ILogicChain.class);
+            ILogicChain ruleDefaultLogicChain = applicationContext.getBean(LogicModel.RULE_DEFAULT.getCode(), ILogicChain.class);
             // 写入缓存
             strategyChainGroup.put(strategyId,ruleDefaultLogicChain);
             return ruleDefaultLogicChain;
@@ -70,7 +69,7 @@ public class DefaultChainFactory {
             current = current.appendNext(nextChain);
         }
         // 责任链的最后装填默认责任链
-        current.appendNext(applicationContext.getBean(DefaultLogicFactory.LogicModel.RULE_DEFAULT.getCode(), ILogicChain.class));
+        current.appendNext(applicationContext.getBean(LogicModel.RULE_DEFAULT.getCode(), ILogicChain.class));
         // 写入缓存
         strategyChainGroup.put(strategyId,logicChain);
 

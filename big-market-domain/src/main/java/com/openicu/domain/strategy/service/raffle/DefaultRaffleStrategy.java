@@ -8,13 +8,10 @@ import com.openicu.domain.strategy.service.AbstractRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyDispatch;
 import com.openicu.domain.strategy.service.rule.chain.ILogicChain;
 import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
-import com.openicu.domain.strategy.service.DefaultLogicFactory;
 import com.openicu.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import com.openicu.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @description:
@@ -25,8 +22,6 @@ import javax.annotation.Resource;
 @Service
 public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
 
-    @Resource
-    private DefaultLogicFactory logicFactory;
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
         super(repository, strategyDispatch,defaultChainFactory,defaultTreeFactory);

@@ -2,11 +2,9 @@ package com.openicu.domain.strategy.service.rule.tree.impl;
 
 import com.openicu.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
-import com.openicu.domain.strategy.service.DefaultLogicFactory;
 import com.openicu.domain.strategy.service.rule.tree.ILogicTreeNode;
 import com.openicu.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
