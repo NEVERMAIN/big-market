@@ -1,298 +1,82 @@
-24-06-26.15:05:22.259 [main            ] INFO  Application            - Starting Application using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 15892 (D:\workplace02\big-market\big-market-app\target\classes started by 666 in D:\workplace02\big-market)
-24-06-26.15:05:22.261 [main            ] INFO  Application            - The following 1 profile is active: "dev"
-24-06-26.15:05:23.076 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-06-26.15:05:23.080 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-06-26.15:05:23.108 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
-24-06-26.15:05:23.537 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8091 (http)
-24-06-26.15:05:23.545 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8091"]
-24-06-26.15:05:23.545 [main            ] INFO  StandardService        - Starting service [Tomcat]
-24-06-26.15:05:23.545 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
-24-06-26.15:05:23.650 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
-24-06-26.15:05:23.650 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1354 ms
-24-06-26.15:05:24.090 [main            ] INFO  Version                - Redisson 3.26.0
-24-06-26.15:05:24.500 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.15:05:24.512 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.15:05:25.242 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-06-26.15:05:25.273 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8091"]
-24-06-26.15:05:25.282 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8091 (http) with context path ''
-24-06-26.15:05:25.299 [main            ] INFO  Application            - Started Application in 3.393 seconds (JVM running for 4.25)
-24-06-26.15:05:25.884 [RMI TCP Connection(1)-192.168.1.102] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
-24-06-26.15:05:25.884 [RMI TCP Connection(1)-192.168.1.102] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
-24-06-26.15:05:25.886 [RMI TCP Connection(1)-192.168.1.102] INFO  DispatcherServlet      - Completed initialization in 2 ms
-24-06-26.15:05:26.361 [RMI TCP Connection(3)-192.168.1.102] INFO  HikariDataSource       - HikariPool-1 - Starting...
-24-06-26.15:05:26.473 [RMI TCP Connection(3)-192.168.1.102] INFO  HikariDataSource       - HikariPool-1 - Start completed.
-24-06-26.15:05:30.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.15:05:35.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.15:05:40.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.15:05:42.932 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
-24-06-26.15:05:42.939 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
-24-06-26.19:27:43.468 [main            ] INFO  Application            - Starting Application using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 23388 (D:\workplace02\big-market\big-market-app\target\classes started by 666 in D:\workplace02\big-market)
-24-06-26.19:27:43.469 [main            ] INFO  Application            - The following 1 profile is active: "dev"
-24-06-26.19:27:44.364 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-06-26.19:27:44.367 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-06-26.19:27:44.394 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
-24-06-26.19:27:44.902 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8091 (http)
-24-06-26.19:27:44.911 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8091"]
-24-06-26.19:27:44.911 [main            ] INFO  StandardService        - Starting service [Tomcat]
-24-06-26.19:27:44.911 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
-24-06-26.19:27:45.052 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
-24-06-26.19:27:45.053 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1544 ms
-24-06-26.19:27:45.476 [main            ] INFO  Version                - Redisson 3.26.0
-24-06-26.19:27:45.953 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.19:27:45.963 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.19:27:46.732 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-06-26.19:27:46.762 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8091"]
-24-06-26.19:27:46.772 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8091 (http) with context path ''
-24-06-26.19:27:46.789 [main            ] INFO  Application            - Started Application in 3.733 seconds (JVM running for 4.752)
-24-06-26.19:27:47.526 [RMI TCP Connection(1)-10.61.156.133] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
-24-06-26.19:27:47.526 [RMI TCP Connection(1)-10.61.156.133] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
-24-06-26.19:27:47.528 [RMI TCP Connection(2)-10.61.156.133] INFO  HikariDataSource       - HikariPool-1 - Starting...
-24-06-26.19:27:47.528 [RMI TCP Connection(1)-10.61.156.133] INFO  DispatcherServlet      - Completed initialization in 2 ms
-24-06-26.19:27:47.658 [RMI TCP Connection(2)-10.61.156.133] INFO  HikariDataSource       - HikariPool-1 - Start completed.
-24-06-26.19:27:50.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:27:55.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:28:00.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:28:01.550 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
-24-06-26.19:28:01.557 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
-24-06-26.19:28:38.056 [main            ] INFO  Application            - Starting Application using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 22588 (D:\workplace02\big-market\big-market-app\target\classes started by 666 in D:\workplace02\big-market)
-24-06-26.19:28:38.058 [main            ] INFO  Application            - The following 1 profile is active: "dev"
-24-06-26.19:28:38.694 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-06-26.19:28:38.696 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-06-26.19:28:38.720 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
-24-06-26.19:28:39.075 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8091 (http)
-24-06-26.19:28:39.083 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8091"]
-24-06-26.19:28:39.083 [main            ] INFO  StandardService        - Starting service [Tomcat]
-24-06-26.19:28:39.083 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
-24-06-26.19:28:39.175 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
-24-06-26.19:28:39.175 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1089 ms
-24-06-26.19:28:39.546 [main            ] INFO  Version                - Redisson 3.26.0
-24-06-26.19:28:39.919 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.19:28:39.930 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.19:28:40.589 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-06-26.19:28:40.619 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8091"]
-24-06-26.19:28:40.627 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8091 (http) with context path ''
-24-06-26.19:28:40.642 [main            ] INFO  Application            - Started Application in 2.97 seconds (JVM running for 3.684)
-24-06-26.19:28:40.803 [RMI TCP Connection(1)-10.61.156.133] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
-24-06-26.19:28:40.803 [RMI TCP Connection(1)-10.61.156.133] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
-24-06-26.19:28:40.806 [RMI TCP Connection(1)-10.61.156.133] INFO  DispatcherServlet      - Completed initialization in 2 ms
-24-06-26.19:28:41.218 [RMI TCP Connection(3)-10.61.156.133] INFO  HikariDataSource       - HikariPool-1 - Starting...
-24-06-26.19:28:41.322 [RMI TCP Connection(3)-10.61.156.133] INFO  HikariDataSource       - HikariPool-1 - Start completed.
-24-06-26.19:28:45.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:28:50.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:28:55.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:00.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:05.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:10.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:15.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:20.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:25.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:30.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:35.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:40.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:45.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:50.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:29:55.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:00.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:05.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:10.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:15.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:20.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:25.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:30.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:35.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:40.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:45.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:50.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:30:55.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:00.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:05.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:10.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:15.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:20.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:25.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:30.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:35.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:40.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:45.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:31:50.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:37:43.570 [main            ] INFO  Application            - Starting Application using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 16136 (D:\workplace02\big-market\big-market-app\target\classes started by 666 in D:\workplace02\big-market)
-24-06-26.19:37:43.572 [main            ] INFO  Application            - The following 1 profile is active: "dev"
-24-06-26.19:37:44.414 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-06-26.19:37:44.417 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-06-26.19:37:44.440 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
-24-06-26.19:37:44.912 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8091 (http)
-24-06-26.19:37:44.921 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8091"]
-24-06-26.19:37:44.922 [main            ] INFO  StandardService        - Starting service [Tomcat]
-24-06-26.19:37:44.922 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
-24-06-26.19:37:45.066 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
-24-06-26.19:37:45.066 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1442 ms
-24-06-26.19:37:45.592 [main            ] INFO  Version                - Redisson 3.26.0
-24-06-26.19:37:46.100 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.19:37:46.112 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
-24-06-26.19:37:46.888 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-06-26.19:37:46.917 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8091"]
-24-06-26.19:37:46.928 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8091 (http) with context path ''
-24-06-26.19:37:46.944 [main            ] INFO  Application            - Started Application in 3.846 seconds (JVM running for 4.938)
-24-06-26.19:37:47.392 [RMI TCP Connection(1)-10.61.156.133] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
-24-06-26.19:37:47.392 [RMI TCP Connection(1)-10.61.156.133] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
-24-06-26.19:37:47.473 [RMI TCP Connection(1)-10.61.156.133] INFO  DispatcherServlet      - Completed initialization in 81 ms
-24-06-26.19:37:48.410 [RMI TCP Connection(3)-10.61.156.133] INFO  HikariDataSource       - HikariPool-1 - Starting...
-24-06-26.19:37:48.528 [RMI TCP Connection(3)-10.61.156.133] INFO  HikariDataSource       - HikariPool-1 - Start completed.
-24-06-26.19:37:50.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:37:55.075 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:37:55.081 [http-nio-8091-exec-2] INFO  RaffleController       - 抽奖策略装配开始 strategyId:100006 
-24-06-26.19:37:55.201 [http-nio-8091-exec-2] INFO  RaffleController       - 抽奖策略装配完成 strategyId:100006 response:Response(code=0000, info=成功, data=true)
-24-06-26.19:38:00.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:05.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:10.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:13.386 [http-nio-8091-exec-3] INFO  RaffleController       - 抽奖策略装配开始 strategyId:100006 
-24-06-26.19:38:13.413 [http-nio-8091-exec-3] INFO  RaffleController       - 抽奖策略装配完成 strategyId:100006 response:Response(code=0000, info=成功, data=true)
-24-06-26.19:38:15.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:20.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:25.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:30.017 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:35.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:40.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:45.017 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:50.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:38:55.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:00.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:05.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:10.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:15.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:20.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:25.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:30.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:35.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:40.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:45.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:50.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:39:55.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:00.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:05.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:10.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:15.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:20.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:25.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:28.351 [http-nio-8091-exec-6] INFO  RaffleController       - 查询抽奖奖品列表配置开始 strategyId:100006
-24-06-26.19:40:28.478 [http-nio-8091-exec-6] INFO  RaffleController       - 查询抽奖奖品列表配置完成 strategyId：100006 response: {"code":"0000","data":[{"awardId":101,"awardTitle":"随机积分","sort":1},{"awardId":102,"awardTitle":"7等奖","sort":2},{"awardId":103,"awardTitle":"6等奖","sort":3},{"awardId":104,"awardTitle":"5等奖","sort":4},{"awardId":105,"awardTitle":"4等奖","sort":5},{"awardId":106,"awardSubtitle":"抽奖1次后解锁","awardTitle":"3等奖","sort":6},{"awardId":107,"awardSubtitle":"抽奖1次后解锁","awardTitle":"2等奖","sort":7},{"awardId":108,"awardSubtitle":"抽奖2次后解锁","awardTitle":"1等奖","sort":8}],"info":"成功"}
-24-06-26.19:40:30.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:35.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:40.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:45.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:50.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:40:55.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:00.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:05.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:10.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:15.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:20.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:25.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:30.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:35.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:40.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:45.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:50.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:41:55.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:00.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:05.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:10.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:15.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:20.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:25.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:30.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:35.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:40.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:45.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:50.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:42:55.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:00.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:05.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:10.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:15.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:20.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:23.794 [http-nio-8091-exec-9] INFO  RaffleController       - 随机抽奖 strategyId:100006
-24-06-26.19:43:23.804 [http-nio-8091-exec-9] INFO  DefaultLogicChain      - 抽奖责任链-默认处理 userId:system strategyId:100006 ruleModel:rule_default awardId:108
-24-06-26.19:43:23.804 [http-nio-8091-exec-9] INFO  AbstractRaffleStrategy - 抽奖策略计算-责任链 userId:system strategyId:100006 awardId:108 logicModel:rule_default
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  RuleLockLogicTreeNode  - 规则树过滤开始--次数锁--开始 userId:system strategyId:100006 awardId:108 ruleValue:2
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  RuleLockLogicTreeNode  - 规则树过滤结束--次数锁--接管 userId:system strategyId:100006 awardId:108
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  DecisionTreeEngine     - 决策树引擎【规则树】 treeId:tree_lock_2 node:rule_lock code:0001 info:接管,后续的流程,受规则引擎执行结果影响
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  RuleLuckAwardLogicTreeNode - 规则过滤--兜底奖品 userId:system strategyId:100006 awardId:108 ruleValue:101:1,100
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  DecisionTreeEngine     - 决策树引擎【规则树】 treeId:tree_lock_2 node:rule_luck_award code:0001 info:接管,后续的流程,受规则引擎执行结果影响
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  AbstractRaffleStrategy - 抽奖策略计算-规则树 userId:system strategyId:100006 awardId:101 logicModel:1,100
-24-06-26.19:43:23.826 [http-nio-8091-exec-9] INFO  RaffleController       - 随机抽奖完成 strategyId: 100006 response: {"code":"0000","data":{"awardId":101},"info":"成功"}
-24-06-26.19:43:25.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:30.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:35.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:40.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:45.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:50.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:43:55.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:00.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:05.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:10.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:15.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:20.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:25.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:30.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:35.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:40.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:45.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:50.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:44:55.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:00.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:05.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:10.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:15.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:20.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:25.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:30.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:35.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:40.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:45.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:50.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:45:55.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:00.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:05.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:10.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:15.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:20.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:25.017 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:30.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:35.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:40.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:45.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:50.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:46:55.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:00.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:05.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:10.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:15.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:18.533 [http-nio-8091-exec-2] INFO  RaffleController       - 随机抽奖 strategyId:100006
-24-06-26.19:47:18.537 [http-nio-8091-exec-2] INFO  DefaultLogicChain      - 抽奖责任链-默认处理 userId:system strategyId:100006 ruleModel:rule_default awardId:104
-24-06-26.19:47:18.537 [http-nio-8091-exec-2] INFO  AbstractRaffleStrategy - 抽奖策略计算-责任链 userId:system strategyId:100006 awardId:104 logicModel:rule_default
-24-06-26.19:47:18.537 [http-nio-8091-exec-2] INFO  RuleStockLogicTreeNode - 规则过滤--库存扣减--开始 userId:system strategyId:100006 awardId:104
-24-06-26.19:47:18.545 [http-nio-8091-exec-2] INFO  RuleStockLogicTreeNode - 规则过滤--库存扣减--成功 userId:system strategyId:100006 awardId:104
-24-06-26.19:47:18.566 [http-nio-8091-exec-2] INFO  DecisionTreeEngine     - 决策树引擎【规则树-兜底奖励】 treeId:tree_luck_award node:rule_stock code:0001 info:接管,后续的流程,受规则引擎执行结果影响
-24-06-26.19:47:18.566 [http-nio-8091-exec-2] INFO  AbstractRaffleStrategy - 抽奖策略计算-规则树 userId:system strategyId:100006 awardId:104 logicModel:null
-24-06-26.19:47:18.566 [http-nio-8091-exec-2] INFO  RaffleController       - 随机抽奖完成 strategyId: 100006 response: {"code":"0000","data":{"awardId":104},"info":"成功"}
-24-06-26.19:47:20.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:25.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:25.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 strategyId:100006 awardId:104
-24-06-26.19:47:30.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:35.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:40.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:45.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:50.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:47:55.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:00.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:04.854 [http-nio-8091-exec-3] INFO  RaffleController       - 查询抽奖奖品列表配置开始 strategyId:100006
-24-06-26.19:48:04.854 [http-nio-8091-exec-3] INFO  RaffleController       - 查询抽奖奖品列表配置完成 strategyId：100006 response: {"code":"0000","data":[{"awardId":101,"awardTitle":"随机积分","sort":1},{"awardId":102,"awardTitle":"7等奖","sort":2},{"awardId":103,"awardTitle":"6等奖","sort":3},{"awardId":104,"awardTitle":"5等奖","sort":4},{"awardId":105,"awardTitle":"4等奖","sort":5},{"awardId":106,"awardSubtitle":"抽奖1次后解锁","awardTitle":"3等奖","sort":6},{"awardId":107,"awardSubtitle":"抽奖1次后解锁","awardTitle":"2等奖","sort":7},{"awardId":108,"awardSubtitle":"抽奖2次后解锁","awardTitle":"1等奖","sort":8}],"info":"成功"}
-24-06-26.19:48:05.018 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:10.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:15.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:20.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:25.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:30.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
-24-06-26.19:48:30.168 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
-24-06-26.19:48:30.173 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-06-28.10:12:52.431 [main            ] INFO  Application            - Starting Application using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 4820 (D:\workplace02\big-market\big-market-app\target\classes started by 666 in D:\workplace02\big-market)
+24-06-28.10:12:52.433 [main            ] INFO  Application            - The following 1 profile is active: "dev"
+24-06-28.10:12:53.484 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-06-28.10:12:53.487 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-06-28.10:12:53.525 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+24-06-28.10:12:54.215 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8091 (http)
+24-06-28.10:12:54.225 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8091"]
+24-06-28.10:12:54.225 [main            ] INFO  StandardService        - Starting service [Tomcat]
+24-06-28.10:12:54.226 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
+24-06-28.10:12:54.378 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
+24-06-28.10:12:54.378 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1886 ms
+24-06-28.10:12:54.990 [main            ] INFO  Version                - Redisson 3.26.0
+24-06-28.10:12:55.571 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-06-28.10:12:55.585 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-06-28.10:12:56.482 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-06-28.10:12:56.515 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8091"]
+24-06-28.10:12:56.525 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8091 (http) with context path ''
+24-06-28.10:12:56.541 [main            ] INFO  Application            - Started Application in 4.677 seconds (JVM running for 6.017)
+24-06-28.10:12:57.055 [RMI TCP Connection(1)-192.168.1.102] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-06-28.10:12:57.185 [RMI TCP Connection(1)-192.168.1.102] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-06-28.10:12:57.532 [RMI TCP Connection(3)-192.168.1.102] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
+24-06-28.10:12:57.532 [RMI TCP Connection(3)-192.168.1.102] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
+24-06-28.10:12:57.533 [RMI TCP Connection(3)-192.168.1.102] INFO  DispatcherServlet      - Completed initialization in 1 ms
+24-06-28.10:13:00.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:05.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:10.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:15.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:20.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:25.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:30.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:35.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:40.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:45.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:48.459 [http-nio-8091-exec-3] INFO  RaffleController       - 抽奖策略装配开始 strategyId:100006 
+24-06-28.10:13:48.578 [http-nio-8091-exec-3] INFO  RaffleController       - 抽奖策略装配完成 strategyId:100006 response:Response(code=0000, info=成功, data=true)
+24-06-28.10:13:50.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:55.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:13:57.350 [http-nio-8091-exec-2] INFO  RaffleController       - 查询抽奖奖品列表配置开始 strategyId:100006
+24-06-28.10:13:57.461 [http-nio-8091-exec-2] INFO  RaffleController       - 查询抽奖奖品列表配置完成 strategyId：100006 response: {"code":"0000","data":[{"awardId":101,"awardTitle":"随机积分","sort":1},{"awardId":102,"awardTitle":"7等奖","sort":2},{"awardId":103,"awardTitle":"6等奖","sort":3},{"awardId":104,"awardTitle":"5等奖","sort":4},{"awardId":105,"awardTitle":"4等奖","sort":5},{"awardId":106,"awardSubtitle":"抽奖1次后解锁","awardTitle":"3等奖","sort":6},{"awardId":107,"awardSubtitle":"抽奖1次后解锁","awardTitle":"2等奖","sort":7},{"awardId":108,"awardSubtitle":"抽奖2次后解锁","awardTitle":"1等奖","sort":8}],"info":"成功"}
+24-06-28.10:14:00.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:14:05.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:14:06.595 [http-nio-8091-exec-4] INFO  RaffleController       - 随机抽奖 strategyId:100006
+24-06-28.10:14:06.601 [http-nio-8091-exec-4] INFO  DefaultLogicChain      - 抽奖责任链-默认处理 userId:system strategyId:100006 ruleModel:rule_default awardId:102
+24-06-28.10:14:06.601 [http-nio-8091-exec-4] INFO  AbstractRaffleStrategy - 抽奖策略计算-责任链 userId:system strategyId:100006 awardId:102 logicModel:rule_default
+24-06-28.10:14:06.618 [http-nio-8091-exec-4] INFO  RuleStockLogicTreeNode - 规则过滤--库存扣减--开始 userId:system strategyId:100006 awardId:102
+24-06-28.10:14:06.618 [http-nio-8091-exec-4] INFO  RuleStockLogicTreeNode - 规则过滤--库存扣减--成功 userId:system strategyId:100006 awardId:102
+24-06-28.10:14:06.638 [http-nio-8091-exec-4] INFO  DecisionTreeEngine     - 决策树引擎【规则树-兜底奖励】 treeId:tree_luck_award node:rule_stock code:0001 info:接管,后续的流程,受规则引擎执行结果影响
+24-06-28.10:14:06.640 [http-nio-8091-exec-4] INFO  AbstractRaffleStrategy - 抽奖策略计算-规则树 userId:system strategyId:100006 awardId:102 logicModel:null
+24-06-28.10:14:06.642 [http-nio-8091-exec-4] INFO  RaffleController       - 随机抽奖完成 strategyId: 100006 response: {"code":"0000","data":{"awardId":102},"info":"成功"}
+24-06-28.10:14:10.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:14:10.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 strategyId:100006 awardId:102
+24-06-28.10:14:15.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.10:14:19.341 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-06-28.10:14:19.346 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-06-28.16:05:17.565 [main            ] INFO  Application            - Starting Application using Java 1.8.0_152 on LAPTOP-6JRG2D2F with PID 15144 (D:\workplace02\big-market\big-market-app\target\classes started by 666 in D:\workplace02\big-market)
+24-06-28.16:05:17.567 [main            ] INFO  Application            - The following 1 profile is active: "dev"
+24-06-28.16:05:18.437 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-06-28.16:05:18.439 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-06-28.16:05:18.463 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+24-06-28.16:05:19.059 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8091 (http)
+24-06-28.16:05:19.067 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8091"]
+24-06-28.16:05:19.067 [main            ] INFO  StandardService        - Starting service [Tomcat]
+24-06-28.16:05:19.067 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
+24-06-28.16:05:19.197 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
+24-06-28.16:05:19.197 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1598 ms
+24-06-28.16:05:19.670 [main            ] INFO  Version                - Redisson 3.26.0
+24-06-28.16:05:20.145 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-06-28.16:05:20.157 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-06-28.16:05:20.914 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-06-28.16:05:20.944 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8091"]
+24-06-28.16:05:20.953 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8091 (http) with context path ''
+24-06-28.16:05:20.968 [main            ] INFO  Application            - Started Application in 3.785 seconds (JVM running for 4.761)
+24-06-28.16:05:21.701 [RMI TCP Connection(1)-192.168.1.102] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
+24-06-28.16:05:21.701 [RMI TCP Connection(1)-192.168.1.102] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
+24-06-28.16:05:21.703 [RMI TCP Connection(2)-192.168.1.102] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-06-28.16:05:21.703 [RMI TCP Connection(1)-192.168.1.102] INFO  DispatcherServlet      - Completed initialization in 1 ms
+24-06-28.16:05:21.859 [RMI TCP Connection(2)-192.168.1.102] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-06-28.16:05:22.004 [RMI TCP Connection(2)-192.168.1.102] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-06-28.16:05:22.008 [RMI TCP Connection(2)-192.168.1.102] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-06-28.16:05:25.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.16:05:30.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-06-28.16:05:35.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务,更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
