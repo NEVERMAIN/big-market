@@ -1,4 +1,4 @@
-package com.openicu.test.domain;
+package com.openicu.test.domain.strategy;
 
 import com.openicu.domain.strategy.service.armory.IStrategyArmory;
 import com.openicu.domain.strategy.service.armory.IStrategyDispatch;

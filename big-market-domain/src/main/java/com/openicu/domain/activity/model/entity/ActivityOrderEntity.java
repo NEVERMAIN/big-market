@@ -1,5 +1,6 @@
-package com.openicu.infrastructure.persistent.po;
+package com.openicu.domain.activity.model.entity;
 
+import com.openicu.domain.activity.model.valobj.OrderStateVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @description: 活动下单记录表
+ * @description: 活动参与实体对象
  * @author: 云奇迹
  * @date: 2024/6/28
  */
@@ -16,14 +17,10 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleActivityOrder {
+public class ActivityOrderEntity {
 
-    /** 自增ID */
-    private Long id;
     /** 用户ID */
     private String userId;
-    /** 商品SKU */
-    private Long sku;
     /** 活动ID */
     private Long activityId;
     /** 活动名称 */
@@ -41,9 +38,6 @@ public class RaffleActivityOrder {
     /** 月次数 */
     private Integer monthCount;
     /** 订单状态（complete） */
-    private String state;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
+    private OrderStateVO state;
+
 }

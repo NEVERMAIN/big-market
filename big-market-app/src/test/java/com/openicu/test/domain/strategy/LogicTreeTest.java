@@ -1,4 +1,4 @@
-package com.openicu.test.domain;
+package com.openicu.test.domain.strategy;
 
 import com.alibaba.fastjson.JSON;
 import com.openicu.domain.strategy.model.valobj.*;

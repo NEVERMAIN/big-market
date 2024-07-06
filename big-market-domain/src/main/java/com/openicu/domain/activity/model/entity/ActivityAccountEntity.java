@@ -1,15 +1,12 @@
-package com.openicu.infrastructure.persistent.po;
+package com.openicu.domain.activity.model.entity;
 
-import com.google.errorprone.annotations.NoAllocation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
- * @description: 活动次数账户表
+ * @description:
  * @author: 云奇迹
  * @date: 2024/6/28
  */
@@ -17,10 +14,8 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleActivityAccount {
+public class ActivityAccountEntity {
 
-    /** 自增ID */
-    private Long id;
     /** 用户ID */
     private String userId;
     /** 活动ID */
@@ -37,9 +32,6 @@ public class RaffleActivityAccount {
     private Integer monthCount;
     /** 月次数-剩余 */
     private Integer monthCountSurplus;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
+
 
 }

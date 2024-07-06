@@ -1,5 +1,7 @@
 package com.openicu.infrastructure.persistent.dao;
 
+import com.myapp.middleware.db.router.annotation.DBRouter;
+import com.openicu.infrastructure.persistent.po.RaffleActivityAccount;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,4 +11,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityAccountDao {
+
+    @DBRouter(key = "userId")
+    void insert(RaffleActivityAccount raffleActivityAccount);
+
 }

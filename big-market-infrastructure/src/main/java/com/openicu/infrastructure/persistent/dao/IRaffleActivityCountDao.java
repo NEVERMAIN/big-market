@@ -1,5 +1,7 @@
 package com.openicu.infrastructure.persistent.dao;
 
+import com.openicu.domain.activity.model.entity.ActivityCountEntity;
+import com.openicu.infrastructure.persistent.po.RaffleActivityCount;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,4 +11,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityCountDao {
+
+    RaffleActivityCount queryRaffleActivityCountByActivityCountId(Long activityCountId);
+
+
+
 }

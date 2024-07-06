@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 28/06/2024 16:40:03
+ Date: 28/06/2024 17:06:51
 */
 
 SET NAMES utf8mb4;
@@ -95,6 +95,29 @@ CREATE TABLE `raffle_activity_count`  (
 -- Records of raffle_activity_count
 -- ----------------------------
 INSERT INTO `raffle_activity_count` VALUES (1, 1, 100, 2, 60, '2024-03-09 10:15:42', '2024-03-09 10:15:42');
+
+-- ----------------------------
+-- Table structure for raffle_activity_sku
+-- ----------------------------
+DROP TABLE IF EXISTS `raffle_activity_sku`;
+CREATE TABLE `raffle_activity_sku`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `sku` bigint(12) NOT NULL COMMENT '商品sku - 把每一个组合当做一个商品',
+  `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
+  `activity_count_id` bigint(12) NOT NULL COMMENT '活动个人参与次数ID',
+  `stock_count` int(11) NOT NULL COMMENT '商品库存',
+  `stock_count_surplus` int(11) NOT NULL COMMENT '剩余库存',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uq_sku`(`sku`) USING BTREE,
+  INDEX `idx_activity_id_activity_count_id`(`activity_id`, `activity_count_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of raffle_activity_sku
+-- ----------------------------
+INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 0, 0, '2024-03-16 11:41:09', '2024-03-16 11:59:21');
 
 -- ----------------------------
 -- Table structure for rule_tree

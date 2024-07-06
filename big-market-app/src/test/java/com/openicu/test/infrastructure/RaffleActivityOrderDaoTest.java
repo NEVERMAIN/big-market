@@ -48,16 +48,19 @@ public class RaffleActivityOrderDaoTest {
     }
 
 
-
     @Test
     public void test_insert(){
         RaffleActivityOrder raffleActivityOrder = new RaffleActivityOrder();
         raffleActivityOrder.setUserId("咸鱼12138");
+        raffleActivityOrder.setSku(9011L);
         raffleActivityOrder.setActivityId(100301L);
         raffleActivityOrder.setActivityName("测试活动");
         raffleActivityOrder.setStrategyId(100006L);
         raffleActivityOrder.setOrderId(RandomStringUtils.randomNumeric(12));
         raffleActivityOrder.setOrderTime(new Date());
+        raffleActivityOrder.setTotalCount(60);
+        raffleActivityOrder.setMonthCount(60);
+        raffleActivityOrder.setDayCount(2);
         raffleActivityOrder.setState("not_used");
         // 插入数据
         raffleActivityOrderDao.insert(raffleActivityOrder);

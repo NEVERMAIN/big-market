@@ -1,4 +1,4 @@
-package com.openicu.test.domain;
+package com.openicu.test.domain.strategy;
 
 import com.alibaba.fastjson.JSON;
 import com.openicu.domain.strategy.model.entity.RaffleAwardEntity;
@@ -9,7 +9,6 @@ import com.openicu.domain.strategy.service.rule.chain.ILogicChain;
 import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.openicu.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
