@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @description:
+ * @description: 抽奖策略默认实现
  * @author: 云奇迹
  * @date: 2024/6/20
  */

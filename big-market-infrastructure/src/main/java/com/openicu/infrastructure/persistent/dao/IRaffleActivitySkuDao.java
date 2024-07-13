@@ -11,6 +11,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IRaffleActivitySkuDao {
 
+    /**
+     * 根据商品SKU 查询活动SKU对象
+     * @param sku 商品sku
+     * @return 活动SKU对象
+     */
     RaffleActivitySku queryActivitySku(Long sku);
 
 

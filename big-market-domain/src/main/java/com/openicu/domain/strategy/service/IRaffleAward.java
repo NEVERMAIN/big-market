@@ -5,7 +5,7 @@ import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
 import java.util.List;
 
 /**
- * @description:
+ * @description: 抽奖奖品相关接口
  * @author: 云奇迹
  * @date: 2024/6/26
  */

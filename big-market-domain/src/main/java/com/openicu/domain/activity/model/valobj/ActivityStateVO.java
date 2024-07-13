@@ -13,6 +13,9 @@ import lombok.Getter;
 public enum ActivityStateVO {
 
     CREATE("create","创建"),
+    OPEN("open","开启"),
+    CLOSE("close","关闭"),
+
     ;
 
     private final String code;

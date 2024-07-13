@@ -1,0 +1,26 @@
+package com.openicu.domain.activity.model.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @description: 活动购物车实体对象
+ * @author: 云奇迹
+ * @date: 2024/7/8
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class SkuRechargeEntity {
+
+    /** 用户ID */
+    private String userId;
+    /** 商品SKU activity + activity_count */
+    private Long sku;
+    /** 幂等性业务单号 */
+    private String outBusinessNo;
+
+}

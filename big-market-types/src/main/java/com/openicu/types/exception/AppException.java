@@ -3,6 +3,9 @@ package com.openicu.types.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * @author 666
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AppException extends RuntimeException {
