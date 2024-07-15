@@ -21,7 +21,7 @@ public interface IRaffleOrder {
      * @param skuRechargeEntity  活动商品充值实体对象
      * @return 订单ID
      */
-    String createRaffleActivityOrder(SkuRechargeEntity skuRechargeEntity);
+    String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity);
 
 
 }

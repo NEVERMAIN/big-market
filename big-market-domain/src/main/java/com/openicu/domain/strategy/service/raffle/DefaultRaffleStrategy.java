@@ -43,6 +43,7 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
 
         // 1. 获取奖品配置的规则配置值
         StrategyAwardRuleModelVO strategyAwardRuleModelVO = repository.queryStrategyAwardRuleModelVO(strategyId,awardId);
+        // 奖品规则配置为 null , 则直接返回
         if(null == strategyAwardRuleModelVO){
             return DefaultTreeFactory.StrategyAwardData.builder()
                     .awardId(awardId)
@@ -67,8 +68,18 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     }
 
     @Override
+    public void clearQueueValue() {
+        repository.clearQueueValue();
+    }
+
+    @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
         repository.updateStrategyAwardStock(strategyId,awardId);
+    }
+
+    @Override
+    public void clearStrategyAwardStock(Long strategyId, Integer awardId) {
+        repository.clearStrategyAwardStock(strategyId,awardId);
     }
 
     @Override

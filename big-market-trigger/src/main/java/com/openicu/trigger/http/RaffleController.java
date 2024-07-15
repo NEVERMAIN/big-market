@@ -128,12 +128,13 @@ public class RaffleController implements IRaffleService {
 
         try {
             log.info("随机抽奖 strategyId:{}",requestDTO.getStrategyId());
-            // 调用抽奖接口
+            // 1. 调用抽奖接口
             RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
                     .userId("system")
                     .strategyId(requestDTO.getStrategyId())
                     .build());
-            // 封装返回结果
+
+            // 2. 封装返回结果
             Response<RaffleResponseDTO> response = Response.<RaffleResponseDTO>builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .info(ResponseCode.SUCCESS.getInfo())

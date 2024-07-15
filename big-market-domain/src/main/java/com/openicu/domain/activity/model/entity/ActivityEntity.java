@@ -1,5 +1,6 @@
 package com.openicu.domain.activity.model.entity;
 
+import com.openicu.domain.activity.model.valobj.ActivityStateVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +32,7 @@ public class ActivityEntity {
     /** 抽奖策略ID */
     private Long strategyId;
     /** 活动状态 */
-    private String state;
+    private ActivityStateVO state;
 
 
 }

@@ -125,7 +125,7 @@ public interface IStrategyRepository {
      * @param cacheKey 缓存Key
      * @return 扣减结果
      */
-    Boolean subtractionAwardStock(String cacheKey);
+    Boolean subtractionAwardStock(Long strategyId, Integer awardId,String cacheKey);
 
     /**
      * 写入奖品库存到消费队列
@@ -147,5 +147,15 @@ public interface IStrategyRepository {
      */
     void updateStrategyAwardStock(Long strategyId,Integer awardId);
 
+    /**
+     * 清空队列
+     */
+    void clearQueueValue();
 
+    /**
+     * 清空数据库 抽奖奖品库存
+     * @param strategyId 策略ID
+     * @param awardId 奖品ID
+     */
+    void clearStrategyAwardStock(Long strategyId, Integer awardId);
 }

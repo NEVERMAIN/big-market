@@ -20,7 +20,6 @@ public class DefaultActivityChainFactory {
     public DefaultActivityChainFactory(Map<String,IActionChain> actionChainGroup){
         actionChain = actionChainGroup.get(ActionModel.ACTIVITY_BASE_ACTION.getCode());
         actionChain.appendNext(actionChainGroup.get(ActionModel.ACTIVITY_SKU_STOCK_ACTION.getCode()));
-        actionChain.next().appendNext(actionChainGroup.get(ActionModel.ACTIVITY_COUNT_ACTION.getCode()));
     }
 
     public IActionChain openActionChain(){
@@ -33,8 +32,7 @@ public class DefaultActivityChainFactory {
     public enum ActionModel{
 
         ACTIVITY_BASE_ACTION("activity_base_action","活动的库存,时间校验"),
-        ACTIVITY_SKU_STOCK_ACTION("activity_sku_action_chain","活动sku库存"),
-        ACTIVITY_COUNT_ACTION("activity_count_chain","活动参与次数"),
+        ACTIVITY_SKU_STOCK_ACTION("activity_sku_stock_action","活动sku库存"),
 
         ;
 

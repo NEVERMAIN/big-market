@@ -18,6 +18,15 @@ public interface IRaffleActivitySkuDao {
      */
     RaffleActivitySku queryActivitySku(Long sku);
 
+    /**
+     * 更新活动 商品SKU库存
+     * @param sku 商品 sku
+     */
+    void updateActivitySkuStock(Long sku);
 
-
+    /**
+     * 清空活动 商品sku库存
+     * @param sku 商品sku
+     */
+    void clearActivitySkuStock(Long sku);
 }

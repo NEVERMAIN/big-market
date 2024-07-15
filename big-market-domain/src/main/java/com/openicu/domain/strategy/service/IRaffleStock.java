@@ -25,6 +25,15 @@ public interface IRaffleStock {
      */
     void updateStrategyAwardStock(Long strategyId,Integer awardId);
 
+    /**
+     * 清空队列
+     */
+    void clearQueueValue();
+
+    /**
+     * 清空抽奖奖品库存
+     */
+    void clearStrategyAwardStock(Long strategyId,Integer awardId);
 
 
 }

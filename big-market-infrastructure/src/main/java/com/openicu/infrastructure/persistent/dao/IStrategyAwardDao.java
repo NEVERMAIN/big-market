@@ -44,4 +44,13 @@ public interface IStrategyAwardDao {
      * 此方法用于更新数据库中相应策略奖励的库存数量。
      */
     void updateStrategyAwardStock(StrategyAward strategyAward);
+
+    /**
+     * 清空策略奖励的库存。
+     *
+     * @param strategyAward 包含策略ID和奖励ID的对象。
+     * 此方法用于清空数据库中相应策略奖励的库存数量。
+     */
+    void clearStrategyAwardStock(StrategyAward strategyAward);
+
 }

@@ -1,10 +1,14 @@
 package com.openicu.infrastructure.persistent.repository;
 
 import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
+import com.openicu.domain.activity.event.ActivitySkuStockZeroMessageEvent;
 import com.openicu.domain.activity.model.aggregate.CreateOrderAggregate;
 import com.openicu.domain.activity.model.entity.*;
+import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
+import com.openicu.domain.activity.model.valobj.ActivityStateVO;
 import com.openicu.domain.activity.model.valobj.OrderStateVO;
 import com.openicu.domain.activity.repository.IActivityRepository;
+import com.openicu.infrastructure.event.EventPublisher;
 import com.openicu.infrastructure.persistent.dao.*;
 import com.openicu.infrastructure.persistent.po.*;
 import com.openicu.infrastructure.persistent.redis.IRedisService;
@@ -13,6 +17,8 @@ import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import com.openicu.types.model.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBlockingQueue;
+import org.redisson.api.RDelayedQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -20,6 +26,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description: 活动仓储服务
@@ -53,18 +61,30 @@ public class ActivityRepository implements IActivityRepository {
     @Resource
     private IDBRouterStrategy dbRouter;
 
+    @Resource
+    private EventPublisher eventPublisher;
+
+    @Resource
+    private ActivitySkuStockZeroMessageEvent activitySkuStockZeroMessageEvent;
+
 
 
     @Override
     public ActivitySkuEntity queryActivitySku(Long sku) {
         // 1.从数据库中查询活动库存
         RaffleActivitySku raffleActivitySku = raffleActivitySkuDao.queryActivitySku(sku);
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
+        Long cacheSkuStock = redisService.getAtomicLong(cacheKey);
+        if(null == cacheSkuStock || 0 == cacheSkuStock){
+            cacheSkuStock = 0L;
+        }
+        // 返回活动商品sku信息
         return ActivitySkuEntity.builder()
                 .sku(raffleActivitySku.getSku())
                 .activityId(raffleActivitySku.getActivityId())
                 .activityCountId(raffleActivitySku.getActivityCountId())
                 .stockCount(raffleActivitySku.getStockCount())
-                .stockCountSurplus(raffleActivitySku.getStockCountSurplus())
+                .stockCountSurplus(cacheSkuStock.intValue())
                 .build();
     }
 
@@ -83,7 +103,7 @@ public class ActivityRepository implements IActivityRepository {
                 .strategyId(raffleActivity.getStrategyId())
                 .beginDateTime(raffleActivity.getBeginDateTime())
                 .endDateTime(raffleActivity.getEndDateTime())
-                .state(raffleActivity.getState())
+                .state(ActivityStateVO.valueOf(raffleActivity.getState()))
                 .build();
         // 3. 缓存数据
         redisService.setValue(cacheKey, activityEntity);
@@ -165,6 +185,78 @@ public class ActivityRepository implements IActivityRepository {
         } finally {
             dbRouter.clear();
         }
+    }
+
+    @Override
+    public void cacheActivitySkuStockCount(String cacheKey, Integer stockCount) {
+        // 1.如果已经缓存,则直接返回
+        if(redisService.isExists(cacheKey)) return;
+        // 2.缓存活动商品库存
+        redisService.setAtomicLong(cacheKey,stockCount);
+    }
+
+    @Override
+    public boolean subtractionActivitySkuStock(Long sku, String cacheKey, Date endDateTime) {
+
+        long surplus = redisService.decr(cacheKey);
+        if(surplus == 0){
+            // 库存消耗完以后,发送MQ消息,更新数据库库存。设置商品库存为0
+            eventPublisher.publish(activitySkuStockZeroMessageEvent.topic(),activitySkuStockZeroMessageEvent.buildEventMessage(sku));
+        } else if (surplus < 0)  {
+            // 库存小于 0 , 恢复为 0 个
+            redisService.setAtomicLong(cacheKey,0);
+            return false;
+        }
+
+        // 1.按照 cacheKey decr 后的值,如 99,98,97 和 key 组成的库存锁的 key 进行使用
+        // 2.加锁为了兜底,如果后续有恢复库存,手动处理等【运营是人来操作,会有这种情况发送,系统要做防护】,也不会超卖.因为所有的可用库存key,都被加锁了。
+        // 3.设置加锁时间为活动到期 + 延迟1天
+        String lockKey = cacheKey + Constants.UNDERLINE+ surplus;
+        long expireMills = endDateTime.getTime() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
+        boolean lock = redisService.setNx(lockKey,expireMills,TimeUnit.MILLISECONDS);
+        if(!lock){
+            log.info("活动 sku 库存加锁失败 lockKey:{}",lockKey);
+        }
+        return lock;
+    }
+
+    @Override
+    public void activitySkuStockConsumerSendQueue(ActivitySkuStockKeyVO activitySkuStockKeyVO) {
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY;
+        RBlockingQueue<ActivitySkuStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
+        RDelayedQueue<ActivitySkuStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
+        delayedQueue.offer(activitySkuStockKeyVO,3,TimeUnit.SECONDS);
+    }
+
+    @Override
+    public ActivitySkuStockKeyVO takeQueueValue() {
+
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY;
+        RBlockingQueue<ActivitySkuStockKeyVO> destinationQueue  = redisService.getBlockingQueue(cacheKey);
+        return destinationQueue .poll();
+
+    }
+
+    @Override
+    public void clearQueueValue() {
+
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY;
+        RBlockingQueue<ActivitySkuStockKeyVO> destinationQueue  = redisService.getBlockingQueue(cacheKey);
+        destinationQueue.clear();
+    }
+
+    @Override
+    public void updateActivitySkuStock(Long sku) {
+
+        raffleActivitySkuDao.updateActivitySkuStock(sku);
+
+    }
+
+    @Override
+    public void clearActivitySkuStock(Long sku) {
+
+        raffleActivitySkuDao.clearActivitySkuStock(sku);
+
     }
 
 }

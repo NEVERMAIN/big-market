@@ -19,8 +19,18 @@
 
     <update id="updateStrategyAwardStock" parameterType="com.openicu.infrastructure.persistent.po.StrategyAward">
         update strategy_award
-        set award_count_surplus = award_count_surplus - 1
+        set award_count_surplus = award_count_surplus - 1,
+            update_time = now()
         where strategy_id = #{strategyId} and award_id = #{awardId} and award_count_surplus > 0 ;
+    </update>
+
+    <update id="clearStrategyAwardStock" parameterType="com.openicu.infrastructure.persistent.po.StrategyAward">
+
+        update strategy_award
+            set award_count_surplus = 0,
+                update_time = now()
+        where strategy_id = #{strategyId} and award_id = #{awardId};
+
     </update>
 
     <select id="queryStrategyAwardListByStrategyId" resultMap="dataMap">

@@ -2,6 +2,8 @@ package com.openicu.infrastructure.persistent.redis;
 
 import org.redisson.api.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @description: Redis 服务
  * @author: 云奇迹
@@ -262,5 +264,8 @@ public interface IRedisService {
     <T> RBloomFilter<T> getBloomFilter(String key);
 
     Boolean setNx(String key);
+
+    Boolean setNx(String lockKey, long expireMills, TimeUnit timeUnit);
+
 }
 

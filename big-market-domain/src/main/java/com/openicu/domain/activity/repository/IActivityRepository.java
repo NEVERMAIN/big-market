@@ -4,6 +4,9 @@ import com.openicu.domain.activity.model.aggregate.CreateOrderAggregate;
 import com.openicu.domain.activity.model.entity.ActivityCountEntity;
 import com.openicu.domain.activity.model.entity.ActivityEntity;
 import com.openicu.domain.activity.model.entity.ActivitySkuEntity;
+import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
+
+import java.util.Date;
 
 /**
  * @description: 活动仓储接口
@@ -54,5 +57,51 @@ public interface IActivityRepository {
      * @param createOrderAggregate 待保存的订单聚合体，包含订单相关的所有信息。
      */
     void doSaveOrder(CreateOrderAggregate createOrderAggregate);
+
+    /**
+     * 缓存活动商品库存
+     * @param cacheKey 缓存Key
+     * @param stockCount 商品库存数
+     */
+    void cacheActivitySkuStockCount(String cacheKey, Integer stockCount);
+
+    /**
+     * 扣减商品库存
+     * @param sku 商品SKU
+     * @param cacheKey 缓存中的Key
+     * @param endDateTime 活动截止时间
+     * @return 是否扣减成功
+     */
+    boolean subtractionActivitySkuStock(Long sku, String cacheKey, Date endDateTime);
+
+    /**
+     * 扣减商品库存, 发送消息到阻塞队列
+     * @param activitySkuStockKeyVO 活动商品库存消息
+     */
+    void activitySkuStockConsumerSendQueue(ActivitySkuStockKeyVO activitySkuStockKeyVO);
+
+    /**
+     * 从阻塞队列中获取消息
+     * @return 活动商品库存消息
+     */
+    ActivitySkuStockKeyVO takeQueueValue();
+
+    /**
+     * 清空阻塞队列中的信息
+     */
+    void clearQueueValue();
+
+    /**
+     * 更新活动商品库存
+     * @param sku 商品sku
+     */
+    void updateActivitySkuStock(Long sku);
+
+    /**
+     * 清空 活动商品库存
+     * @param sku 商品SKU
+     */
+    void clearActivitySkuStock(Long sku);
+
 
 }
