@@ -1,7 +1,7 @@
 package com.openicu.domain.activity.service.armory;
 
 /**
- * @description: 装配库存的功能接口
+ * @description: 活动装配预热接口
  * @author: 云奇迹
  * @date: 2024/7/14
  */

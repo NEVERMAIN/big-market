@@ -36,13 +36,15 @@ public class StrategyRuleEntity {
     private String ruleDesc;
 
 
+    private final String RULE_WEIGHT = "rule_weight";
+
     /**
      * 获取权重值
      * 数据案例: 4000:102,103,104,105 5000:102,103,104,105,106,107 6000,102,103,104,105,106,107,108,109
      * @return
      */
     public Map<String, List<Integer>> getRuleWeightValues() {
-        if (!"rule_weight".equals(ruleModel)) {
+        if (!RULE_WEIGHT.equals(ruleModel)) {
             return null;
         }
         String[] ruleValueGroups = ruleValue.split(Constants.SPACE);

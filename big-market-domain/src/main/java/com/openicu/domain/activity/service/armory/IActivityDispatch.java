@@ -3,7 +3,7 @@ package com.openicu.domain.activity.service.armory;
 import java.util.Date;
 
 /**
- * @description:
+ * @description: 活动调度
  * @author: 云奇迹
  * @date: 2024/7/14
  */

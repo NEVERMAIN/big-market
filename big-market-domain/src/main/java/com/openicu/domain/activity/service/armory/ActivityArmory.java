@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 /**
- * @description: 库存状态（缓存预热）
+ * @description: 活动状态装配
  * @author: 云奇迹
  * @date: 2024/7/14
  */
