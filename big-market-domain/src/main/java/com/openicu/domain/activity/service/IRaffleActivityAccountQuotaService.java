@@ -3,7 +3,7 @@ package com.openicu.domain.activity.service;
 import com.openicu.domain.activity.model.entity.SkuRechargeEntity;
 
 /**
- * @description: 下单活动接口
+ * @description: 抽奖额度扣减服务
  * @author: 云奇迹
  * @date: 2024/6/28
  */

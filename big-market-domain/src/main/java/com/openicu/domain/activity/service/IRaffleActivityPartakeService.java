@@ -4,7 +4,7 @@ import com.openicu.domain.activity.model.entity.PartakeRaffleActivityEntity;
 import com.openicu.domain.activity.model.entity.UserRaffleOrderEntity;
 
 /**
- * @description: 参与活动接口
+ * @description: 抽奖活动参与服务
  * @author: 云奇迹
  * @date: 2024/7/16
  */
