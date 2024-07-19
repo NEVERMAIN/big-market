@@ -1,5 +1,8 @@
 package com.openicu.infrastructure.persistent.dao;
 
+import com.myapp.middleware.db.router.annotation.DBRouter;
+import com.myapp.middleware.db.router.annotation.DBRouterStrategy;
+import com.openicu.infrastructure.persistent.po.UserRaffleOrder;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -8,5 +11,21 @@ import org.apache.ibatis.annotations.Mapper;
  * @date: 2024/7/16
  */
 @Mapper
+@DBRouterStrategy(splitTable = true)
 public interface IUserRaffleOrderDao {
+
+    /**
+     * 查询未使用的中奖记录
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @return
+     */
+    @DBRouter(key = "userId")
+    UserRaffleOrder queryNoUsedRaffleOrder(String userId, Long activityId);
+
+    /**
+     * 创建用户抽奖订单
+     * @param userRaffleOrder 用户抽奖订单持久化对象
+     */
+    void insert(UserRaffleOrder userRaffleOrder);
 }

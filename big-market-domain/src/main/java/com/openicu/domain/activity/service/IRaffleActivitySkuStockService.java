@@ -7,7 +7,7 @@ import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
  * @author: 云奇迹
  * @date: 2024/7/14
  */
-public interface ISkuStock {
+public interface IRaffleActivitySkuStockService {
 
     /**
      * 获取活动sku库存消耗队列

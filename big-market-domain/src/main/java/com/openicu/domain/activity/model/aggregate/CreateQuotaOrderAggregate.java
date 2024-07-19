@@ -1,6 +1,5 @@
 package com.openicu.domain.activity.model.aggregate;
 
-import com.openicu.domain.activity.model.entity.ActivityAccountEntity;
 import com.openicu.domain.activity.model.entity.ActivityOrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateOrderAggregate {
+public class CreateQuotaOrderAggregate {
 
     /** 用户ID */
     private String userId;

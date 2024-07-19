@@ -1,4 +1,4 @@
-package com.openicu.domain.activity.service.rule;
+package com.openicu.domain.activity.service.quota.rule;
 
 /**
  * @description: 责任链接口

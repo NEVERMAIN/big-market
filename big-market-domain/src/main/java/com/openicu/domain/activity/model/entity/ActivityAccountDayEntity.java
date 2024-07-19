@@ -1,40 +1,29 @@
-package com.openicu.infrastructure.persistent.po;
+package com.openicu.domain.activity.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
- * @description: 抽奖活动账户表-日次数
+ * @description: 活动账户日额度 实体对象
  * @author: 云奇迹
- * @date: 2024/7/16
+ * @date: 2024/7/17
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleActivityAccountDay {
+public class ActivityAccountDayEntity {
 
-
-    /** 自增ID */
-    private Long id;
     /** 用户ID */
     private String userId;
     /** 活动ID */
     private Long activityId;
-    /** 日期 (yyyy-mm-dd) */
+    /** 日期(yyyy-mm-dd) */
     private String day;
     /** 日次数 */
     private Integer dayCount;
     /** 日次数-剩余 */
     private Integer dayCountSurplus;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
-
-
 }

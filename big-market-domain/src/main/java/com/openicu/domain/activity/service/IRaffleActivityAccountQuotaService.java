@@ -1,8 +1,5 @@
 package com.openicu.domain.activity.service;
 
-import com.openicu.domain.activity.model.aggregate.CreateOrderAggregate;
-import com.openicu.domain.activity.model.entity.ActivityOrderEntity;
-import com.openicu.domain.activity.model.entity.ActivityShopCartEntity;
 import com.openicu.domain.activity.model.entity.SkuRechargeEntity;
 
 /**
@@ -10,7 +7,7 @@ import com.openicu.domain.activity.model.entity.SkuRechargeEntity;
  * @author: 云奇迹
  * @date: 2024/6/28
  */
-public interface IRaffleOrder {
+public interface IRaffleActivityAccountQuotaService {
 
     /**
      * 创建 sku 账户充值订单,给用户增加抽奖次数
@@ -21,7 +18,7 @@ public interface IRaffleOrder {
      * @param skuRechargeEntity  活动商品充值实体对象
      * @return 订单ID
      */
-    String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity);
+    String createOrder(SkuRechargeEntity skuRechargeEntity);
 
 
 }

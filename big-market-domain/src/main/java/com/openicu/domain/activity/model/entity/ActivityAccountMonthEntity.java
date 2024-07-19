@@ -1,39 +1,30 @@
-package com.openicu.infrastructure.persistent.po;
+package com.openicu.domain.activity.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
- * @description: 抽奖活动账户表-月次数
+ * @description: 活动账户月额度 实体对象
  * @author: 云奇迹
- * @date: 2024/7/16
+ * @date: 2024/7/17
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleActivityAccountMonth {
+public class ActivityAccountMonthEntity {
 
-    /** 自增ID */
-    private Long id;
     /** 用户ID */
     private String userId;
     /** 活动ID */
     private Long activityId;
-    /** 月（yyyy-mm） */
+    /** 月(yyyy-mm) */
     private String month;
     /** 月次数 */
     private Integer monthCount;
     /** 月次数-剩余 */
     private Integer monthCountSurplus;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
-
 
 }

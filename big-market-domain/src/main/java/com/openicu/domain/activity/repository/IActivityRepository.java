@@ -1,9 +1,8 @@
 package com.openicu.domain.activity.repository;
 
-import com.openicu.domain.activity.model.aggregate.CreateOrderAggregate;
-import com.openicu.domain.activity.model.entity.ActivityCountEntity;
-import com.openicu.domain.activity.model.entity.ActivityEntity;
-import com.openicu.domain.activity.model.entity.ActivitySkuEntity;
+import com.openicu.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
+import com.openicu.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
+import com.openicu.domain.activity.model.entity.*;
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
 import java.util.Date;
@@ -56,7 +55,7 @@ public interface IActivityRepository {
      *
      * @param createOrderAggregate 待保存的订单聚合体，包含订单相关的所有信息。
      */
-    void doSaveOrder(CreateOrderAggregate createOrderAggregate);
+    void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate);
 
     /**
      * 缓存活动商品库存
@@ -103,5 +102,43 @@ public interface IActivityRepository {
      */
     void clearActivitySkuStock(Long sku);
 
+    /**
+     * 查询还没有被消费的订单
+     * @param partakeRaffleActivityEntity 参与抽奖活动实体
+     * @return UserRaffleOrderEntity 用户抽奖订单实体
+     */
+    UserRaffleOrderEntity queryNoUsedRaffleOrder(PartakeRaffleActivityEntity partakeRaffleActivityEntity);
+
+    /**
+     * 查询用户抽奖账户总余额
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @return ActivityAccountEntity 用户抽奖总账户实体
+     */
+    ActivityAccountEntity queryActivityAccountByUserId(String userId, Long activityId);
+
+    /**
+     * 查询用户抽奖账户月余额
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @param month 月份
+     * @return ActivityAccountMonthEntity 用户抽奖月账户实体
+     */
+    ActivityAccountMonthEntity queryActivityAccountMonthByUserId(String userId, Long activityId, String month);
+
+    /**
+     * 查询用户抽奖账户日余额
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @param day 天数
+     * @return ActivityAccountDayEntity 用户抽奖日账户实体
+     */
+    ActivityAccountDayEntity queryActivityAccountDayByUserId(String userId, Long activityId, String day);
+
+    /**
+     * 在一个事务内保存聚合对象
+     * @param createPartakeOrderAggregate 领域聚合对象
+     */
+    void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
 
 }

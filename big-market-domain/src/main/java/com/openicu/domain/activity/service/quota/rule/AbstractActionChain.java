@@ -1,4 +1,4 @@
-package com.openicu.domain.activity.service.rule;
+package com.openicu.domain.activity.service.quota.rule;
 
 /**
  * @description: 下单规则责任链抽象类

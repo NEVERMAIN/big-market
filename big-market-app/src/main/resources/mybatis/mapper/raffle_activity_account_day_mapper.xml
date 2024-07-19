@@ -14,4 +14,30 @@
     </resultMap>
 
 
+    <insert id="insertActivityAccountDay" parameterType="com.openicu.infrastructure.persistent.po.RaffleActivityAccountDay">
+        INSERT INTO raffle_activity_account_day
+        (user_id, activity_id, day, day_count, day_count_surplus, create_time, update_time)
+        values (#{userId}, #{activityId}, #{day}, #{dayCount}, #{dayCountSurplus}, now(), now())
+    </insert>
+
+
+    <update id="updateActivityAccountMonthSubtractionQuota"
+            parameterType="com.openicu.infrastructure.persistent.po.RaffleActivityAccountDay">
+        update raffle_activity_account_day
+        set day_count_surplus = day_count_surplus - 1
+        where user_id = #{userId}
+                  AND activity_id = #{activityId}
+                  AND day = #{day}
+    </update>
+
+    <select id="queryActivityAccountDayByUserId" parameterType="com.openicu.infrastructure.persistent.po.RaffleActivityAccountDay"
+            resultMap="dataMap">
+        select user_id,activity_id, day, day_count, day_count_surplus
+        from raffle_activity_account_day
+        where user_id = #{userId}
+          AND activity_id = #{activityId}
+          AND day = #{day}
+    </select>
+
+
 </mapper>

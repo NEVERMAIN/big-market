@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 16/07/2024 15:02:31
+ Date: 19/07/2024 15:32:41
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `raffle_activity_account`  (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id`(`user_id`, `activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of raffle_activity_account
@@ -47,9 +47,9 @@ CREATE TABLE `raffle_activity_account`  (
 DROP TABLE IF EXISTS `raffle_activity_account_day`;
 CREATE TABLE `raffle_activity_account_day`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `user_id` varchar(32) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '用户ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
   `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
-  `day` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '日期 (yyyy-mm-dd)',
+  `day` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '日期 (yyyy-mm-dd)',
   `day_count` int(8) NOT NULL COMMENT '日次数',
   `day_count_surplus` int(8) NOT NULL COMMENT '日次数-剩余',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -68,9 +68,9 @@ CREATE TABLE `raffle_activity_account_day`  (
 DROP TABLE IF EXISTS `raffle_activity_account_month`;
 CREATE TABLE `raffle_activity_account_month`  (
   `id` int(11) NOT NULL COMMENT '自增ID',
-  `user_id` varchar(32) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '用户ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
   `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
-  `month` varchar(7) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '月（yyyy-mm）',
+  `month` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '月（yyyy-mm）',
   `month_count` int(8) NOT NULL COMMENT '月次数',
   `month_count_surplus` int(8) NOT NULL COMMENT '月次数-剩余',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -167,7 +167,7 @@ CREATE TABLE `raffle_activity_order_002`  (
   UNIQUE INDEX `uq_order_id`(`order_id`) USING BTREE,
   UNIQUE INDEX `uq_out_business_no`(`out_business_no`) USING BTREE,
   INDEX `idx_user_id_activity_id`(`user_id`, `activity_id`, `state`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 79 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动单' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of raffle_activity_order_002
@@ -334,7 +334,7 @@ CREATE TABLE `user_award_record_003`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `user_raffle_order_000`;
 CREATE TABLE `user_raffle_order_000`  (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
   `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
   `activity_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '活动名称',

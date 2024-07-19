@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 16/07/2024 15:02:42
+ Date: 19/07/2024 15:32:49
 */
 
 SET NAMES utf8mb4;
@@ -35,53 +35,56 @@ CREATE TABLE `raffle_activity_account`  (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id`(`user_id`, `activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_account
 -- ----------------------------
+INSERT INTO `raffle_activity_account` VALUES (2, '咸鱼12138', 100301, 20, 19, 10, 1, 2, 1, '2024-07-19 15:22:53', '2024-07-19 15:24:01');
 
 -- ----------------------------
 -- Table structure for raffle_activity_account_day
 -- ----------------------------
 DROP TABLE IF EXISTS `raffle_activity_account_day`;
 CREATE TABLE `raffle_activity_account_day`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-  `user_id` varchar(32) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '用户ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
   `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
-  `day` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '日期 (yyyy-mm-dd)',
+  `day` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '日期 (yyyy-mm-dd)',
   `day_count` int(8) NOT NULL COMMENT '日次数',
   `day_count_surplus` int(8) NOT NULL COMMENT '日次数-剩余',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id_day`(`user_id`, `activity_id`, `day`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-日次数\r\n' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-日次数\r\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_account_day
 -- ----------------------------
+INSERT INTO `raffle_activity_account_day` VALUES (2, '咸鱼12138', 100301, '2024-07-19', 10, 9, '2024-07-19 15:24:01', '2024-07-19 15:24:01');
 
 -- ----------------------------
 -- Table structure for raffle_activity_account_month
 -- ----------------------------
 DROP TABLE IF EXISTS `raffle_activity_account_month`;
 CREATE TABLE `raffle_activity_account_month`  (
-  `id` int(11) NOT NULL COMMENT '自增ID',
-  `user_id` varchar(32) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '用户ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `user_id` varchar(32) CHARACTER SET utf16 COLLATE utf16_general_ci NOT NULL COMMENT '用户ID',
   `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
-  `month` varchar(7) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '月（yyyy-mm）',
+  `month` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '月（yyyy-mm）',
   `month_count` int(8) NOT NULL COMMENT '月次数',
   `month_count_surplus` int(8) NOT NULL COMMENT '月次数-剩余',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id_month`(`user_id`, `activity_id`, `month`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '抽奖活动账户表-月次数' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-月次数' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_account_month
 -- ----------------------------
+INSERT INTO `raffle_activity_account_month` VALUES (4, '咸鱼12138', 100301, '2024-07', 2, 1, '2024-07-19 15:24:01', '2024-07-19 15:24:01');
 
 -- ----------------------------
 -- Table structure for raffle_activity_order_000
@@ -167,11 +170,12 @@ CREATE TABLE `raffle_activity_order_002`  (
   UNIQUE INDEX `uq_order_id`(`order_id`) USING BTREE,
   UNIQUE INDEX `uq_out_business_no`(`out_business_no`) USING BTREE,
   INDEX `idx_user_id_activity_id`(`user_id`, `activity_id`, `state`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 79 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_order_002
 -- ----------------------------
+INSERT INTO `raffle_activity_order_002` VALUES (2, '咸鱼12138', 9011, 100301, '测试活动', 100006, '650677489456', '2024-07-19 07:22:54', 20, 10, 2, 'completed', '700091009111', '2024-07-19 15:22:53', '2024-07-19 15:22:53');
 
 -- ----------------------------
 -- Table structure for raffle_activity_order_003
@@ -395,11 +399,12 @@ CREATE TABLE `user_raffle_order_002`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_order_id`(`order_id`) USING BTREE,
   INDEX `idx_user_id_activity_id`(`user_id`, `activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抽奖订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抽奖订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_raffle_order_002
 -- ----------------------------
+INSERT INTO `user_raffle_order_002` VALUES (2, '咸鱼12138', 100301, '测试活动', 100006, '293007471819', '2024-07-19 07:24:01', 'create', '2024-07-19 15:24:01', '2024-07-19 15:24:01');
 
 -- ----------------------------
 -- Table structure for user_raffle_order_003

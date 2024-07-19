@@ -1,4 +1,4 @@
-package com.openicu.domain.activity.service.rule;
+package com.openicu.domain.activity.service.quota.rule;
 
 import com.openicu.domain.activity.model.entity.ActivityCountEntity;
 import com.openicu.domain.activity.model.entity.ActivityEntity;

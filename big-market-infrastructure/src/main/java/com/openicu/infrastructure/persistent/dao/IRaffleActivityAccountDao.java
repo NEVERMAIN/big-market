@@ -2,6 +2,7 @@ package com.openicu.infrastructure.persistent.dao;
 
 import com.myapp.middleware.db.router.annotation.DBRouter;
 import com.openicu.infrastructure.persistent.po.RaffleActivityAccount;
+import com.openicu.infrastructure.persistent.po.RaffleActivityCount;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -25,4 +26,30 @@ public interface IRaffleActivityAccountDao {
      */
     int updateAccountQuota(RaffleActivityAccount raffleActivityAccount);
 
+    /**
+     * 根据用户ID和活动ID查询用户活动总账户
+     * @param raffleActivityAccount 活动账户实体化对象
+     * @return 用户活动总账户
+     */
+    @DBRouter(key = "userId")
+    RaffleActivityAccount queryActivityAccountByUserId(RaffleActivityAccount raffleActivityAccount);
+
+    /**
+     * 更新用户活动总账户,扣减余额
+     * @param raffleActivityAccount
+     * @return
+     */
+    int updateActivityAccountSubtractionQuota(RaffleActivityAccount raffleActivityAccount);
+
+    /**
+     * 更新用户活动总账户中的月次数的镜像余额
+     * @param raffleActivityAccount
+     */
+    void updateActivityAccountMonthSurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
+
+    /**
+     * 更新用户活动总账户中的日次数的镜像余额
+     * @param raffleActivityAccount
+     */
+    void updateActivityAccountDaySurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
 }

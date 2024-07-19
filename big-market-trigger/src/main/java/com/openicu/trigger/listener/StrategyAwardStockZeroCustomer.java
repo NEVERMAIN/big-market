@@ -2,7 +2,6 @@ package com.openicu.trigger.listener;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.openicu.domain.activity.service.ISkuStock;
 import com.openicu.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.openicu.domain.strategy.service.IRaffleStock;
 import com.openicu.types.event.BaseEvent;

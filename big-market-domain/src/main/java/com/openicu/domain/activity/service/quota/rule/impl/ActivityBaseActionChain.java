@@ -1,10 +1,10 @@
-package com.openicu.domain.activity.service.rule.impl;
+package com.openicu.domain.activity.service.quota.rule.impl;
 
 import com.openicu.domain.activity.model.entity.ActivityCountEntity;
 import com.openicu.domain.activity.model.entity.ActivityEntity;
 import com.openicu.domain.activity.model.entity.ActivitySkuEntity;
 import com.openicu.domain.activity.model.valobj.ActivityStateVO;
-import com.openicu.domain.activity.service.rule.AbstractActionChain;
+import com.openicu.domain.activity.service.quota.rule.AbstractActionChain;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
