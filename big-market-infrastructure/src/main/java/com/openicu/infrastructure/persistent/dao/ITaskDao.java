@@ -1,6 +1,9 @@
 package com.openicu.infrastructure.persistent.dao;
 
+import com.openicu.infrastructure.persistent.po.Task;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @description: 任务表DAO
@@ -9,4 +12,30 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ITaskDao {
+
+    /**
+     * 创建 任务消息记录
+     * @param task
+     */
+    void insert(Task task);
+
+    /**
+     * 更新任务消息为完成状态
+     * @param task
+     */
+    void updateTaskMessageCompleted(Task task);
+
+    /**
+     * 更新任务状态为失败总状态
+     * @param task
+     */
+    void updateTaskSendMessageFail(Task task);
+
+    /**
+     * 查询发送状态为失败的任务任务列表
+     * @return
+     */
+    List<Task> queryNoSendMessageTaskList();
+
+
 }

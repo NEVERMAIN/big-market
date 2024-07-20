@@ -4,12 +4,37 @@
 
     <resultMap id="dataMap" type="com.openicu.infrastructure.persistent.po.Task">
         <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
         <result column="topic" property="topic"/>
+        <result column="message_id" property="messageId"/>
         <result column="message" property="message"/>
         <result column="state" property="state"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+
+
+    <insert id="insert" parameterType="com.openicu.infrastructure.persistent.po.Task">
+        insert into task
+        (user_id,topic,message_id,message,state)
+        values (#{userId},#{topic},#{messageId},#{message},#{state})
+    </insert>
+
+    <update id="updateTaskMessageCompleted" parameterType="com.openicu.infrastructure.persistent.po.Task">
+        update task
+        set state       = 'completed' ,
+            update_time = now()
+        where user_id = #{userId}
+          AND message_id = #{messageId}
+    </update>
+
+    <update id="updateTaskSendMessageFail" parameterType="com.openicu.infrastructure.persistent.po.Task">
+        update task
+        set state       = 'fail' ,
+            update_time = now()
+        where user_id = #{userId}
+          AND message_id = #{messageId}
+    </update>
 
 
 </mapper>

@@ -1,38 +1,32 @@
-package com.openicu.infrastructure.persistent.po;
+package com.openicu.domain.award.model.entity;
 
+import com.openicu.domain.award.model.valobj.TaskStateVO;
+import com.openicu.types.event.BaseEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
- * @description: 任务表
+ * @description:
  * @author: 云奇迹
- * @date: 2024/7/16
+ * @date: 2024/7/19
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class TaskEntity {
 
-    /** 自增ID */
-    private Long id;
-    /** 用户ID */
+    /** 活动ID */
     private String userId;
     /** 消息主题 */
     private String topic;
     /** 消息编号 */
     private String messageId;
     /** 消息主体 */
-    private String message;
+    private BaseEvent.EventMessage<?> message;
     /** 任务状态: create-创建、completed-完成、fail-失败 */
-    private String state;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
+    private TaskStateVO state;
 
 }

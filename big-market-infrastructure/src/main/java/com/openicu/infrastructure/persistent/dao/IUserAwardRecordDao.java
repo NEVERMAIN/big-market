@@ -1,5 +1,6 @@
 package com.openicu.infrastructure.persistent.dao;
 
+import com.openicu.infrastructure.persistent.po.UserAwardRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,4 +10,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IUserAwardRecordDao {
+
+    /**
+     * 创建用户抽奖奖品记录
+     * @param userAwardRecord
+     */
+    void insert(UserAwardRecord userAwardRecord);
 }

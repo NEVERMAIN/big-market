@@ -1,0 +1,24 @@
+package com.openicu.domain.award.model.valobj;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+/**
+ * @description:
+ * @author: 云奇迹
+ * @date: 2024/7/19
+ */
+@Getter
+@AllArgsConstructor
+public enum TaskStateVO {
+
+    create("create", "创建"),
+    completed("completed", "创建"),
+    fail("fail", "创建"),
+
+    ;
+
+    private final String code;
+    private final String info;
+
+}

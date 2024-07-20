@@ -1,5 +1,6 @@
-package com.openicu.infrastructure.persistent.po;
+package com.openicu.domain.award.model.entity;
 
+import com.openicu.domain.award.model.valobj.AwardStateVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,19 +9,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @description: 用户中奖记录表
+ * @description: 用户奖品记录实体对象
  * @author: 云奇迹
- * @date: 2024/7/16
+ * @date: 2024/7/19
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAwardRecord {
+public class UserAwardRecordEntity {
 
-
-    /** 自增ID */
-    private Long id;
     /** 用户ID */
     private String userId;
     /** 活动ID */
@@ -36,11 +34,5 @@ public class UserAwardRecord {
     /** 中奖时间 */
     private Date awardTime;
     /** 奖品状态；create-创建、completed-发奖完成 */
-    private String awardState;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
-
-
+    private AwardStateVO awardState;
 }
