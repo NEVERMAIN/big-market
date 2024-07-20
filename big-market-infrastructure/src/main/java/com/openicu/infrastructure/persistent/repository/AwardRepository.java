@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @description: 奖品仓储服务
@@ -42,6 +43,10 @@ public class AwardRepository implements IAwardRepository {
 
     @Resource
     private EventPublisher eventPublisher;
+
+    @Resource
+    private ThreadPoolExecutor threadPoolExecutor;
+
 
     @Override
     public void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate) {
@@ -94,16 +99,21 @@ public class AwardRepository implements IAwardRepository {
             dbRouter.clear();
         }
 
-        // 发送 MQ 消息,通知发货。
-        try{
-            // 1.发送消息【在事务外执行,如果失败还有任务补偿】
-            eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
-            // 2. 更新数据库记录, task 任务表
-            taskDao.updateTaskMessageCompleted(task);
-        }catch (Exception e){
-            log.error("写入中奖记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic());
-            taskDao.updateTaskSendMessageFail(task);
-        }
+        // 异步执行发送 MQ
+        threadPoolExecutor.execute(()->{
+            // 发送 MQ 消息,通知发货。
+            try{
+                // 1.发送消息【在事务外执行,如果失败还有任务补偿】
+                eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
+                // 2. 更新数据库记录, task 任务表
+                taskDao.updateTaskMessageCompleted(task);
+            }catch (Exception e){
+                log.error("写入中奖记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic());
+                taskDao.updateTaskSendMessageFail(task);
+            }
+        });
+
+
 
     }
 }
