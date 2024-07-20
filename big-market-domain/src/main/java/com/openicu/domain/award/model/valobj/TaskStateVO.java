@@ -13,8 +13,9 @@ import lombok.Getter;
 public enum TaskStateVO {
 
     create("create", "创建"),
-    completed("completed", "创建"),
-    fail("fail", "创建"),
+    complete("complete", "发送完成"),
+    fail("fail", "发送失败"),
+
 
     ;
 

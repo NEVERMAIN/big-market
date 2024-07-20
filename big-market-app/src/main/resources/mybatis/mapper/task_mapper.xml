@@ -16,13 +16,13 @@
 
     <insert id="insert" parameterType="com.openicu.infrastructure.persistent.po.Task">
         insert into task
-        (user_id,topic,message_id,message,state)
-        values (#{userId},#{topic},#{messageId},#{message},#{state})
+        (user_id,topic,message_id,message,state,create_time,update_time)
+        values (#{userId},#{topic},#{messageId},#{message},#{state},now(),now())
     </insert>
 
     <update id="updateTaskMessageCompleted" parameterType="com.openicu.infrastructure.persistent.po.Task">
         update task
-        set state       = 'completed' ,
+        set state       = 'complete' ,
             update_time = now()
         where user_id = #{userId}
           AND message_id = #{messageId}
@@ -35,6 +35,13 @@
         where user_id = #{userId}
           AND message_id = #{messageId}
     </update>
+
+    <select id="queryNoSendMessageTaskList"  resultMap="dataMap">
+        select user_id,topic,message_id,message
+        from task
+        where state = 'fail' or (state = 'create' and now() - update_time > 6)
+        limit 10
+    </select>
 
 
 </mapper>

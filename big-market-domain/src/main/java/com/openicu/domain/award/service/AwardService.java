@@ -2,7 +2,7 @@ package com.openicu.domain.award.service;
 
 import com.openicu.domain.award.event.SendAwardMessageEvent;
 import com.openicu.domain.award.model.aggregate.UserAwardRecordAggregate;
-import com.openicu.domain.task.model.entity.TaskEntity;
+import com.openicu.domain.award.model.entity.TaskEntity;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;
 import com.openicu.domain.award.model.valobj.TaskStateVO;
 import com.openicu.domain.award.reposiotry.IAwardRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @description:
+ * @description: 奖品服务实现
  * @author: 云奇迹
  * @date: 2024/7/19
  */

@@ -11,7 +11,7 @@ public interface IAwardRepository {
 
     /**
      * 保存用户抽奖奖品记录
-     * @param userAwardRecordAggregate
+     * @param userAwardRecordAggregate 用户抽奖奖品聚合对象
      */
     void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate);
 

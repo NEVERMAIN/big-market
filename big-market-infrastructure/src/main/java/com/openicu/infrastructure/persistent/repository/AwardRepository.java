@@ -59,6 +59,7 @@ public class AwardRepository implements IAwardRepository {
                 .activityId(userAwardRecordEntity.getActivityId())
                 .orderId(userAwardRecordEntity.getOrderId())
                 .awardId(userAwardRecordEntity.getAwardId())
+                .awardTitle(userAwardRecordEntity.getAwardTitle())
                 .awardTime(userAwardRecordEntity.getAwardTime())
                 .awardState(userAwardRecordEntity.getAwardState().getCode())
                 .build();
@@ -93,7 +94,7 @@ public class AwardRepository implements IAwardRepository {
             dbRouter.clear();
         }
 
-        // 发送 MQ 消息
+        // 发送 MQ 消息,通知发货。
         try{
             // 1.发送消息【在事务外执行,如果失败还有任务补偿】
             eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());

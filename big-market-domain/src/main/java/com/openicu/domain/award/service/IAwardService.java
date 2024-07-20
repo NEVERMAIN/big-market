@@ -3,7 +3,7 @@ package com.openicu.domain.award.service;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;
 
 /**
- * @description: 奖品服务
+ * @description: 奖品服务接口
  * @author: 云奇迹
  * @date: 2024/7/19
  */
