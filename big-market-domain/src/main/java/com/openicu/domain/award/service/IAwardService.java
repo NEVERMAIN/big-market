@@ -15,5 +15,4 @@ public interface IAwardService {
      */
     void saveUserAwardRecord(UserAwardRecordEntity userAwardRecordEntity);
 
-
 }

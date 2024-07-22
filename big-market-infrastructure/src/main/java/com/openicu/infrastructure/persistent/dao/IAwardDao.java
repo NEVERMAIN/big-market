@@ -13,5 +13,10 @@ import java.util.List;
 @Mapper
 public interface IAwardDao {
 
-
+    /**
+     * 查询奖品详细信息
+     * @param awardId
+     * @return
+     */
+    Award queryAwardByAwardId(Integer awardId);
 }

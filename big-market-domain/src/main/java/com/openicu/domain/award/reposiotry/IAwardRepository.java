@@ -1,6 +1,7 @@
 package com.openicu.domain.award.reposiotry;
 
 import com.openicu.domain.award.model.aggregate.UserAwardRecordAggregate;
+import com.openicu.domain.award.model.entity.AwardEntity;
 
 /**
  * @description: 奖品仓储服务接口
@@ -15,4 +16,16 @@ public interface IAwardRepository {
      */
     void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate);
 
+    /**
+     * 更新用户抽奖奖品记录为发奖成功
+     * @param
+     */
+    void updateUserAwardRecordCompleted(String orderId,String userId);
+
+    /**
+     * 查询奖品详细信息
+     * @param awardId
+     * @return
+     */
+    AwardEntity queryAwardByAwardId(Integer awardId);
 }

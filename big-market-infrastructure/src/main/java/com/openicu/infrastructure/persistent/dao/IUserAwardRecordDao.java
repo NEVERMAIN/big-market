@@ -19,4 +19,13 @@ public interface IUserAwardRecordDao {
      * @param userAwardRecord
      */
     void insert(UserAwardRecord userAwardRecord);
+
+    /**
+     * 更新用户抽奖奖品记录 - 发奖成功
+     * @param userAwardRecord
+     */
+    @DBRouter(key = "userId")
+    void updateUserAwardRecordCompleted(UserAwardRecord userAwardRecord);
+
+
 }

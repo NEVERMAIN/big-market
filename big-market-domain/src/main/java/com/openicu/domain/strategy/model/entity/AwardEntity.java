@@ -6,4 +6,6 @@ package com.openicu.domain.strategy.model.entity;
  * @date: 2024/6/16
  */
 public class AwardEntity {
+
+
 }
