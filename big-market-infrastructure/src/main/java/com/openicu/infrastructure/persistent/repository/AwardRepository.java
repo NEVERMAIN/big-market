@@ -9,8 +9,10 @@ import com.openicu.domain.award.model.entity.TaskEntity;
 import com.openicu.infrastructure.event.EventPublisher;
 import com.openicu.infrastructure.persistent.dao.ITaskDao;
 import com.openicu.infrastructure.persistent.dao.IUserAwardRecordDao;
+import com.openicu.infrastructure.persistent.dao.IUserRaffleOrderDao;
 import com.openicu.infrastructure.persistent.po.Task;
 import com.openicu.infrastructure.persistent.po.UserAwardRecord;
+import com.openicu.infrastructure.persistent.po.UserRaffleOrder;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,10 @@ public class AwardRepository implements IAwardRepository {
 
     @Resource
     private IUserAwardRecordDao userAwardRecordDao;
+
+    @Resource
+    private IUserRaffleOrderDao userRaffleOrderDao;
+
 
     @Resource
     private ITaskDao taskDao;
@@ -78,6 +84,11 @@ public class AwardRepository implements IAwardRepository {
                 .state(taskEntity.getState().getCode())
                 .build();
 
+        // 3.用户抽奖订单
+        UserRaffleOrder userRaffleOrderReq = new UserRaffleOrder();
+        userRaffleOrderReq.setUserId(userAwardRecordEntity.getUserId());
+        userRaffleOrderReq.setOrderId(userAwardRecordEntity.getOrderId());
+
         try{
             dbRouter.doRouter(userId);
             transactionTemplate.execute(status -> {
@@ -87,6 +98,14 @@ public class AwardRepository implements IAwardRepository {
                    userAwardRecordDao.insert(userAwardRecord);
                    // 2.写入任务
                    taskDao.insert(task);
+                   // 3. 更新数据库记录
+                   Integer count = userRaffleOrderDao.updateUserRaffleOrderStateUsed(userRaffleOrderReq);
+                   if(1 != count){
+                       status.setRollbackOnly();
+                       log.error("写入中奖记录，用户抽奖单已使用过，不可重复抽奖 userId: {} activityId: {} awardId: {}", userId, activityId, awardId);
+                       throw new AppException(ResponseCode.ACTIVITY_ORDER_ERROR.getCode(), ResponseCode.ACTIVITY_ORDER_ERROR.getInfo());
+                   }
+
                    return 1;
                }catch (DuplicateKeyException e){
                    status.setRollbackOnly();
@@ -112,7 +131,6 @@ public class AwardRepository implements IAwardRepository {
                 taskDao.updateTaskSendMessageFail(task);
             }
         });
-
 
 
     }

@@ -53,4 +53,10 @@ public interface IStrategyAwardDao {
      */
     void clearStrategyAwardStock(StrategyAward strategyAward);
 
+    /**
+     * 查询策略奖品
+     * @param strategyAwardReq
+     * @return
+     */
+    StrategyAward queryStrategyAward(StrategyAward strategyAwardReq);
 }

@@ -8,10 +8,15 @@ package com.openicu.domain.activity.service.armory;
 public interface IActivityArmory {
 
     /**
-     * 装撇活动库存
+     * 装配活动库存
      * @param sku 商品sku
      * @return 是否装配成功
      */
     boolean assembleActivitySku(Long sku);
 
+    /**
+     * 装配活动库存
+     * @param activityId 活动ID
+     */
+    boolean assembleActivitySkuByActivityId(Long activityId);
 }

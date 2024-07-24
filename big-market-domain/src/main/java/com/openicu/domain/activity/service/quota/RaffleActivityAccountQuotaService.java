@@ -69,6 +69,11 @@ public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAcc
     }
 
     @Override
+    public void clearQueueValue(String sku) {
+        activityRepository.clearQueueValue(sku);
+    }
+
+    @Override
     public void updateActivitySkuStock(Long sku) {
         activityRepository.updateActivitySkuStock(sku);
     }

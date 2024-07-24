@@ -20,5 +20,4 @@ public interface IRaffleActivityAccountQuotaService {
      */
     String createOrder(SkuRechargeEntity skuRechargeEntity);
 
-
 }

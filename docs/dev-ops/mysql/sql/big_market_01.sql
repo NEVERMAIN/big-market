@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 19/07/2024 15:32:41
+ Date: 24/07/2024 18:40:42
 */
 
 SET NAMES utf8mb4;
@@ -208,14 +208,16 @@ CREATE TABLE `raffle_activity_order_003`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task`  (
-  `id` int(11) NOT NULL COMMENT '自增ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户ID',
   `topic` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息主题',
+  `message_id` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息编号',
   `message` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息主体',
-  `state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'create' COMMENT '任务状态: create-创建、completed-完成、fail-失败',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'create' COMMENT '任务状态: create-创建、complete-完成、fail-失败',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of task

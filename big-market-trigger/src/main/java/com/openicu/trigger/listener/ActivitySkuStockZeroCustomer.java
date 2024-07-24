@@ -40,6 +40,7 @@ public class ActivitySkuStockZeroCustomer {
             // 2.更新数据库商品库存
             skuStock.clearActivitySkuStock(sku);
             // 3.清空延迟队列【此时就不需要延迟更新数据库记录】
+            // //todo 清空时，需要设定sku标识，不能全部清空。
             skuStock.clearQueueValue();
 
         }catch (Exception e){

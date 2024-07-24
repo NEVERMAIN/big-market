@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 19/07/2024 15:32:31
+ Date: 24/07/2024 18:40:33
 */
 
 SET NAMES utf8mb4;
@@ -64,7 +64,8 @@ CREATE TABLE `raffle_activity`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_activity_id`(`activity_id`) USING BTREE,
   INDEX `idx_begin_date_time`(`begin_date_time`) USING BTREE,
-  INDEX `idx_end_date_time`(`end_date_time`) USING BTREE
+  INDEX `idx_end_date_time`(`end_date_time`) USING BTREE,
+  UNIQUE INDEX `uq_strategy_id`(`strategy_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -91,7 +92,7 @@ CREATE TABLE `raffle_activity_count`  (
 -- ----------------------------
 -- Records of raffle_activity_count
 -- ----------------------------
-INSERT INTO `raffle_activity_count` VALUES (1, 11101, 20, 10, 2, '2024-03-09 10:15:42', '2024-07-19 15:10:54');
+INSERT INTO `raffle_activity_count` VALUES (1, 11101, 20, 20, 20, '2024-03-09 10:15:42', '2024-07-20 09:16:35');
 
 -- ----------------------------
 -- Table structure for raffle_activity_sku
@@ -114,7 +115,7 @@ CREATE TABLE `raffle_activity_sku`  (
 -- ----------------------------
 -- Records of raffle_activity_sku
 -- ----------------------------
-INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 20, 20, '2024-03-16 11:41:09', '2024-07-19 15:10:28');
+INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 20, 20, '2024-03-16 11:41:09', '2024-07-20 09:32:23');
 
 -- ----------------------------
 -- Table structure for rule_tree

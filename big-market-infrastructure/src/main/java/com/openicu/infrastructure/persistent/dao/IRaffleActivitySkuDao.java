@@ -3,6 +3,8 @@ package com.openicu.infrastructure.persistent.dao;
 import com.openicu.infrastructure.persistent.po.RaffleActivitySku;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @description: 活动SKU表 DAO
  * @author: 云奇迹
@@ -29,4 +31,11 @@ public interface IRaffleActivitySkuDao {
      * @param sku 商品sku
      */
     void clearActivitySkuStock(Long sku);
+
+    /**
+     * 通过活动ID查询活动SKU列表
+     * @param activityId 活动ID
+     * @return
+     */
+    List<RaffleActivitySku> queryActivitySkuListByActivityId(Long activityId);
 }

@@ -28,4 +28,11 @@ public interface IUserRaffleOrderDao {
      * @param userRaffleOrder 用户抽奖订单持久化对象
      */
     void insert(UserRaffleOrder userRaffleOrder);
+
+    /**
+     * 更新用户抽奖订单状态为已使用
+     * @param userRaffleOrder 用户抽奖订单持久化对象
+     */
+    Integer updateUserRaffleOrderStateUsed(UserRaffleOrder userRaffleOrder);
+
 }

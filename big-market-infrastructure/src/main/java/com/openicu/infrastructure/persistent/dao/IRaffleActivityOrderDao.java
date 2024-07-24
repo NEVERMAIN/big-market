@@ -3,6 +3,7 @@ package com.openicu.infrastructure.persistent.dao;
 import com.myapp.middleware.db.router.annotation.DBRouter;
 import com.myapp.middleware.db.router.annotation.DBRouterStrategy;
 import com.openicu.infrastructure.persistent.po.RaffleActivityOrder;
+import com.openicu.infrastructure.persistent.po.UserRaffleOrder;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,7 +29,10 @@ public interface IRaffleActivityOrderDao {
      * @param userId 用户唯一ID
      * @return 抽奖活动订单集合
      */
-    @DBRouter
+    @DBRouter(key = "userId")
     List<RaffleActivityOrder> queryRaffleActivityOrderByUserId(String userId);
+
+
+
 
 }

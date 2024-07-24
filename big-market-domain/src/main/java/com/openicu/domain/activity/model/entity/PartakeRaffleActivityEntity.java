@@ -1,6 +1,9 @@
 package com.openicu.domain.activity.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @description:
@@ -8,6 +11,9 @@ import lombok.Data;
  * @date: 2024/7/17
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PartakeRaffleActivityEntity {
 
     /** 用户ID */

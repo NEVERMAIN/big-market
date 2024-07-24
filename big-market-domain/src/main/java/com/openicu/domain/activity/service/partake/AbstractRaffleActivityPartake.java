@@ -40,19 +40,19 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
         ActivityEntity activityEntity = activityRepository.queryRaffleActivityByActivityId(activityId);
 
         // .校验:活动状态
-        if(!ActivityStateVO.open.equals(activityEntity.getState())){
-            throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(),ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
+        if (!ActivityStateVO.open.equals(activityEntity.getState())) {
+            throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
         }
 
         // .校验:活动日期[开始时间 <- 当前时间 -> 结束时间]
-        if(activityEntity.getBeginDateTime().after(currentDay) || activityEntity.getEndDateTime().before(currentDay)){
-            throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(),ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
+        if (activityEntity.getBeginDateTime().after(currentDay) || activityEntity.getEndDateTime().before(currentDay)) {
+            throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
         }
 
         // 3.查询未被使用的活动参与订单记录
         UserRaffleOrderEntity userRaffleOrderEntity = activityRepository.queryNoUsedRaffleOrder(partakeRaffleActivityEntity);
-        if(null != userRaffleOrderEntity){
-            log.info("创建参与活动订单[已存在未消费]: userId: {}  activityId: {}  userRaffleOrderEntity: {}",userRaffleOrderEntity.getUserId(),userRaffleOrderEntity.getActivityId(), JSON.toJSON(userRaffleOrderEntity));
+        if (null != userRaffleOrderEntity) {
+            log.info("创建参与活动订单[已存在未消费]: userId: {}  activityId: {}  userRaffleOrderEntity: {}", userRaffleOrderEntity.getUserId(), userRaffleOrderEntity.getActivityId(), JSON.toJSON(userRaffleOrderEntity));
             return userRaffleOrderEntity;
         }
 
@@ -60,7 +60,7 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
         CreatePartakeOrderAggregate createPartakeOrderAggregate = this.doFilterAccount(userId, activityId, currentDay);
 
         // 5.构建订单
-        UserRaffleOrderEntity userRaffleOrder  = buildUserRaffleOrder(userId, activityId, currentDay);
+        UserRaffleOrderEntity userRaffleOrder = buildUserRaffleOrder(userId, activityId, currentDay);
 
         // 6. 填充抽奖单实体对象
         createPartakeOrderAggregate.setUserRaffleOrderEntity(userRaffleOrder);
@@ -70,6 +70,15 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
 
         // 8.返回订单信息
         return userRaffleOrder;
+    }
+
+
+    @Override
+    public UserRaffleOrderEntity createOrder(String userId, Long activityId) {
+        return createOrder(PartakeRaffleActivityEntity.builder()
+                .userId(userId)
+                .activityId(activityId)
+                .build());
     }
 
     /**

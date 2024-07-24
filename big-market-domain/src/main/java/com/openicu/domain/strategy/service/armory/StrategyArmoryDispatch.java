@@ -59,11 +59,18 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         for(String key : ruleWeightValueMap.keySet()){
             List<Integer> ruleWeightValues = ruleWeightValueMap.get(key);
             ArrayList<StrategyAwardEntity> strategyAwardEntitiesClone = new ArrayList<>(strategyAwardEntityList);
+            // 删除不在权重值中的奖品
             strategyAwardEntitiesClone.removeIf(entity -> !ruleWeightValues.contains(entity.getAwardId()));
             assembleLotteryStrategy(String.valueOf(strategyId).concat("_").concat(key), strategyAwardEntitiesClone);
         }
 
         return true;
+    }
+
+    @Override
+    public boolean assembleLotteryStrategyByActivityId(Long activityId) {
+        Long strategyId = repository.queryStrategyIdByActivityId(activityId);
+        return assembleLotteryStrategy(strategyId);
     }
 
     /**

@@ -23,6 +23,12 @@ public interface IRaffleActivitySkuStockService {
     void clearQueueValue();
 
     /**
+     * 清空队列 - 指定 sku
+     * @param sku
+     */
+    void clearQueueValue(String sku);
+
+    /**
      * 延迟队列 + 任务趋势更新活动sku库存
      * @param sku 活动商品sku
      */

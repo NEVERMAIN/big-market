@@ -6,6 +6,7 @@ import com.openicu.domain.activity.model.entity.*;
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description: 活动仓储接口
@@ -91,6 +92,11 @@ public interface IActivityRepository {
     void clearQueueValue();
 
     /**
+     * 清空阻塞队列中的信息
+     */
+    void clearQueueValue(String sku);
+
+    /**
      * 更新活动商品库存
      * @param sku 商品sku
      */
@@ -140,5 +146,12 @@ public interface IActivityRepository {
      * @param createPartakeOrderAggregate 领域聚合对象
      */
     void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
+
+    /**
+     * 查询活动的sku
+     * @param activityId
+     * @return
+     */
+    List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId);
 
 }

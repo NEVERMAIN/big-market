@@ -158,4 +158,27 @@ public interface IStrategyRepository {
      * @param awardId 奖品ID
      */
     void clearStrategyAwardStock(Long strategyId, Integer awardId);
+
+    /**
+     * 查询策略ID
+     * @param activityId
+     * @return
+     */
+    Long queryStrategyIdByActivityId(Long activityId);
+
+    /**
+     * 查询用户抽奖次数 - 当天的；策略ID:活动ID 1:1 的配置，可以直接用 strategyId 查询。
+     * @param userId
+     * @param strategyId
+     * @return
+     */
+    Integer queryTodayUserRaffleCount(String userId, Long strategyId);
+
+    /**
+     * 查询策略奖品实体
+     * @param strategyId
+     * @param awardId
+     * @return
+     */
+    StrategyAwardEntity queryStrategyAwardEntity(Long strategyId, Integer awardId);
 }

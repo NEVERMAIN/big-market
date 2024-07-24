@@ -3,8 +3,8 @@ package com.openicu.trigger.api;
 
 import com.openicu.trigger.api.dto.RaffleAwardListRequestDTO;
 import com.openicu.trigger.api.dto.RaffleAwardListResponseDTO;
-import com.openicu.trigger.api.dto.RaffleRequestDTO;
-import com.openicu.trigger.api.dto.RaffleResponseDTO;
+import com.openicu.trigger.api.dto.RaffleStrategyRequestDTO;
+import com.openicu.trigger.api.dto.RaffleStrategyResponseDTO;
 import com.openicu.types.model.Response;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author: 云奇迹
  * @date: 2024/6/26
  */
-public interface IRaffleService {
+public interface IRaffleStrategyService {
 
     /**
      * 策略装配接口
@@ -36,7 +36,7 @@ public interface IRaffleService {
      * @param requestDTO 请求参数
      * @return 抽奖结果
      */
-    Response<RaffleResponseDTO> randomRaffle(RaffleRequestDTO requestDTO);
+    Response<RaffleStrategyResponseDTO> randomRaffle(RaffleStrategyRequestDTO requestDTO);
 
 
 

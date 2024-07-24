@@ -32,6 +32,10 @@ public class StrategyEntity {
         return ruleModels.split(Constants.SPLIT);
     }
 
+    /**
+     * 获取策略中关于权重的配置值
+     * @return
+     */
     public String getRuleWeight(){
         String[] ruleModels = this.ruleModels();
         if(ruleModels != null){

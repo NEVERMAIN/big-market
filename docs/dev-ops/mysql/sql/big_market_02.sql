@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 19/07/2024 15:32:49
+ Date: 24/07/2024 18:40:51
 */
 
 SET NAMES utf8mb4;
@@ -35,12 +35,12 @@ CREATE TABLE `raffle_activity_account`  (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id`(`user_id`, `activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_account
 -- ----------------------------
-INSERT INTO `raffle_activity_account` VALUES (2, '咸鱼12138', 100301, 20, 19, 10, 1, 2, 1, '2024-07-19 15:22:53', '2024-07-19 15:24:01');
+INSERT INTO `raffle_activity_account` VALUES (4, '咸鱼12138', 100301, 20, 19, 20, 19, 20, 19, '2024-07-20 09:32:40', '2024-07-20 09:33:00');
 
 -- ----------------------------
 -- Table structure for raffle_activity_account_day
@@ -57,12 +57,12 @@ CREATE TABLE `raffle_activity_account_day`  (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id_day`(`user_id`, `activity_id`, `day`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-日次数\r\n' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-日次数\r\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_account_day
 -- ----------------------------
-INSERT INTO `raffle_activity_account_day` VALUES (2, '咸鱼12138', 100301, '2024-07-19', 10, 9, '2024-07-19 15:24:01', '2024-07-19 15:24:01');
+INSERT INTO `raffle_activity_account_day` VALUES (4, '咸鱼12138', 100301, '2024-07-20', 20, 19, '2024-07-20 09:33:00', '2024-07-20 09:33:00');
 
 -- ----------------------------
 -- Table structure for raffle_activity_account_month
@@ -79,12 +79,12 @@ CREATE TABLE `raffle_activity_account_month`  (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_user_id_activity_id_month`(`user_id`, `activity_id`, `month`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-月次数' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动账户表-月次数' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_account_month
 -- ----------------------------
-INSERT INTO `raffle_activity_account_month` VALUES (4, '咸鱼12138', 100301, '2024-07', 2, 1, '2024-07-19 15:24:01', '2024-07-19 15:24:01');
+INSERT INTO `raffle_activity_account_month` VALUES (6, '咸鱼12138', 100301, '2024-07', 20, 19, '2024-07-20 09:33:00', '2024-07-20 09:33:00');
 
 -- ----------------------------
 -- Table structure for raffle_activity_order_000
@@ -170,12 +170,11 @@ CREATE TABLE `raffle_activity_order_002`  (
   UNIQUE INDEX `uq_order_id`(`order_id`) USING BTREE,
   UNIQUE INDEX `uq_out_business_no`(`out_business_no`) USING BTREE,
   INDEX `idx_user_id_activity_id`(`user_id`, `activity_id`, `state`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '抽奖活动单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_order_002
 -- ----------------------------
-INSERT INTO `raffle_activity_order_002` VALUES (2, '咸鱼12138', 9011, 100301, '测试活动', 100006, '650677489456', '2024-07-19 07:22:54', 20, 10, 2, 'completed', '700091009111', '2024-07-19 15:22:53', '2024-07-19 15:22:53');
 
 -- ----------------------------
 -- Table structure for raffle_activity_order_003
@@ -212,18 +211,22 @@ CREATE TABLE `raffle_activity_order_003`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task`  (
-  `id` int(11) NOT NULL COMMENT '自增ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户ID',
   `topic` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息主题',
+  `message_id` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息ID',
   `message` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息主体',
   `state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'create' COMMENT '任务状态: create-创建、completed-完成、fail-失败',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 218 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
 -- ----------------------------
+INSERT INTO `task` VALUES (216, '咸鱼12138', 'send_award', '418011970207', '{\"data\":{\"awardId\":101,\"awardTitle\":\"OpenAI 增加使用次数\",\"orderId\":\"302389921232\",\"userId\":\"咸鱼12138\"},\"id\":\"418011970207\",\"timestamp\":1721643666966}', 'complete', '2024-07-22 18:21:07', '2024-07-22 18:21:07');
+INSERT INTO `task` VALUES (217, '咸鱼12138', 'send_award', '171828782335', '{\"data\":{\"awardId\":101,\"awardTitle\":\"OpenAI 增加使用次数\",\"userId\":\"咸鱼12138\"},\"id\":\"171828782335\",\"timestamp\":1721694942866}', 'complete', '2024-07-23 08:35:43', '2024-07-23 08:35:43');
 
 -- ----------------------------
 -- Table structure for user_award_record_000
@@ -300,11 +303,13 @@ CREATE TABLE `user_award_record_002`  (
   INDEX `idx_user_id`(`user_id`) USING BTREE,
   INDEX `idx_activity_id`(`activity_id`) USING BTREE,
   INDEX `idx_award_id`(`strategy_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户中奖记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 221 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户中奖记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_award_record_002
 -- ----------------------------
+INSERT INTO `user_award_record_002` VALUES (219, '咸鱼12138', 100301, 100006, '302389921232', 101, 'OpenAI 增加使用次数', '2024-07-22 10:21:07', 'complete', '2024-07-22 18:21:07', '2024-07-22 18:21:07');
+INSERT INTO `user_award_record_002` VALUES (220, '咸鱼12138', 100301, 100006, '508617009117', 101, 'OpenAI 增加使用次数', '2024-07-23 00:35:43', 'create', '2024-07-23 08:35:43', '2024-07-23 08:35:43');
 
 -- ----------------------------
 -- Table structure for user_award_record_003
@@ -399,12 +404,11 @@ CREATE TABLE `user_raffle_order_002`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_order_id`(`order_id`) USING BTREE,
   INDEX `idx_user_id_activity_id`(`user_id`, `activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抽奖订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户抽奖订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_raffle_order_002
 -- ----------------------------
-INSERT INTO `user_raffle_order_002` VALUES (2, '咸鱼12138', 100301, '测试活动', 100006, '293007471819', '2024-07-19 07:24:01', 'create', '2024-07-19 15:24:01', '2024-07-19 15:24:01');
 
 -- ----------------------------
 -- Table structure for user_raffle_order_003
