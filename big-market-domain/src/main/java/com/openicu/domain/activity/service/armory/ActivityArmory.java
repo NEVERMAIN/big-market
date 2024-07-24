@@ -54,6 +54,7 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch {
     }
 
     private void cacheActivitySkuStockCount(Long sku,Integer stockCount){
+
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
         activityRepository.cacheActivitySkuStockCount(cacheKey,stockCount);
     }
@@ -61,6 +62,7 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch {
 
     @Override
     public boolean subtractionActivitySkuStock(Long sku, Date endDateTime) {
+
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
         return activityRepository.subtractionActivitySkuStock(sku,cacheKey,endDateTime);
     }
