@@ -1,5 +1,6 @@
 package com.openicu.domain.strategy.service;
 
+import com.openicu.domain.strategy.model.entity.ActivityAwardEntity;
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
 
 import java.util.List;
@@ -18,4 +19,10 @@ public interface IRaffleAward {
      */
     List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId);
 
+    /**
+     * 查询活动奖品接口
+     * @param activityId
+     * @return
+     */
+    List<ActivityAwardEntity> queryActivityAwardList(Long activityId,String userId);
 }

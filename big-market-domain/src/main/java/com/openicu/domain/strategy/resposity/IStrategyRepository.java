@@ -181,4 +181,13 @@ public interface IStrategyRepository {
      * @return
      */
     StrategyAwardEntity queryStrategyAwardEntity(Long strategyId, Integer awardId);
+
+
+    /**
+     * 查询策略奖品规则实体
+     * @param strategyId
+     * @param awardId
+     * @return
+     */
+    StrategyRuleEntity queryStrategyAwardRule(Long strategyId, Integer awardId);
 }

@@ -7,11 +7,16 @@ import com.openicu.domain.activity.service.armory.IActivityArmory;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;
 import com.openicu.domain.award.model.valobj.AwardStateVO;
 import com.openicu.domain.award.service.IAwardService;
+import com.openicu.domain.strategy.model.entity.ActivityAwardEntity;
 import com.openicu.domain.strategy.model.entity.RaffleAwardEntity;
 import com.openicu.domain.strategy.model.entity.RaffleFactorEntity;
+import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
+import com.openicu.domain.strategy.service.IRaffleAward;
 import com.openicu.domain.strategy.service.IRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyArmory;
 import com.openicu.trigger.api.IRaffleActivityService;
+import com.openicu.trigger.api.dto.ActivityAwardListRequestDTO;
+import com.openicu.trigger.api.dto.ActivityAwardListResponseDTO;
 import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
 import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
 import com.openicu.types.enums.ResponseCode;
@@ -22,7 +27,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
@@ -46,6 +53,10 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Resource
     private IRaffleStrategy raffleStrategy;
+
+    @Resource
+    private IRaffleAward raffleAward;
+
 
     @Resource
     private IAwardService awardService;
@@ -144,4 +155,57 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .build();
         }
     }
+
+    @RequestMapping(value = "query_activity_award_list", method = RequestMethod.POST)
+    @Override
+    public Response<List<ActivityAwardListResponseDTO>> queryActivityAwardList(@RequestBody ActivityAwardListRequestDTO request) {
+
+        try {
+
+            log.info("查询活动奖品列表 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
+            // 1.参数校验
+            if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
+            // 2.查询奖品信息
+            List<ActivityAwardEntity> strategyAwardEntityList = raffleAward.queryActivityAwardList(request.getActivityId(), request.getUserId());
+
+            List<ActivityAwardListResponseDTO> dataList = new ArrayList<>();
+            for (ActivityAwardEntity activityAwardEntity : strategyAwardEntityList) {
+                ActivityAwardListResponseDTO activityAwardListResponseDTO = ActivityAwardListResponseDTO.builder()
+                        .awardId(activityAwardEntity.getAwardId())
+                        .awardTitle(activityAwardEntity.getAwardTitle())
+                        .awardSubtitle(activityAwardEntity.getAwardSubtitle())
+                        .sort(activityAwardEntity.getSort())
+                        .lock(activityAwardEntity.isLock())
+                        .build();
+
+                dataList.add(activityAwardListResponseDTO);
+
+            }
+            // 4.返回结果
+            return Response.<List<ActivityAwardListResponseDTO>>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(dataList)
+                    .build();
+
+        } catch (AppException e) {
+            log.error("查询活动奖品列表失败 userId:{} activityId:{}", request.getUserId(), request.getActivityId(), e);
+            return Response.<List<ActivityAwardListResponseDTO>>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("查询活动奖品列表失败 userId:{} activityId:{}", request.getUserId(), request.getActivityId(), e);
+            return Response.<List<ActivityAwardListResponseDTO>>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
+
+    }
+
+
 }

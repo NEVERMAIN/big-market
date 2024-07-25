@@ -43,7 +43,6 @@ public class AwardRepository implements IAwardRepository {
     @Resource
     private IUserRaffleOrderDao userRaffleOrderDao;
 
-
     @Resource
     private ITaskDao taskDao;
 

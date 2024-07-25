@@ -1,11 +1,16 @@
 package com.openicu.trigger.api;
 
+import com.openicu.trigger.api.dto.ActivityAwardListRequestDTO;
+import com.openicu.trigger.api.dto.ActivityAwardListResponseDTO;
 import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
 import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
 import com.openicu.types.model.Response;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
- * @description:
+ * @description: 抽奖活动接口
  * @author: 云奇迹
  * @date: 2024/7/23
  */
@@ -24,5 +29,12 @@ public interface IRaffleActivityService {
      * @return 返回结果
      */
     Response<ActivityDrawResponseDTO> draw(ActivityDrawRequestDTO request);
+
+    /**
+     * 查询活动奖品列表
+     * @param request
+     * @return
+     */
+    Response<List<ActivityAwardListResponseDTO>> queryActivityAwardList(ActivityAwardListRequestDTO request);
 
 }

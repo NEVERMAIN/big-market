@@ -44,7 +44,7 @@ public class RaffleActivityAccountOrderServiceTest {
         skuRechargeEntity.setUserId("咸鱼12138");
         skuRechargeEntity.setSku(9011L);
         // outBusinessNo 作为幂等性防重使用,同一个业务号2次使用会抛出索引冲突
-        skuRechargeEntity.setOutBusinessNo("700091009111");
+        skuRechargeEntity.setOutBusinessNo("70009100912");
         String orderId = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
 
         log.info("测试结果:{} ",orderId);
