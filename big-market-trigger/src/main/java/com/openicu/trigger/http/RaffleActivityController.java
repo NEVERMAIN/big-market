@@ -1,5 +1,6 @@
 package com.openicu.trigger.http;
 
+import com.alibaba.fastjson.JSON;
 import com.openicu.domain.activity.model.entity.UserRaffleOrderEntity;
 import com.openicu.domain.activity.service.IRaffleActivityAccountQuotaService;
 import com.openicu.domain.activity.service.IRaffleActivityPartakeService;
@@ -9,11 +10,16 @@ import com.openicu.domain.award.model.valobj.AwardStateVO;
 import com.openicu.domain.award.service.IAwardService;
 import com.openicu.domain.strategy.model.entity.RaffleAwardEntity;
 import com.openicu.domain.strategy.model.entity.RaffleFactorEntity;
+import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
+import com.openicu.domain.strategy.service.IRaffleAward;
+import com.openicu.domain.strategy.service.IRaffleRule;
 import com.openicu.domain.strategy.service.IRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyArmory;
 import com.openicu.trigger.api.IRaffleActivityService;
 import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
 import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
+import com.openicu.trigger.api.dto.RaffleAwardListRequestDTO;
+import com.openicu.trigger.api.dto.RaffleAwardListResponseDTO;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import com.openicu.types.model.Response;
@@ -22,7 +28,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -102,6 +111,7 @@ public class RaffleActivityController implements IRaffleActivityService {
             RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
                     .userId(orderEntity.getUserId())
                     .strategyId(orderEntity.getStrategyId())
+                    .endDateTime(orderEntity.getEndDateTime())
                     .build());
 
             // 4.存放结果-写入中奖记录
@@ -144,4 +154,6 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .build();
         }
     }
+
+
 }

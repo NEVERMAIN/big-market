@@ -10,6 +10,8 @@ import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
+
 /**
  * @description: 抽奖策略抽象类
  * @author: 云奇迹
@@ -60,7 +62,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         }
 
         // 4.规则树抽奖过滤【奖品ID，会根据抽奖次数判断、库存判断、兜底兜里返回最终的可获得奖品信息】
-        DefaultTreeFactory.StrategyAwardData treeStrategyAwardVO = raffleLogicTree(userId, strategyId, chainStrategyAwardVO.getAwardId());
+        DefaultTreeFactory.StrategyAwardData treeStrategyAwardVO = raffleLogicTree(userId, strategyId, chainStrategyAwardVO.getAwardId(),raffleFactorEntity.getEndDateTime());
         log.info("抽奖策略计算结果 -规则树 userId:{} strategyId:{} awardId:{} logicModel:{}", userId, strategyId, treeStrategyAwardVO.getAwardId(), treeStrategyAwardVO.getAwardRuleValue());
 
         // 5. 返回抽奖结果
@@ -96,7 +98,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
      * @param award 奖品ID
      * @return 过滤结果【奖品ID，会根据抽奖次数判断、库存判断、兜底兜里返回最终的可获得奖品信息】
      */
-    public abstract DefaultTreeFactory.StrategyAwardData raffleLogicTree(String userId, Long strategyId, Integer award);
+    public abstract DefaultTreeFactory.StrategyAwardData raffleLogicTree(String userId, Long strategyId, Integer award, Date endDateTime);
 
 
 }

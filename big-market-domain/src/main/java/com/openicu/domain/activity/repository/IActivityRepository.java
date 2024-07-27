@@ -154,4 +154,12 @@ public interface IActivityRepository {
      */
     List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId);
 
+    /**
+     * 查询活动账户 - 日，参与次数
+     *
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @return 日参与次数
+     */
+    Integer queryRaffleActivityAccountDayPartakeCount(String userId, Long activityId);
 }

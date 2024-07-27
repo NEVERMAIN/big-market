@@ -23,7 +23,7 @@ import java.util.*;
  */
 @Service
 @Slf4j
-public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch {
+public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatch {
 
     @Resource
     private IStrategyRepository repository;
@@ -38,7 +38,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         for (StrategyAwardEntity strategyAward : strategyAwardEntityList) {
             Integer awardId = strategyAward.getAwardId();
             Integer awardCount = strategyAward.getAwardCount();
-            cacheStrategyAwardCont(strategyId,awardId,awardCount);
+            cacheStrategyAwardCont(strategyId, awardId, awardCount);
         }
 
         // 3.1. 默认装配配置【全量抽奖概率】
@@ -47,16 +47,16 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         // 3.2. 权重策略配置,适用于 rule_weight 权重规则配置
         StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
         String ruleWeight = strategyEntity.getRuleWeight();
-        if(null == ruleWeight) return true;
+        if (null == ruleWeight) return true;
 
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleWeight);
         // 业务异常，策略规则中 rule_weight 权重规则已适用但未配置
-        if(null == strategyRuleEntity){
-            throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(),ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
+        if (null == strategyRuleEntity) {
+            throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(), ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
         }
 
         Map<String, List<Integer>> ruleWeightValueMap = strategyRuleEntity.getRuleWeightValues();
-        for(String key : ruleWeightValueMap.keySet()){
+        for (String key : ruleWeightValueMap.keySet()) {
             List<Integer> ruleWeightValues = ruleWeightValueMap.get(key);
             ArrayList<StrategyAwardEntity> strategyAwardEntitiesClone = new ArrayList<>(strategyAwardEntityList);
             // 删除不在权重值中的奖品
@@ -81,7 +81,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
      * 4. 后续的抽奖就用123作为随机数的范围值，生成的值100个都是0.1概率的奖品、20个是概率0.02的奖品、最后是3个是0.003的奖品。
      */
 
-    private void assembleLotteryStrategy(String key,List<StrategyAwardEntity> strategyAwardEntityList) {
+    private void assembleLotteryStrategy(String key, List<StrategyAwardEntity> strategyAwardEntityList) {
 
         // 1.获取最小概率值
         BigDecimal minAwardRate = strategyAwardEntityList.stream()
@@ -107,23 +107,23 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         Collections.shuffle(strategyAwardSearchRateTables);
 
         // 5. 生成出 Map 集合,key 值 , 对应的就是后续的概率值,通过概率来获得对应的奖品ID
-        Map<Integer,Integer> shuffleStrategyAwardSearchRateTables = new LinkedHashMap<>();
-        for(int i = 0 ; i < strategyAwardSearchRateTables.size() ; i++){
-            shuffleStrategyAwardSearchRateTables.put(i,strategyAwardSearchRateTables.get(i));
+        Map<Integer, Integer> shuffleStrategyAwardSearchRateTables = new LinkedHashMap<>();
+        for (int i = 0; i < strategyAwardSearchRateTables.size(); i++) {
+            shuffleStrategyAwardSearchRateTables.put(i, strategyAwardSearchRateTables.get(i));
         }
 
         // 6.存放到 Redis
-        repository.storeStrategyAwardSearchRateTable(key,shuffleStrategyAwardSearchRateTables.size(),shuffleStrategyAwardSearchRateTables);
+        repository.storeStrategyAwardSearchRateTable(key, shuffleStrategyAwardSearchRateTables.size(), shuffleStrategyAwardSearchRateTables);
 
     }
 
     /**
      * 转换计算: 只根据小数位来计算,如[0.1返回100],[0.009返回1000],[0.0018返回10000]
      */
-    private double convert(double min){
+    private double convert(double min) {
         double current = min;
         double max = 1;
-        while(current < 1){
+        while (current < 1) {
             current = current * 10;
             max = max * 10;
         }
@@ -136,9 +136,9 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
      * @param awardId 奖品ID
      * @param awardCount 奖品库存
      */
-    private void cacheStrategyAwardCont(Long strategyId,Integer awardId,Integer awardCount){
+    private void cacheStrategyAwardCont(Long strategyId, Integer awardId, Integer awardCount) {
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
-        repository.cacheStrategyAwardCount(cacheKey,awardCount);
+        repository.cacheStrategyAwardCount(cacheKey, awardCount);
     }
 
 
@@ -148,7 +148,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         // 1.分布式部署下,不一定为当前应用做的策略装配,也就是值不一定会保存到本应用,而是分布式应用,所以需要从 Redis 中获取
         int rateRange = repository.getRateRange(String.valueOf(strategyId));
         // 2.通过生成的随机值,获取概率值奖品查找表的结果
-        return repository.getStrategyAwardAssemble(String.valueOf(strategyId),new SecureRandom().nextInt(rateRange));
+        return repository.getStrategyAwardAssemble(String.valueOf(strategyId), new SecureRandom().nextInt(rateRange));
     }
 
     @Override
@@ -158,17 +158,17 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
     }
 
     @Override
-    public Integer getRandomAwardId(String key){
+    public Integer getRandomAwardId(String key) {
         // 1.分布式部署下,不一定为当前应用做的策略装配,也就是值不一定会保存到本应用,而是分布式应用,所以需要从 Redis 中获取
         int rateRange = repository.getRateRange(String.valueOf(key));
         // 2.通过生成的随机值,获取概率值奖品查找表的结果
-        return repository.getStrategyAwardAssemble(key,new SecureRandom().nextInt(rateRange));
+        return repository.getStrategyAwardAssemble(key, new SecureRandom().nextInt(rateRange));
     }
 
     @Override
-    public Boolean subtractionAwardStock(Long strategyId, Integer awardId) {
+    public Boolean subtractionAwardStock(Long strategyId, Integer awardId, Date endDateTime) {
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
-        return repository.subtractionAwardStock(strategyId,awardId,cacheKey);
+        return repository.subtractionAwardStock(strategyId, awardId, cacheKey, endDateTime);
     }
 
 }

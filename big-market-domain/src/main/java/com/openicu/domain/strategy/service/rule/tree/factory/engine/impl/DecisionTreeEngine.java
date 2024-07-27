@@ -9,6 +9,7 @@ import com.openicu.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import com.openicu.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
     }
 
     @Override
-    public DefaultTreeFactory.StrategyAwardData process(String userId, Long strategyId, Integer awardId) {
+    public DefaultTreeFactory.StrategyAwardData process(String userId, Long strategyId, Integer awardId, Date endDateTime) {
 
         DefaultTreeFactory.StrategyAwardData strategyAwardData = null;
 
@@ -46,7 +47,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
             String ruleValue = ruleTreeNode.getRuleValue();
 
             // 决策节点计算
-            DefaultTreeFactory.TreeActionEntity logicEntity = logicTreeNode.logic(userId, strategyId, awardId,ruleValue);
+            DefaultTreeFactory.TreeActionEntity logicEntity = logicTreeNode.logic(userId, strategyId, awardId,ruleValue,endDateTime);
             RuleLogicCheckTypeVO ruleLogicCheckTypeVO = logicEntity.getRuleLogicCheckType();
             strategyAwardData = logicEntity.getStrategyAwardData();
 

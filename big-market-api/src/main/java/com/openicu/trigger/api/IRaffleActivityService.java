@@ -2,7 +2,11 @@ package com.openicu.trigger.api;
 
 import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
 import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
+import com.openicu.trigger.api.dto.RaffleAwardListRequestDTO;
+import com.openicu.trigger.api.dto.RaffleAwardListResponseDTO;
 import com.openicu.types.model.Response;
+
+import java.util.List;
 
 /**
  * @description:
@@ -24,5 +28,7 @@ public interface IRaffleActivityService {
      * @return 返回结果
      */
     Response<ActivityDrawResponseDTO> draw(ActivityDrawRequestDTO request);
+
+
 
 }

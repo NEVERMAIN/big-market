@@ -20,10 +20,7 @@ import org.redisson.api.RDelayedQueue;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -73,10 +70,11 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public List<StrategyAwardEntity> queryStrategyAwardList(Long strategyId) {
 
+        // 1.优先从缓存中获取
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_LIST_KEY + strategyId;
         List<StrategyAwardEntity> strategyAwardEntities = redisService.getValue(cacheKey);
         if (null != strategyAwardEntities && !strategyAwardEntities.isEmpty()) return strategyAwardEntities;
-        // 从库中读取
+        // 2.从库中获取数据
         List<StrategyAward> strategyAwards = strategyAwardDao.queryStrategyAwardListByStrategyId(strategyId);
         strategyAwardEntities = new ArrayList<>(strategyAwards.size());
         for (StrategyAward strategyAward : strategyAwards) {
@@ -88,12 +86,14 @@ public class StrategyRepository implements IStrategyRepository {
                     .awardCount(strategyAward.getAwardCount())
                     .awardCountSurplus(strategyAward.getAwardCountSurplus())
                     .awardRate(strategyAward.getAwardRate())
+                    .ruleModels(strategyAward.getRuleModels())
                     .sort(strategyAward.getSort())
                     .build();
             strategyAwardEntities.add(strategyAwardEntity);
         }
         redisService.setValue(cacheKey, strategyAwardEntities);
         return strategyAwardEntities;
+
     }
 
     @Override
@@ -252,9 +252,11 @@ public class StrategyRepository implements IStrategyRepository {
 
 
     @Override
-    public Boolean subtractionAwardStock(Long strategyId, Integer awardId, String cacheKey) {
+    public Boolean subtractionAwardStock(Long strategyId, Integer awardId, String cacheKey, Date endDateTime) {
+
         long surplus = redisService.decr(cacheKey);
         if (surplus == 0) {
+            // 发送消息给MQ,清空延迟队列
             eventPublisher.publish(strategyAwardStockZeroMessageEvent.topic(),
                     strategyAwardStockZeroMessageEvent.buildEventMessage(StrategyAwardStockKeyVO.builder()
                             .strategyId(strategyId)
@@ -269,7 +271,13 @@ public class StrategyRepository implements IStrategyRepository {
         // 1. 按照cacheKey decr 后的值，如 99、98、97 和 key 组成为库存锁的key进行使用。
         // 2. 加锁为了兜底，如果后续有恢复库存，手动处理等，也不会超卖。因为所有的可用库存key，都被加锁了。
         String lockKey = cacheKey + Constants.UNDERLINE + surplus;
-        Boolean lock = redisService.setNx(lockKey);
+        Boolean lock = false;
+        if (null != endDateTime) {
+            long expireMills = endDateTime.getTime() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
+            lock = redisService.setNx(lockKey, expireMills, TimeUnit.MILLISECONDS);
+        } else {
+            lock = redisService.setNx(lockKey);
+        }
         if (!lock) {
             log.info("策略奖品库存加锁失败 {}", lockKey);
         }
@@ -361,7 +369,7 @@ public class StrategyRepository implements IStrategyRepository {
         // 1.优先从缓存获取
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId + Constants.UNDERLINE + awardId;
         StrategyAwardEntity strategyAwardEntity = redisService.getValue(cacheKey);
-        if(null != strategyAwardEntity) return strategyAwardEntity;
+        if (null != strategyAwardEntity) return strategyAwardEntity;
 
         // 2.从数据库中查询数据
         StrategyAward strategyAwardReq = new StrategyAward();
@@ -380,8 +388,21 @@ public class StrategyRepository implements IStrategyRepository {
                 .build();
 
         // 3.缓存结果
-        redisService.setValue(cacheKey,strategyAwardEntity);
+        redisService.setValue(cacheKey, strategyAwardEntity);
         // 4.返回结果
         return strategyAwardEntity;
+    }
+
+    @Override
+    public Map<String, Integer> queryAwardRuleLockCount(String[] treeIds) {
+        if (null == treeIds || treeIds.length == 0) return new HashMap<>();
+        List<RuleTreeNode> ruleTreeNodeList = ruleTreeNodeDao.queryRuleLocks(treeIds);
+        HashMap<String, Integer> resultMap = new HashMap<>();
+        for (RuleTreeNode node : ruleTreeNodeList) {
+            String treeId = node.getTreeId();
+            Integer ruleValue = Integer.parseInt(node.getRuleValue());
+            resultMap.put(treeId, ruleValue);
+        }
+        return resultMap;
     }
 }

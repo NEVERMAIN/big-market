@@ -2,6 +2,8 @@ package com.openicu.domain.strategy.service.rule.tree.factory.engine;
 
 import com.openicu.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 
+import java.util.Date;
+
 /**
  * @description: 规则树组合接口
  * @author: 云奇迹
@@ -17,6 +19,6 @@ public interface IDecisionTreeEngine {
      * @param awardId 奖励的唯一标识符。用于确定用户将获得哪种奖励。
      * @return 返回一个DefaultTreeFactory.StrategyAwardData对象，其中包含了处理结果。
      */
-    DefaultTreeFactory.StrategyAwardData process(String userId, Long strategyId,Integer awardId);
+    DefaultTreeFactory.StrategyAwardData process(String userId, Long strategyId, Integer awardId, Date endDateTime);
 
 }

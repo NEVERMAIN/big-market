@@ -15,4 +15,10 @@ public interface IRuleTreeNodeDao {
 
     List<RuleTreeNode> queryRuleTreeNodeListByTreeId(String treeId);
 
+    /**
+     * 根据规则树ID集合查询次数锁的值
+     * @param treeIds 规则树ID集合
+     * @return
+     */
+    List<RuleTreeNode> queryRuleLocks(String[] treeIds);
 }

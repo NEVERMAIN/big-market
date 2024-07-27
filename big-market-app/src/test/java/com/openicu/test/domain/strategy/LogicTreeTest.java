@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -99,7 +100,7 @@ public class LogicTreeTest {
 
         IDecisionTreeEngine treeComposite = defaultTreeFactory.openLogicTree(ruleTreeVO);
 
-        DefaultTreeFactory.StrategyAwardData data  = treeComposite.process("咸鱼12138", 100001L, 100);
+        DefaultTreeFactory.StrategyAwardData data  = treeComposite.process("咸鱼12138", 100001L, 100,new Date());
         log.info("测试结果: {}", JSON.toJSONString(data));
 
     }

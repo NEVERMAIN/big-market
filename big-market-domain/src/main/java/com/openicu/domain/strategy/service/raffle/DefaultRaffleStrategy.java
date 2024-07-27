@@ -7,6 +7,7 @@ import com.openicu.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.AbstractRaffleStrategy;
 import com.openicu.domain.strategy.service.IRaffleAward;
+import com.openicu.domain.strategy.service.IRaffleRule;
 import com.openicu.domain.strategy.service.IRaffleStock;
 import com.openicu.domain.strategy.service.armory.IStrategyDispatch;
 import com.openicu.domain.strategy.service.rule.chain.ILogicChain;
@@ -16,7 +17,10 @@ import com.openicu.domain.strategy.service.rule.tree.factory.engine.IDecisionTre
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description: 抽奖策略默认实现
@@ -25,7 +29,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleStock, IRaffleAward {
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleStock, IRaffleAward, IRaffleRule {
 
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
@@ -39,7 +43,7 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     }
 
     @Override
-    public DefaultTreeFactory.StrategyAwardData raffleLogicTree(String userId, Long strategyId, Integer awardId) {
+    public DefaultTreeFactory.StrategyAwardData raffleLogicTree(String userId, Long strategyId, Integer awardId, Date endDateTime) {
 
         // 1. 获取奖品配置的规则配置值
         StrategyAwardRuleModelVO strategyAwardRuleModelVO = repository.queryStrategyAwardRuleModelVO(strategyId,awardId);
@@ -59,7 +63,7 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
         IDecisionTreeEngine treeEngine  = defaultTreeFactory.openLogicTree(ruleTreeVO);
 
         // 3. 获取决策树引擎执行结果
-        return treeEngine.process(userId,strategyId,awardId);
+        return treeEngine.process(userId,strategyId,awardId,endDateTime);
     }
 
     @Override
@@ -85,5 +89,17 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     @Override
     public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
         return repository.queryStrategyAwardList(strategyId);
+    }
+
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardListByActivityId(Long activityId) {
+        Long strategyId = repository.queryStrategyIdByActivityId(activityId);
+        return queryRaffleStrategyAwardList(strategyId);
+    }
+
+
+    @Override
+    public Map<String, Integer> queryAwardRuleLockCount(String[] treeIds) {
+        return repository.queryAwardRuleLockCount(treeIds);
     }
 }

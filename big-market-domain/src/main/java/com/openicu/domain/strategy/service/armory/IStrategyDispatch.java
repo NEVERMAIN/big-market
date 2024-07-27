@@ -1,5 +1,7 @@
 package com.openicu.domain.strategy.service.armory;
 
+import java.util.Date;
+
 /**
  * @description: 调度接口
  * @author: 云奇迹
@@ -36,8 +38,11 @@ public interface IStrategyDispatch {
      * 根据策略ID和奖品ID,扣减奖品缓存库存
      * @param strategyId 策略ID
      * @param awardId 奖品ID
+     * @param endDateTime 活动结束时间
      * @return 扣减结果
      */
-    Boolean subtractionAwardStock(Long strategyId,Integer awardId);
+    Boolean subtractionAwardStock(Long strategyId, Integer awardId, Date endDateTime);
+
+
 
 }

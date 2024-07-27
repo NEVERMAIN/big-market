@@ -39,5 +39,12 @@
           AND day = #{day}
     </select>
 
+    <select id="queryRaffleActivityAccountDayPartakeCount" resultType="java.lang.Integer">
+        select day_count - day_count_surplus
+        from raffle_activity_account_day
+        where user_id = #{userId} AND activity_id = #{activityId} AND day = #{day}
+
+    </select>
+
 
 </mapper>
