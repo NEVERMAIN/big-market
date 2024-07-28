@@ -193,4 +193,7 @@ public interface IStrategyRepository {
      * @return key 规则树，value rule_lock 加锁值
      */
     Map<String, Integer> queryAwardRuleLockCount(String[] treeIds);
+
+    Long queryActivitySkuByActivityId(Long activityId);
+
 }

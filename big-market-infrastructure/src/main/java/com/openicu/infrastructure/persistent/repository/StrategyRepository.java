@@ -13,7 +13,6 @@ import com.openicu.infrastructure.persistent.redis.IRedisService;
 import com.openicu.types.common.Constants;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
-import com.openicu.types.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
@@ -38,6 +37,8 @@ public class StrategyRepository implements IStrategyRepository {
     @Resource
     private IRaffleActivityAccountDayDao raffleActivityAccountDayDao;
 
+    @Resource
+    private IRaffleActivitySkuDao raffleActivitySkuDao;
 
     @Resource
     private IStrategyDao strategyDao;
@@ -268,6 +269,7 @@ public class StrategyRepository implements IStrategyRepository {
             redisService.setValue(cacheKey, 0);
             return false;
         }
+
         // 1. 按照cacheKey decr 后的值，如 99、98、97 和 key 组成为库存锁的key进行使用。
         // 2. 加锁为了兜底，如果后续有恢复库存，手动处理等，也不会超卖。因为所有的可用库存key，都被加锁了。
         String lockKey = cacheKey + Constants.UNDERLINE + surplus;
@@ -290,7 +292,7 @@ public class StrategyRepository implements IStrategyRepository {
      */
     @Override
     public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
-        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + strategyAwardStockKeyVO.getSku();
         // 从Redis服务中获取指定缓存键对应的阻塞队列。
         RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
         // 获取阻塞队列对应的延迟队列，用于实现延迟处理功能。
@@ -313,8 +315,11 @@ public class StrategyRepository implements IStrategyRepository {
     }
 
 
+
+
     @Override
     public void clearQueueValue() {
+
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
         // 通过缓存键获取阻塞队列
         RBlockingQueue<Object> destinationQueue = redisService.getBlockingQueue(cacheKey);
@@ -404,5 +409,11 @@ public class StrategyRepository implements IStrategyRepository {
             resultMap.put(treeId, ruleValue);
         }
         return resultMap;
+    }
+
+    @Override
+    public Long queryActivitySkuByActivityId(Long activityId) {
+        RaffleActivitySku raffleActivitySku = raffleActivitySkuDao.queryActivitySkuByActivityId(activityId);
+        return raffleActivitySku.getSku();
     }
 }

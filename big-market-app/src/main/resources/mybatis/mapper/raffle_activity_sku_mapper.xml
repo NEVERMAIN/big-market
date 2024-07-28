@@ -44,5 +44,16 @@
 
     </select>
 
+    <select id="querySkuList" resultMap="dataMap">
+        select sku
+        from raffle_activity_sku
+    </select>
+
+    <select id="queryActivitySkuByActivityId" resultMap="dataMap">
+        select sku
+        from raffle_activity_sku
+        where activity_id = #{activityId}
+    </select>
+
 
 </mapper>

@@ -87,6 +87,13 @@ public interface IActivityRepository {
     ActivitySkuStockKeyVO takeQueueValue();
 
     /**
+     * 从阻塞队列中获取消息
+     * @param sku 活动sku
+     * @return 活动商品库存消息
+     */
+    ActivitySkuStockKeyVO takeQueueValue(Long sku);
+
+    /**
      * 清空阻塞队列中的信息
      */
     void clearQueueValue();
@@ -94,7 +101,7 @@ public interface IActivityRepository {
     /**
      * 清空阻塞队列中的信息
      */
-    void clearQueueValue(String sku);
+    void clearQueueValue(Long sku);
 
     /**
      * 更新活动商品库存
@@ -162,4 +169,12 @@ public interface IActivityRepository {
      * @return 日参与次数
      */
     Integer queryRaffleActivityAccountDayPartakeCount(String userId, Long activityId);
+
+    /**
+     * 查询活动sku列表
+     * @return
+     */
+    List<Long> querySkuList();
+
+
 }

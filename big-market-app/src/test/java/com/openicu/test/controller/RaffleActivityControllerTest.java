@@ -30,10 +30,12 @@ public class RaffleActivityControllerTest {
     public void test_armory(){
         Response<Boolean> response = raffleActivityService.armory(100301L);
         log.info("测试结果:{}", JSON.toJSONString(response));
+
     }
 
     @Test
     public void test_draw(){
+
         ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
         request.setActivityId(100301L);
         request.setUserId("咸鱼12138");

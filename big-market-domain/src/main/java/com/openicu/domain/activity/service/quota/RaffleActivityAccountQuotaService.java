@@ -10,7 +10,9 @@ import com.openicu.domain.activity.service.quota.rule.factory.DefaultActivityCha
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @description: 抽奖活动服务
@@ -64,12 +66,20 @@ public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAcc
     }
 
     @Override
+    public ActivitySkuStockKeyVO takeQueueValue(Long sku) throws InterruptedException {
+        if(null != sku){
+            return activityRepository.takeQueueValue(sku);
+        }
+        return null;
+    }
+
+    @Override
     public void clearQueueValue() {
         activityRepository.clearQueueValue();
     }
 
     @Override
-    public void clearQueueValue(String sku) {
+    public void clearQueueValue(Long sku) {
         activityRepository.clearQueueValue(sku);
     }
 
@@ -86,5 +96,11 @@ public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAcc
     @Override
     public Integer queryRaffleActivityAccountDayPartakeCount(String userId, Long activityId) {
         return activityRepository.queryRaffleActivityAccountDayPartakeCount(userId,activityId);
+    }
+
+
+    @Override
+    public List<Long> querySkuList() {
+        return activityRepository.querySkuList();
     }
 }

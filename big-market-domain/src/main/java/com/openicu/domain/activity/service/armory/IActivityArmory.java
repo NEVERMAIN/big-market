@@ -17,6 +17,7 @@ public interface IActivityArmory {
     /**
      * 装配活动库存
      * @param activityId 活动ID
+     * @return 是否装配成功
      */
     boolean assembleActivitySkuByActivityId(Long activityId);
 }

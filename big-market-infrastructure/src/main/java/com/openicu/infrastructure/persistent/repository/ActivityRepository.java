@@ -1,5 +1,6 @@
 package com.openicu.infrastructure.persistent.repository;
 
+import com.alibaba.fastjson.JSON;
 import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.activity.event.ActivitySkuStockZeroMessageEvent;
 import com.openicu.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
@@ -239,7 +240,7 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public void activitySkuStockConsumerSendQueue(ActivitySkuStockKeyVO activitySkuStockKeyVO) {
         // 1.获取 sku 的延迟队列
-        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY;
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY + activitySkuStockKeyVO.getSku();
         RBlockingQueue<ActivitySkuStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
         RDelayedQueue<ActivitySkuStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
         delayedQueue.offer(activitySkuStockKeyVO, 3, TimeUnit.SECONDS);
@@ -255,6 +256,15 @@ public class ActivityRepository implements IActivityRepository {
     }
 
     @Override
+    public ActivitySkuStockKeyVO takeQueueValue(Long sku) {
+
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY + sku;
+        RBlockingQueue<ActivitySkuStockKeyVO> destinationQueue = redisService.getBlockingQueue(cacheKey);
+        return destinationQueue.poll();
+
+    }
+
+    @Override
     public void clearQueueValue() {
 
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY;
@@ -263,7 +273,7 @@ public class ActivityRepository implements IActivityRepository {
     }
 
     @Override
-    public void clearQueueValue(String sku) {
+    public void clearQueueValue(Long sku) {
 
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY + sku;
         RBlockingQueue<Object> destinationQueue = redisService.getBlockingQueue(cacheKey);
@@ -541,6 +551,21 @@ public class ActivityRepository implements IActivityRepository {
         Integer dayPartakeCount = raffleActivityAccountDayDao.queryRaffleActivityAccountDayPartakeCount(raffleActivityAccountDay);
         // 当日未参与抽奖则为0次
         return null == dayPartakeCount ? 0 : dayPartakeCount;
+    }
+
+    @Override
+    public List<Long> querySkuList() {
+
+        // 1.优先从缓存中获取
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_LIST_KEY;
+        String jsonList = redisService.getValue(cacheKey);
+        List<Long> resultList = JSON.parseArray(jsonList, Long.class);
+        if (null != jsonList && null != resultList && !resultList.isEmpty()) return resultList;
+        // 从数据库中查询
+        List<RaffleActivitySku> raffleActivitySkuList = raffleActivitySkuDao.querySkuList();
+        resultList = raffleActivitySkuList.stream().map(RaffleActivitySku::getSku).collect(Collectors.toList());
+        redisService.setValue(cacheKey, JSON.toJSONString(resultList));
+        return resultList;
     }
 
 

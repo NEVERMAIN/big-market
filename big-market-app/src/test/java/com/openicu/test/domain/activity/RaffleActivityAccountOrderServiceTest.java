@@ -34,8 +34,8 @@ public class RaffleActivityAccountOrderServiceTest {
     @Before
     public void setUp() {
         log.info("装配活动：{}", activityArmory.assembleActivitySku(9011L));
+        log.info("装配活动：{}", activityArmory.assembleActivitySku(10011L));
     }
-
 
     @Test
     public void test_createSkuRechargeOrder_duplicate(){
@@ -44,7 +44,7 @@ public class RaffleActivityAccountOrderServiceTest {
         skuRechargeEntity.setUserId("咸鱼12138");
         skuRechargeEntity.setSku(9011L);
         // outBusinessNo 作为幂等性防重使用,同一个业务号2次使用会抛出索引冲突
-        skuRechargeEntity.setOutBusinessNo("700091009111");
+        skuRechargeEntity.setOutBusinessNo("700091009115");
         String orderId = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
 
         log.info("测试结果:{} ",orderId);

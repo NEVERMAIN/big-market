@@ -2,6 +2,8 @@ package com.openicu.domain.activity.service;
 
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
+import java.util.List;
+
 /**
  * @description: 活动sku库存处理接口
  * @author: 云奇迹
@@ -17,6 +19,8 @@ public interface IRaffleActivitySkuStockService {
      */
     ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException;
 
+    ActivitySkuStockKeyVO takeQueueValue(Long sku) throws InterruptedException;
+
     /**
      * 清空队列
      */
@@ -26,7 +30,7 @@ public interface IRaffleActivitySkuStockService {
      * 清空队列 - 指定 sku
      * @param sku
      */
-    void clearQueueValue(String sku);
+    void clearQueueValue(Long sku);
 
     /**
      * 延迟队列 + 任务趋势更新活动sku库存
@@ -40,5 +44,10 @@ public interface IRaffleActivitySkuStockService {
      */
     void clearActivitySkuStock(Long sku);
 
+    /**
+     * 查询活动sku集合
+     * @return
+     */
+    List<Long> querySkuList();
 
 }

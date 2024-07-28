@@ -40,6 +40,8 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         this.defaultTreeFactory = defaultTreeFactory;
     }
 
+
+
     @Override
     public RaffleAwardEntity performRaffle(RaffleFactorEntity raffleFactorEntity) {
 
@@ -68,6 +70,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         // 5. 返回抽奖结果
         return buildRaffleAwardEntity(strategyId,treeStrategyAwardVO.getAwardId(),treeStrategyAwardVO.getAwardRuleValue());
     }
+
 
     private RaffleAwardEntity buildRaffleAwardEntity(Long strategyId, Integer awardId, String awardConfig) {
         // 1.查询奖品信息

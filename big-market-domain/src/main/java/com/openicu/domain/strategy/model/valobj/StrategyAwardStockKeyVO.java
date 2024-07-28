@@ -20,5 +20,6 @@ public class StrategyAwardStockKeyVO {
     private Long strategyId;
     /** 奖品ID */
     private Integer awardId;
-
+    /** 活动sku */
+    private Long sku;
 }
