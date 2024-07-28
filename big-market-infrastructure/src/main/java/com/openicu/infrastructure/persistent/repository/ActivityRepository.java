@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.DefaultErrorViewResolver;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -80,6 +81,8 @@ public class ActivityRepository implements IActivityRepository {
 
     @Resource
     private IUserRaffleOrderDao userRaffleOrderDao;
+    @Autowired
+    private EndpointAutoConfiguration endpointAutoConfiguration;
 
 
     @Override
@@ -120,7 +123,8 @@ public class ActivityRepository implements IActivityRepository {
                 .state(ActivityStateVO.valueOf(raffleActivity.getState()))
                 .build();
         // 3. 缓存数据
-        redisService.setValue(cacheKey, activityEntity);
+        long expired = raffleActivity.getEndDateTime().getTime() - System.currentTimeMillis();
+        redisService.setValue(cacheKey, activityEntity, expired);
         return activityEntity;
 
     }
@@ -144,6 +148,7 @@ public class ActivityRepository implements IActivityRepository {
         // 3. 缓存数据
         redisService.setValue(cacheKey, activityCountEntity);
         return activityCountEntity;
+
     }
 
     @Override

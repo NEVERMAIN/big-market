@@ -54,6 +54,7 @@ public class RedissonService implements IRedisService {
         redissonClient.getAtomicLong(key).set(value);
     }
 
+
     @Override
     public Long getAtomicLong(String key) {
         return redissonClient.getAtomicLong(key).get();
