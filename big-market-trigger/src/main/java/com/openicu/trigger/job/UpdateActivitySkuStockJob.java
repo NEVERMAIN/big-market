@@ -26,6 +26,9 @@ public class UpdateActivitySkuStockJob {
         try {
 
             List<Long> skuList = skuStock.querySkuList();
+            if(skuList.isEmpty()){
+                return;
+            }
 
             for (Long sku : skuList) {
                 ActivitySkuStockKeyVO activitySkuStockKeyVO = skuStock.takeQueueValue(sku);

@@ -34,6 +34,7 @@ spring:
       activity_sku_stock_zero: activity_sku_stock_zero
       strategy_award_stock_zero: strategy_award_stock_zero
       send_award: send_award
+      send_rebate: send_rebate
 
 # 多数据源路由配置，库数量 * 表数量 为2的次幂，如2库4表
 # mysql 5.x 配置 driver-class-name: com.mysql.jdbc.Driver    mysql-connector-java 5.1.34

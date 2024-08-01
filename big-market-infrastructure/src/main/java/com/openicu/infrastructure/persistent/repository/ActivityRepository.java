@@ -146,6 +146,7 @@ public class ActivityRepository implements IActivityRepository {
                 .monthCount(raffleActivityCount.getMonthCount())
                 .build();
         // 3. 缓存数据
+        // TODO 增加缓存有效期
         redisService.setValue(cacheKey, activityCountEntity);
         return activityCountEntity;
 
@@ -214,6 +215,7 @@ public class ActivityRepository implements IActivityRepository {
         // 1.如果已经缓存,则直接返回
         if (redisService.isExists(cacheKey)) return;
         // 2.缓存活动商品库存
+        // TODO 增加活动SKU缓存有效期
         redisService.setAtomicLong(cacheKey, stockCount);
     }
 
