@@ -38,11 +38,13 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
+
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.openicu</groupId>
             <artifactId>big-market-types</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
