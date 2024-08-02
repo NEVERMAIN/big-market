@@ -172,7 +172,7 @@ public class ActivityRepository implements IActivityRepository {
                     .outBusinessNo(activityOrderEntity.getOutBusinessNo())
                     .build();
 
-            // 2. 账户对象
+            // 2. 账户对象 - 总
             RaffleActivityAccount raffleActivityAccount = RaffleActivityAccount.builder()
                     .userId(createOrderAggregate.getUserId())
                     .activityId(createOrderAggregate.getActivityId())
@@ -184,6 +184,23 @@ public class ActivityRepository implements IActivityRepository {
                     .monthCountSurplus(createOrderAggregate.getMonthCount())
                     .build();
 
+            //  账户对象 - 月
+            RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
+            raffleActivityAccountMonth.setUserId(createOrderAggregate.getUserId());
+            raffleActivityAccountMonth.setActivityId(createOrderAggregate.getActivityId());
+            raffleActivityAccountMonth.setMonth(raffleActivityAccountMonth.currentMonth());
+            raffleActivityAccountMonth.setMonthCount(createOrderAggregate.getMonthCount());
+            raffleActivityAccountMonth.setMonthCountSurplus(createOrderAggregate.getMonthCount());
+
+            //  账户对象 - 日
+            RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+            raffleActivityAccountDay.setUserId(createOrderAggregate.getUserId());
+            raffleActivityAccountDay.setActivityId(createOrderAggregate.getActivityId());
+            raffleActivityAccountDay.setDay(raffleActivityAccountDay.currentDay());
+            raffleActivityAccountDay.setDayCount(createOrderAggregate.getDayCount());
+            raffleActivityAccountDay.setDayCountSurplus(createOrderAggregate.getDayCount());
+
+
             // 3. 以用户ID作为切分键,通过 doRouter 设定路由【这样就保证了下面的操作,都是同一个连接下的,保证了事务的特性】
             dbRouter.doRouter(createOrderAggregate.getUserId());
             // 编程式事务
@@ -191,13 +208,16 @@ public class ActivityRepository implements IActivityRepository {
                 try {
                     // 1.写入订单
                     raffleActivityOrderDao.insert(raffleActivityOrder);
-                    // 2.更新账户
-                    // todo 这里更新用户账户的逻辑
+                    // 2.更新账户 - 总
                     int count = raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
                     // 3.创建账户 更新为0,则账户不存在,创建新账户
                     if (0 == count) {
                         raffleActivityAccountDao.insert(raffleActivityAccount);
                     }
+                    // 4. 更新账户 - 月
+                    raffleActivityAccountDayDao.addAccountQuota(raffleActivityAccountDay);
+                    // 5. 更新账户 - 日
+                    raffleActivityAccountMonthDao.addAccountQuota(raffleActivityAccountMonth);
                     return 1;
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly();

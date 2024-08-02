@@ -33,4 +33,6 @@ public interface IRaffleActivityAccountMonthDao {
      * @return
      */
     int updateActivityAccountMonthSubtractionQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
+
+    void addAccountQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
 }

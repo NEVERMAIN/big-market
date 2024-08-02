@@ -8,6 +8,9 @@ import com.openicu.domain.activity.service.armory.IActivityArmory;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;
 import com.openicu.domain.award.model.valobj.AwardStateVO;
 import com.openicu.domain.award.service.IAwardService;
+import com.openicu.domain.rebate.model.entity.BehaviorEntity;
+import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
+import com.openicu.domain.rebate.service.IBehaviorRebateService;
 import com.openicu.domain.strategy.model.entity.RaffleAwardEntity;
 import com.openicu.domain.strategy.model.entity.RaffleFactorEntity;
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
@@ -23,11 +26,13 @@ import com.openicu.trigger.api.dto.RaffleAwardListResponseDTO;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import com.openicu.types.model.Response;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +49,8 @@ import java.util.Map;
 @RequestMapping("/api/${app.config.api-version}/raffle/activity")
 public class RaffleActivityController implements IRaffleActivityService {
 
+    private final SimpleDateFormat dateFormatDay = new SimpleDateFormat("yyyyMMdd");
+
     @Resource
     private IActivityArmory activityArmory;
 
@@ -58,6 +65,9 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Resource
     private IAwardService awardService;
+
+    @Resource
+    private IBehaviorRebateService behaviorRebateService;
 
 
     @RequestMapping(value = "armory", method = RequestMethod.GET)
@@ -153,6 +163,47 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();
         }
+    }
+
+    @Override
+    @RequestMapping(value = "calendar_sign_rebate", method = RequestMethod.POST)
+    public Response<Boolean> calendarSignRebate(@RequestParam String userId) {
+
+        try {
+
+            log.info("日历签到返利开始 userId:{}", userId);
+            BehaviorEntity behaviorEntity = new BehaviorEntity();
+            behaviorEntity.setUserId(userId);
+            behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
+            behaviorEntity.setOutBusinessNo(dateFormatDay.format(new Date()));
+            List<String> orderIds = behaviorRebateService.createOrder(behaviorEntity);
+            log.info("日历签到返利完成 userId:{} orderIds:{}", userId, JSON.toJSONString(orderIds));
+
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(true)
+                    .build();
+
+        } catch (AppException e) {
+
+            log.error("日历签到返利异常 userId: {}", userId, e);
+            return Response.<Boolean>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+
+        } catch (Exception e) {
+
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .data(false)
+                    .build();
+
+        }
+
+
     }
 
 

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @description:
@@ -38,11 +39,20 @@ public class RaffleActivityControllerTest {
 
         ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
         request.setActivityId(100301L);
-        request.setUserId("咸鱼12138");
+        request.setUserId("星耀");
         Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
         log.info("请求参数:{}",JSON.toJSONString(request));
         log.info("测试结果:{}",JSON.toJSONString(response));
     }
 
+    @Test
+    public void test_calendarSignRebate() throws InterruptedException {
+
+        Response<Boolean> response = raffleActivityService.calendarSignRebate("星耀");
+        log.info("测试结果：{}", JSON.toJSONString(response));
+
+        new CountDownLatch(1).await();
+
+    }
 }
