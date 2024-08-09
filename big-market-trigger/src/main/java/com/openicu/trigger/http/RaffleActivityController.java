@@ -63,12 +63,8 @@ public class RaffleActivityController implements IRaffleActivityService {
     @Resource
     private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
 
-
     @Resource
     private IRaffleStrategy raffleStrategy;
-
-    @Resource
-    private IRaffleRule raffleRule;
 
     @Resource
     private IAwardService awardService;
