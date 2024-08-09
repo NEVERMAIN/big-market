@@ -101,6 +101,12 @@
             <artifactId>db-router-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--<dependency>-->
+        <!--    <groupId>gaga.plus</groupId>-->
+        <!--    <artifactId>business-behavior-monitor-sdk</artifactId>-->
+        <!--</dependency>-->
+
+
         <!-- 工程模块；启动依赖 trigger->domain, infrastructure-->
         <dependency>
             <groupId>com.openicu</groupId>

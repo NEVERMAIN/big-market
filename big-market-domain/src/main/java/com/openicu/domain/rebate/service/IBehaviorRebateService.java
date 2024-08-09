@@ -1,6 +1,7 @@
 package com.openicu.domain.rebate.service;
 
 import com.openicu.domain.rebate.model.entity.BehaviorEntity;
+import com.openicu.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 
 import java.util.List;
 
@@ -18,4 +19,11 @@ public interface IBehaviorRebateService {
      */
     List<String> createOrder(BehaviorEntity behaviorEntity);
 
+    /**
+     * 查询签到返利订单
+     * @param userId
+     * @param outBusinessNo
+     * @return
+     */
+    List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo);
 }

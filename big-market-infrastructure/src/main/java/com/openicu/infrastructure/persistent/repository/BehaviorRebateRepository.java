@@ -8,6 +8,7 @@ import com.openicu.domain.rebate.model.entity.TaskEntity;
 import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.openicu.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 import com.openicu.domain.rebate.repository.IBehaviorRebateRepository;
+import com.openicu.domain.rebate.service.BehaviorRebateService;
 import com.openicu.infrastructure.event.EventPublisher;
 import com.openicu.infrastructure.persistent.dao.IDailyBehaviorRebateDao;
 import com.openicu.infrastructure.persistent.dao.ITaskDao;
@@ -18,13 +19,16 @@ import com.openicu.infrastructure.persistent.po.UserBehaviorRebateOrder;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -75,11 +79,11 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
     @Override
     public void saveUserRebateRecord(String userId, List<BehaviorRebateAggregate> behaviorRebateAggregateList) {
 
-        try{
+        try {
             dbRouter.doRouter(userId);
-            transactionTemplate.execute(status ->{
+            transactionTemplate.execute(status -> {
 
-                try{
+                try {
 
                     for (BehaviorRebateAggregate behaviorRebateAggregate : behaviorRebateAggregateList) {
 
@@ -92,6 +96,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                         userBehaviorRebateOrder.setRebateType(behaviorRebateOrderEntity.getRebateType());
                         userBehaviorRebateOrder.setRebateDesc(behaviorRebateOrderEntity.getRebateDesc());
                         userBehaviorRebateOrder.setRebateConfig(behaviorRebateOrderEntity.getRebateConfig());
+                        userBehaviorRebateOrder.setOutBusinessNo(behaviorRebateOrderEntity.getOutBusinessNo());
                         userBehaviorRebateOrder.setBizId(behaviorRebateOrderEntity.getBizId());
 
                         // 保存
@@ -113,7 +118,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
 
                     return 1;
 
-                }catch (DuplicateKeyException e) {
+                } catch (DuplicateKeyException e) {
 
                     status.setRollbackOnly();
                     log.error("写入返利记录，唯一索引冲突 userId: {}", userId, e);
@@ -122,7 +127,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                 }
             });
 
-        }finally {
+        } finally {
             dbRouter.clear();
         }
 
@@ -133,14 +138,14 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
             Task task = new Task();
             task.setUserId(task.getUserId());
             task.setMessageId(taskEntity.getMessageId());
-            try{
+            try {
 
                 // 发送消息【在事务外执行,如果失败还有任务补偿】
-                eventPublisher.publish(taskEntity.getTopic(),taskEntity.getMessage());
+                eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
                 // 更新数据库记录, task 任务表
                 taskDao.updateTaskMessageCompleted(task);
 
-            }catch (Exception e){
+            } catch (Exception e) {
 
                 log.error("写入返利记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic());
                 taskDao.updateTaskSendMessageFail(task);
@@ -148,6 +153,34 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
             }
 
         }
+
+    }
+
+    @Override
+    public List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo) {
+
+        UserBehaviorRebateOrder userBehaviorRebateOrderReq = new UserBehaviorRebateOrder();
+        userBehaviorRebateOrderReq.setUserId(userId);
+        userBehaviorRebateOrderReq.setOutBusinessNo(outBusinessNo);
+        List<UserBehaviorRebateOrder> userBehaviorRebateOrderResList = userBehaviorRebateOrderDao.queryOrderByOutBusinessNo(userBehaviorRebateOrderReq);
+
+        List<BehaviorRebateOrderEntity> behaviorRebateOrderEntities = new ArrayList<>(userBehaviorRebateOrderResList.size());
+        for (UserBehaviorRebateOrder userBehaviorRebateOrder : userBehaviorRebateOrderResList) {
+            BehaviorRebateOrderEntity behaviorRebateOrderEntity = BehaviorRebateOrderEntity.builder()
+                    .userId(userBehaviorRebateOrder.getUserId())
+                    .orderId(userBehaviorRebateOrder.getOrderId())
+                    .behaviorType(userBehaviorRebateOrder.getBehaviorType())
+                    .rebateDesc(userBehaviorRebateOrder.getRebateDesc())
+                    .rebateType(userBehaviorRebateOrder.getRebateType())
+                    .rebateConfig(userBehaviorRebateOrder.getRebateConfig())
+                    .outBusinessNo(userBehaviorRebateOrder.getOutBusinessNo())
+                    .bizId(userBehaviorRebateOrder.getBizId())
+                    .build();
+
+            behaviorRebateOrderEntities.add(behaviorRebateOrderEntity);
+        }
+        return behaviorRebateOrderEntities;
+
 
     }
 }

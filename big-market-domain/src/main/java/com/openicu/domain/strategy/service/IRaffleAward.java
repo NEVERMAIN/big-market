@@ -1,6 +1,7 @@
 package com.openicu.domain.strategy.service;
 
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
+import com.openicu.domain.strategy.model.valobj.RuleWeightVO;
 
 import java.util.List;
 
@@ -24,4 +25,7 @@ public interface IRaffleAward {
      * @return
      */
     List<StrategyAwardEntity> queryRaffleStrategyAwardListByActivityId(Long activityId);
+
+    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
+
 }

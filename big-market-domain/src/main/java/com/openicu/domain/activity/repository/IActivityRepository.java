@@ -177,4 +177,5 @@ public interface IActivityRepository {
     List<Long> querySkuList();
 
 
+    ActivityAccountEntity queryActivityAccountEntity(String userId, Long activityId);
 }

@@ -1,6 +1,7 @@
 package com.openicu.domain.rebate.repository;
 
 import com.openicu.domain.rebate.model.aggregate.BehaviorRebateAggregate;
+import com.openicu.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.openicu.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 
@@ -28,4 +29,13 @@ public interface IBehaviorRebateRepository {
      * @param behaviorRebateAggregateList 行为返利汇总列表，包含用户的具体行为及其返利信息。
      */
     void saveUserRebateRecord(String userId, List<BehaviorRebateAggregate> behaviorRebateAggregateList);
+
+    /**
+     * 根据外部业务号查询用户行为返利订单。
+     *
+     * @param userId 用户ID，用于标识返利订单所属的用户。
+     * @param outBusinessNo 外部业务号，用于标识返利订单。
+     * @return 返回用户行为返利订单列表，每个订单包含用户的具体行为及其返利信息。
+     */
+    List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo);
 }

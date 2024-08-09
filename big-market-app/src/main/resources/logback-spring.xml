@@ -102,7 +102,18 @@
         <logger name="com.nmys.view" level="debug"/>
     </springProfile>
 
+    <!--<appender name="CUSTOM" class="gaga.plus.monitor.sdk.appender.CustomAppender">-->
+    <!--    <systemName>big-market</systemName>-->
+    <!--    <groupId>com.openicu</groupId>-->
+    <!--    <host>127.0.0.1</host>-->
+    <!--    <port>6379</port>-->
+    <!--</appender>-->
+
+
     <root level="info">
+
+        <!--<appender-ref ref="CUSTOM"/>-->
+
         <appender-ref ref="CONSOLE"/>
         <!-- 异步日志-INFO -->
         <appender-ref ref="ASYNC_FILE_INFO"/>

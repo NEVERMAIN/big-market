@@ -2,6 +2,7 @@ package com.openicu.domain.strategy.resposity;
 
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
 import com.openicu.domain.strategy.model.valobj.RuleTreeVO;
+import com.openicu.domain.strategy.model.valobj.RuleWeightVO;
 import com.openicu.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
@@ -196,4 +197,13 @@ public interface IStrategyRepository {
 
     Long queryActivitySkuByActivityId(Long activityId);
 
+    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
+
+    /**
+     * 查询用户总抽奖次数
+     * @param userId
+     * @param strategyId
+     * @return
+     */
+    Integer queryActivityAccountTotalUseCount(String userId, Long strategyId);
 }

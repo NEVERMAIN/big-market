@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.openicu.trigger.api.IRaffleActivityService;
 import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
 import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
+import com.openicu.trigger.api.dto.UserActivityAccountRequestDTO;
+import com.openicu.trigger.api.dto.UserActivityAccountResponseDTO;
 import com.openicu.types.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -35,7 +37,7 @@ public class RaffleActivityControllerTest {
     }
 
     @Test
-    public void test_draw(){
+    public void test_draw() throws InterruptedException {
 
         ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
         request.setActivityId(100301L);
@@ -44,6 +46,8 @@ public class RaffleActivityControllerTest {
 
         log.info("请求参数:{}",JSON.toJSONString(request));
         log.info("测试结果:{}",JSON.toJSONString(response));
+
+        new CountDownLatch(1).await();
     }
 
     @Test
@@ -55,4 +59,30 @@ public class RaffleActivityControllerTest {
         new CountDownLatch(1).await();
 
     }
+
+    @Test
+    public void test_isCalendarSignRebate() throws InterruptedException {
+        Response<Boolean> response = raffleActivityService.isCalendarSignRebate("星耀");
+        log.info("测试结果: {}",JSON.toJSONString(response));
+
+        new CountDownLatch(1).await();
+
+    }
+
+    @Test
+    public void test_queryUserActivityAccount() throws InterruptedException {
+
+        UserActivityAccountRequestDTO request = new UserActivityAccountRequestDTO();
+        request.setActivityId(100301L);
+        request.setUserId("星耀");
+        // 1. 查询数据
+        Response<UserActivityAccountResponseDTO> response = raffleActivityService.queryUserActivityAccount(request);
+        log.info("请求参数: {}",JSON.toJSONString(request));
+        log.info("测试结果: {}",JSON.toJSONString(response));
+
+        new CountDownLatch(1).await();
+
+
+    }
+
 }

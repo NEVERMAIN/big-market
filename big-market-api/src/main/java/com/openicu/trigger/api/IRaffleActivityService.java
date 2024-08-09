@@ -1,9 +1,6 @@
 package com.openicu.trigger.api;
 
-import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
-import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
-import com.openicu.trigger.api.dto.RaffleAwardListRequestDTO;
-import com.openicu.trigger.api.dto.RaffleAwardListResponseDTO;
+import com.openicu.trigger.api.dto.*;
 import com.openicu.types.model.Response;
 
 import java.util.List;
@@ -30,10 +27,25 @@ public interface IRaffleActivityService {
     Response<ActivityDrawResponseDTO> draw(ActivityDrawRequestDTO request);
 
     /**
-     * 返利接口
+     * 签到返利接口
      * @param userId
      * @return
      */
     Response<Boolean> calendarSignRebate(String userId);
+
+    /**
+     * 是否签到
+     * @param userId
+     * @return
+     */
+    Response<Boolean> isCalendarSignRebate(String userId);
+
+    /**
+     * 查询用户额度接口
+     * @param request
+     * @return
+     */
+    Response<UserActivityAccountResponseDTO> queryUserActivityAccount(UserActivityAccountRequestDTO request);
+    
 
 }

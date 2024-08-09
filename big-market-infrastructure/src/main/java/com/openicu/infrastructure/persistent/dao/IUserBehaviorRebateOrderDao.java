@@ -5,6 +5,8 @@ import com.myapp.middleware.db.router.annotation.DBRouterStrategy;
 import com.openicu.infrastructure.persistent.po.UserBehaviorRebateOrder;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: 云奇迹
@@ -16,4 +18,8 @@ public interface IUserBehaviorRebateOrderDao {
 
     @DBRouter(key = "userId")
     void insert(UserBehaviorRebateOrder userBehaviorRebateOrder);
+
+
+    @DBRouter(key = "userId")
+    List<UserBehaviorRebateOrder> queryOrderByOutBusinessNo(UserBehaviorRebateOrder userBehaviorRebateOrder);
 }

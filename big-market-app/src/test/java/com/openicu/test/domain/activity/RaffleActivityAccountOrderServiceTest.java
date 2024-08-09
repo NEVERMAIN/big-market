@@ -31,10 +31,9 @@ public class RaffleActivityAccountOrderServiceTest {
     @Resource
     private IActivityArmory activityArmory;
 
-    @Before
+    @Test
     public void setUp() {
         log.info("装配活动：{}", activityArmory.assembleActivitySku(9011L));
-        log.info("装配活动：{}", activityArmory.assembleActivitySku(10011L));
     }
 
     @Test

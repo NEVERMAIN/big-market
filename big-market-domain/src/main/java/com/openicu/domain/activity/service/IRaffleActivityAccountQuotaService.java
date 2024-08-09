@@ -1,5 +1,6 @@
 package com.openicu.domain.activity.service;
 
+import com.openicu.domain.activity.model.entity.ActivityAccountEntity;
 import com.openicu.domain.activity.model.entity.SkuRechargeEntity;
 
 /**
@@ -28,4 +29,12 @@ public interface IRaffleActivityAccountQuotaService {
      * @return
      */
     Integer queryRaffleActivityAccountDayPartakeCount(String userId, Long activityId);
+
+    /**
+     * 查询活动账户 - 总
+     * @param userId
+     * @param activityId
+     * @return
+     */
+    ActivityAccountEntity queryActivityAccountEntity(String userId, Long activityId);
 }

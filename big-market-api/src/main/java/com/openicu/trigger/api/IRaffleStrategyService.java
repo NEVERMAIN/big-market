@@ -1,11 +1,9 @@
 package com.openicu.trigger.api;
 
 
-import com.openicu.trigger.api.dto.RaffleAwardListRequestDTO;
-import com.openicu.trigger.api.dto.RaffleAwardListResponseDTO;
-import com.openicu.trigger.api.dto.RaffleStrategyRequestDTO;
-import com.openicu.trigger.api.dto.RaffleStrategyResponseDTO;
+import com.openicu.trigger.api.dto.*;
 import com.openicu.types.model.Response;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -39,6 +37,7 @@ public interface IRaffleStrategyService {
     Response<RaffleStrategyResponseDTO> randomRaffle(RaffleStrategyRequestDTO requestDTO);
 
 
+    Response<List<RaffleStrategyRuleWeightResponseDTO>> queryRaffleStrategyRuleWeight(RaffleStrategyRuleWeightRequestDTO request);
 
 
 }

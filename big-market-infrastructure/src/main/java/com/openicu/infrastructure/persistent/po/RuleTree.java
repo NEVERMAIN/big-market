@@ -23,7 +23,7 @@ public class RuleTree {
     /** 规则树描述 */
     private String treeDesc;
     /** 规则根节点 */
-    private String treeRootRuleKey;
+    private String treeNodeRuleKey;
     /** 创建时间 */
     private Date createTime;
     /** 更新时间 */
