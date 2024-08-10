@@ -154,7 +154,9 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate) {
+
         try {
+
             // 1.订单对象
             ActivityOrderEntity activityOrderEntity = createOrderAggregate.getActivityOrderEntity();
             RaffleActivityOrder raffleActivityOrder = RaffleActivityOrder.builder()
@@ -200,12 +202,12 @@ public class ActivityRepository implements IActivityRepository {
             raffleActivityAccountDay.setDayCount(createOrderAggregate.getDayCount());
             raffleActivityAccountDay.setDayCountSurplus(createOrderAggregate.getDayCount());
 
-
             // 3. 以用户ID作为切分键,通过 doRouter 设定路由【这样就保证了下面的操作,都是同一个连接下的,保证了事务的特性】
             dbRouter.doRouter(createOrderAggregate.getUserId());
             // 编程式事务
             transactionTemplate.execute(status -> {
                 try {
+
                     // 1.写入订单
                     raffleActivityOrderDao.insert(raffleActivityOrder);
                     // 2.更新账户 - 总
@@ -219,6 +221,7 @@ public class ActivityRepository implements IActivityRepository {
                     // 5. 更新账户 - 日
                     raffleActivityAccountMonthDao.addAccountQuota(raffleActivityAccountMonth);
                     return 1;
+
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly();
                     log.error("写入订单记录,唯一索引冲突 userId:{} activityId:{} sku:{}", activityOrderEntity.getUserId(), activityOrderEntity.getActivityId(), activityOrderEntity.getSku());

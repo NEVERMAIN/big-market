@@ -22,5 +22,13 @@
         values (#{userId},#{activityId},#{strategyId},#{orderId},#{awardId},#{awardTitle},#{awardTime},#{awardState},now(),now())
     </insert>
 
+    <update id="updateAwardRecordCompletedState" parameterType="com.openicu.infrastructure.persistent.po.UserAwardRecord">
+
+        update user_award_record
+        set award_state = #{awardState}
+        where user_id = #{userId} AND order_id = #{orderId} AND award_state = 'create'
+
+    </update>
+
 
 </mapper>

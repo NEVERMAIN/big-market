@@ -19,4 +19,11 @@ public interface IUserAwardRecordDao {
      * @param userAwardRecord
      */
     void insert(UserAwardRecord userAwardRecord);
+
+    /**
+     * 更新用户抽奖奖品记录
+     * @param userAwardRecordReq
+     * @return
+     */
+    int updateAwardRecordCompletedState(UserAwardRecord userAwardRecordReq);
 }

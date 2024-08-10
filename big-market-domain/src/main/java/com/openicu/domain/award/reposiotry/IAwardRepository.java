@@ -1,5 +1,6 @@
 package com.openicu.domain.award.reposiotry;
 
+import com.openicu.domain.award.model.aggregate.GiveOutPrizesAggregate;
 import com.openicu.domain.award.model.aggregate.UserAwardRecordAggregate;
 
 /**
@@ -15,4 +16,23 @@ public interface IAwardRepository {
      */
     void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate);
 
+    /**
+     * 查询奖品配置
+     * @param awardId 奖品id
+     * @return 奖品配置
+     */
+    String queryAwardConfig(Integer awardId);
+
+    /**
+     * 保存奖品发放聚合
+     * @param giveOutPrizesAggregate 奖品发放聚合
+     */
+    void saveGiveOutPrizesAggregate(GiveOutPrizesAggregate giveOutPrizesAggregate);
+
+    /**
+     * 查询奖品key
+     * @param awardId
+     * @return
+     */
+    String queryAwardKey(Integer awardId);
 }

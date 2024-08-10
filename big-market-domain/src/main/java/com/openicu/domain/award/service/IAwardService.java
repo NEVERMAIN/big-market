@@ -1,5 +1,6 @@
 package com.openicu.domain.award.service;
 
+import com.openicu.domain.award.model.entity.DistributeAwardEntity;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;
 
 /**
@@ -14,6 +15,12 @@ public interface IAwardService {
      * @param userAwardRecordEntity 奖品记录实体对象
      */
     void saveUserAwardRecord(UserAwardRecordEntity userAwardRecordEntity);
+
+    /**
+     * 发奖
+     * @param distributeAwardEntity
+     */
+    void distributeAward(DistributeAwardEntity distributeAwardEntity);
 
 
 }
