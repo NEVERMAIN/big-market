@@ -334,10 +334,12 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+
         StrategyAward strategyAward = new StrategyAward();
         strategyAward.setStrategyId(strategyId);
         strategyAward.setAwardId(awardId);
         strategyAwardDao.updateStrategyAwardStock(strategyAward);
+
     }
 
     @Override

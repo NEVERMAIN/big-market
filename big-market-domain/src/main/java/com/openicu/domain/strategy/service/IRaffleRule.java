@@ -19,6 +19,12 @@ public interface IRaffleRule {
      */
     Map<String ,Integer> queryAwardRuleLockCount(String[] treeIds);
 
+    /**
+     * 根据活动ID查询奖励规则权重
+     *
+     * @param activityId 活动ID，用于指定要查询的特定活动
+     * @return 返回一个List，包含特定活动的奖励规则及其权重
+     */
     List<RuleWeightVO> queryAwardRuleWeightByActivityId(Long activityId);
 
 }

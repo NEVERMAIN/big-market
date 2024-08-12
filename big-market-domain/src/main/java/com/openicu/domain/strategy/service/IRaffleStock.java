@@ -32,6 +32,8 @@ public interface IRaffleStock {
 
     /**
      * 清空抽奖奖品库存
+     * @param strategyId 策略ID
+     * @param awardId 奖品ID
      */
     void clearStrategyAwardStock(Long strategyId,Integer awardId);
 

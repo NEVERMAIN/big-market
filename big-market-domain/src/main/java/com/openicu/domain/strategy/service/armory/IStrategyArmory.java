@@ -19,6 +19,7 @@ public interface IStrategyArmory {
     /**
      * 根据活动ID组装彩票策略。
      * @param activityId 活动ID
+     * @return 如果策略成功组装，则返回 true；否则返回 false。
      */
     boolean assembleLotteryStrategyByActivityId(Long activityId);
 }

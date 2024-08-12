@@ -26,6 +26,12 @@ public interface IRaffleAward {
      */
     List<StrategyAwardEntity> queryRaffleStrategyAwardListByActivityId(Long activityId);
 
+    /**
+     * 查询奖励规则权重
+     *
+     * @param strategyId 策略ID，用于定位到具体的奖励策略
+     * @return 返回一个List，包含该策略下所有奖励规则的权重信息
+     */
     List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
 
 }
