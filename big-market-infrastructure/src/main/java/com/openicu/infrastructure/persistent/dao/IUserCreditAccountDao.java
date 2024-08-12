@@ -26,4 +26,12 @@ public interface IUserCreditAccountDao {
      * @param userCreditAccountReq 包含新的用户信用账户信息的对象
      */
     void insert(UserCreditAccount userCreditAccountReq);
+
+    /**
+     * 查询用户信用账户信息
+     *
+     * @param userCreditAccountReq 包含查询条件的用户信用账户信息的对象
+     * @return 用户信用账户信息
+     */
+    UserCreditAccount queryUserCreditAccount(UserCreditAccount userCreditAccountReq);
 }

@@ -8,7 +8,6 @@ import com.openicu.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import com.openicu.domain.activity.model.entity.*;
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import com.openicu.domain.activity.model.valobj.ActivityStateVO;
-import com.openicu.domain.activity.model.valobj.OrderStateVO;
 import com.openicu.domain.activity.model.valobj.UserRaffleOrderState;
 import com.openicu.domain.activity.repository.IActivityRepository;
 import com.openicu.infrastructure.event.EventPublisher;
@@ -21,15 +20,14 @@ import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.error.DefaultErrorViewResolver;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -87,6 +85,7 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public ActivitySkuEntity queryActivitySku(Long sku) {
+
         // 1.从数据库中查询活动库存
         RaffleActivitySku raffleActivitySku = raffleActivitySkuDao.queryActivitySku(sku);
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
@@ -102,6 +101,7 @@ public class ActivityRepository implements IActivityRepository {
                 .stockCount(raffleActivitySku.getStockCount())
                 .stockCountSurplus(cacheSkuStock.intValue())
                 .build();
+
     }
 
     @Override
@@ -155,8 +155,9 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate) {
 
+        RLock Lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + createOrderAggregate.getUserId() + Constants.UNDERLINE + createOrderAggregate.getActivityId());
         try {
-
+            Lock.lock(3, TimeUnit.SECONDS);
             // 1.订单对象
             ActivityOrderEntity activityOrderEntity = createOrderAggregate.getActivityOrderEntity();
             RaffleActivityOrder raffleActivityOrder = RaffleActivityOrder.builder()
@@ -211,10 +212,11 @@ public class ActivityRepository implements IActivityRepository {
                     // 1.写入订单
                     raffleActivityOrderDao.insert(raffleActivityOrder);
                     // 2.更新账户 - 总
-                    int count = raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
-                    // 3.创建账户 更新为0,则账户不存在,创建新账户
-                    if (0 == count) {
+                    RaffleActivityAccount raffleActivityAccountRes = raffleActivityAccountDao.queryAccountByUserId(raffleActivityAccount);
+                    if (null == raffleActivityAccountRes) {
                         raffleActivityAccountDao.insert(raffleActivityAccount);
+                    } else {
+                        raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
                     }
                     // 4. 更新账户 - 月
                     raffleActivityAccountDayDao.addAccountQuota(raffleActivityAccountDay);
@@ -230,7 +232,9 @@ public class ActivityRepository implements IActivityRepository {
             });
         } finally {
             dbRouter.clear();
+            Lock.unlock();
         }
+
     }
 
     @Override

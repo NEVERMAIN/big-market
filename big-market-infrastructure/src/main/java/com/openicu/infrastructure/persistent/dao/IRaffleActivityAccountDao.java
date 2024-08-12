@@ -61,4 +61,11 @@ public interface IRaffleActivityAccountDao {
     @DBRouter(key = "userId")
     RaffleActivityAccount queryActivityAccountEntity(RaffleActivityAccount raffleActivityAccountReq);
 
+    /**
+     * 根据用户ID和活动ID查询用户活动总账户
+     * @param raffleActivityAccount
+     * @return
+     */
+    RaffleActivityAccount queryAccountByUserId(RaffleActivityAccount raffleActivityAccount);
+
 }
