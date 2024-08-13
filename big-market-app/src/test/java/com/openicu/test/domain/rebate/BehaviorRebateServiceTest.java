@@ -5,6 +5,7 @@ import com.openicu.domain.rebate.model.entity.BehaviorEntity;
 import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.openicu.domain.rebate.service.IBehaviorRebateService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,10 +32,10 @@ public class BehaviorRebateServiceTest {
     public void test_createOrder() throws InterruptedException {
 
         BehaviorEntity behaviorEntity = new BehaviorEntity();
-        behaviorEntity.setUserId("咸鱼12138");
+        behaviorEntity.setUserId("xiaofuge");
         behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
         // 重复的 OutBusinessNo 会报错唯一索引冲突，这也是保证幂等的手段，确保不会多记账
-        behaviorEntity.setOutBusinessNo("20240730");
+        behaviorEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(12));
 
         List<String> orderIds = behaviorRebateService.createOrder(behaviorEntity);
         log.info("请求参数：{}", JSON.toJSONString(behaviorEntity));
