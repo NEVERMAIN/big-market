@@ -35,6 +35,7 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(),ResponseCode.ILLEGAL_PARAMETER.getInfo());
         }
 
+
         // 2.查询基础信息
         // 2.1. 通过 sku 查询活动信息
         ActivitySkuEntity activitySkuEntity =  queryActivitySku(sku);

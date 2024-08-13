@@ -34,37 +34,38 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
 
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
-        super(repository, strategyDispatch,defaultChainFactory,defaultTreeFactory);
+        super(repository, strategyDispatch, defaultChainFactory, defaultTreeFactory);
     }
 
     @Override
     public DefaultChainFactory.StrategyAwardVO raffleLogicChain(String userId, Long strategyId) {
         ILogicChain logicChain = defaultChainFactory.openLogicChain(strategyId);
-        return logicChain.logic(userId,strategyId);
+        log.info("抽奖策略-责任链 userId:{} strategyId:{}", userId, strategyId);
+        return logicChain.logic(userId, strategyId);
     }
 
     @Override
     public DefaultTreeFactory.StrategyAwardData raffleLogicTree(String userId, Long strategyId, Integer awardId, Date endDateTime) {
 
         // 1. 获取奖品配置的规则配置值
-        StrategyAwardRuleModelVO strategyAwardRuleModelVO = repository.queryStrategyAwardRuleModelVO(strategyId,awardId);
+        StrategyAwardRuleModelVO strategyAwardRuleModelVO = repository.queryStrategyAwardRuleModelVO(strategyId, awardId);
         // 奖品规则配置为 null , 则直接返回
-        if(null == strategyAwardRuleModelVO){
+        if (null == strategyAwardRuleModelVO) {
             return DefaultTreeFactory.StrategyAwardData.builder()
                     .awardId(awardId)
                     .build();
         }
-
+        log.info("抽奖策略-规则树 userId:{} strategyId:{} awardId:{}", userId, strategyId, awardId);
         // 2. 感觉奖品的规则模型,获取规则树节点
         RuleTreeVO ruleTreeVO = repository.queryRuleTreeVOByTreeId(strategyAwardRuleModelVO.getRuleModels());
-        if(null == ruleTreeVO){
-            throw new RuntimeException("存在抽奖策略配置的规则模型 Key,未在库表 rule_tree、rule_tree_node、rule_tree_node_line 配置对应的规则信息 ruleModels:"+strategyAwardRuleModelVO.getRuleModels());
+        if (null == ruleTreeVO) {
+            throw new RuntimeException("存在抽奖策略配置的规则模型 Key,未在库表 rule_tree、rule_tree_node、rule_tree_node_line 配置对应的规则信息 ruleModels:" + strategyAwardRuleModelVO.getRuleModels());
         }
 
-        IDecisionTreeEngine treeEngine  = defaultTreeFactory.openLogicTree(ruleTreeVO);
+        IDecisionTreeEngine treeEngine = defaultTreeFactory.openLogicTree(ruleTreeVO);
 
         // 3. 获取决策树引擎执行结果
-        return treeEngine.process(userId,strategyId,awardId,endDateTime);
+        return treeEngine.process(userId, strategyId, awardId, endDateTime);
     }
 
     @Override
@@ -79,12 +80,12 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
 
     @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
-        repository.updateStrategyAwardStock(strategyId,awardId);
+        repository.updateStrategyAwardStock(strategyId, awardId);
     }
 
     @Override
     public void clearStrategyAwardStock(Long strategyId, Integer awardId) {
-        repository.clearStrategyAwardStock(strategyId,awardId);
+        repository.clearStrategyAwardStock(strategyId, awardId);
     }
 
     @Override
@@ -97,7 +98,6 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
         Long strategyId = repository.queryStrategyIdByActivityId(activityId);
         return queryRaffleStrategyAwardList(strategyId);
     }
-
 
 
     @Override

@@ -41,16 +41,17 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
     @Override
     public DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId) {
 
-        log.info("抽奖责任链-权重开始 userId:{} strategyId: {} ruleModel: {}",userId,strategyId,ruleModel());
+        log.info("抽奖责任链-权重开始 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
 
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
 
         // 1.解析权重规则值 4000:102,103,104,105 拆解为；4000 -> 4000:102,103,104,105 便于比对判断
         Map<Long, String> analyticalValueGroup = getAnalyticalValue(ruleValue);
-        if(null == analyticalValueGroup || analyticalValueGroup.isEmpty()){
-            log.warn("抽奖责任链-权重告警【策略配置权重,但 ruleValue 未配置相应值】 userId:{} strategyId:{} ruleModel:{}",userId,strategyId,ruleModel());
-            return next().logic(userId,strategyId);
+        if (null == analyticalValueGroup || analyticalValueGroup.isEmpty()) {
+            log.warn("抽奖责任链-权重告警【策略配置权重，但ruleValue未配置相应值】 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
+            return next().logic(userId, strategyId);
         }
+
 
         // 转换 Keys 值,并默认排序
         List<Long> analyticalSortedKeys = new ArrayList<>(analyticalValueGroup.keySet());
@@ -64,10 +65,10 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
                 .findFirst()
                 .orElse(null);
 
-        // 权重抽奖
-        if(null != nextValue){
+        // 4. 权重抽奖
+        if (null != nextValue) {
             Integer awardId = strategyDispatch.getRandomAwardId(strategyId, analyticalValueGroup.get(nextValue));
-            log.info("抽奖责任链-权重接管 userId:{} strategyId:{} ruleModel:{} awardId:{}",userId,strategyId,ruleModel(),awardId);
+            log.info("抽奖责任链-权重接管 userId:{} strategyId:{} ruleModel:{} awardId:{}", userId, strategyId, ruleModel(), awardId);
             return DefaultChainFactory.StrategyAwardVO.builder()
                     .awardId(awardId)
                     .logicModel(ruleModel())
@@ -75,8 +76,8 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
         }
 
         // 5. 过滤其他责任链
-        log.info("抽奖责任链-权重放行 userId:{} strategyId:{} ruleModel:{} ",userId,strategyId,ruleModel());
-        return next().logic(userId,strategyId);
+        log.info("抽奖责任链-权重放行 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
+        return next().logic(userId, strategyId);
     }
 
     /**

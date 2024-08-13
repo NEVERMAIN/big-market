@@ -65,7 +65,6 @@ public class AwardRepository implements IAwardRepository {
     private IRedisService redisService;
 
 
-
     @Override
     public void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate) {
 
@@ -141,7 +140,7 @@ public class AwardRepository implements IAwardRepository {
                 eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
                 // 2. 更新数据库记录, task 任务表
                 taskDao.updateTaskMessageCompleted(task);
-
+                log.info("写入中奖记录，发送MQ消息完成 userId: {} orderId:{} topic: {}", userId, userAwardRecordEntity.getOrderId(), task.getTopic());
             } catch (Exception e) {
                 log.error("写入中奖记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic());
                 taskDao.updateTaskSendMessageFail(task);
@@ -157,7 +156,7 @@ public class AwardRepository implements IAwardRepository {
 
     @Override
     public String queryAwardKey(Integer awardId) {
-       return awardDao.queryAwardKey(awardId);
+        return awardDao.queryAwardKey(awardId);
     }
 
     @Override
@@ -198,7 +197,7 @@ public class AwardRepository implements IAwardRepository {
 
                     // 更新奖品记录
                     int updateAwardCount = userAwardRecordDao.updateAwardRecordCompletedState(userAwardRecordReq);
-                    if(0 == updateAwardCount){
+                    if (0 == updateAwardCount) {
                         log.warn("更新中奖记录，重复更新拦截 userId:{} giveOutPrizesAggregate:{}", userId, JSON.toJSONString(giveOutPrizesAggregate));
                         status.setRollbackOnly();
                     }
