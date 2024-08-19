@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 15/08/2024 20:31:19
+ Date: 20/08/2024 01:08:46
 */
 
 SET NAMES utf8mb4;
@@ -140,7 +140,7 @@ CREATE TABLE `raffle_activity_sku`  (
 -- ----------------------------
 -- Records of raffle_activity_sku
 -- ----------------------------
-INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 100000, 99988, 0.00, '2024-03-16 11:41:09', '2024-08-13 21:08:05');
+INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 100000, 99982, 1.68, '2024-03-16 11:41:09', '2024-08-19 18:06:35');
 
 -- ----------------------------
 -- Table structure for rule_tree
