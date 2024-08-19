@@ -34,5 +34,9 @@ public interface IRaffleActivityAccountMonthDao {
      */
     int updateActivityAccountMonthSubtractionQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
 
+    /**
+     * 增加账户月额度
+     * @param raffleActivityAccountMonth
+     */
     void addAccountQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
 }

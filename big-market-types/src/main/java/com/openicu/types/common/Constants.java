@@ -17,6 +17,7 @@ public class Constants {
 
     public static class RedisKey {
 
+
         public static String STRATEGY_KEY = "big_market_strategy_key_";
         public static String STRATEGY_AWARD_KEY = "big_market_strategy_award_key_";
         public static String STRATEGY_AWARD_LIST_KEY = "big_market_strategy_award_list_key_";
@@ -34,6 +35,7 @@ public class Constants {
         public static String ACTIVITY_SKU_COUNT_QUERY_KEY = "big_market_activity_sku_count_query_key_";
         public static String ACTIVITY_SKU_STOCK_COUNT_KEY = "big_market_activity_sku_stock_count_key_";
         public static String ACTIVITY_ACCOUNT_LOCK = "big_market_activity_account_lock_";
+        public static String ACTIVITY_ACCOUNT_UPDATE_LOCK = "big_market_activity_account_update_lock_";
 
         public static String USER_CREDIT_ACCOUNT_LOCK = "big_market_user_credit_account_lock_";
 

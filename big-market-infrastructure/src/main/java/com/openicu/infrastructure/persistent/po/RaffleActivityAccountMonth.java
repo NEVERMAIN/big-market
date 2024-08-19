@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class RaffleActivityAccountMonth {
 
-    private final SimpleDateFormat dateFormatMonth = new SimpleDateFormat("yyyy-MM");
+    private static final SimpleDateFormat dateFormatMonth = new SimpleDateFormat("yyyy-MM");
 
     /** 自增ID */
     private Long id;
@@ -39,7 +39,7 @@ public class RaffleActivityAccountMonth {
     private Date updateTime;
 
 
-    public String currentMonth() {
+    public static String currentMonth() {
 
         return dateFormatMonth.format(new Date());
     }

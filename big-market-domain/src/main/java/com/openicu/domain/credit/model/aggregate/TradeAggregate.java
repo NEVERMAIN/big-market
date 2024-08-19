@@ -1,9 +1,13 @@
 package com.openicu.domain.credit.model.aggregate;
 
+import com.openicu.domain.credit.event.CreditAdjustSuccessMessageEvent;
 import com.openicu.domain.credit.model.entity.CreditAccountEntity;
 import com.openicu.domain.credit.model.entity.CreditOrderEntity;
+import com.openicu.domain.credit.model.entity.TaskEntity;
 import com.openicu.domain.credit.model.valobj.TradeNameVO;
 import com.openicu.domain.credit.model.valobj.TradeTypeVO;
+import com.openicu.domain.rebate.model.valobj.TaskStateVO;
+import com.openicu.types.event.BaseEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,11 +27,15 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class TradeAggregate {
 
+    /** 用户ID */
     private String userId;
-
+    /** 积分账户实体 */
     private CreditAccountEntity creditAccountEntity;
-
+    /** 积分订单实体 */
     private CreditOrderEntity creditOrderEntity;
+    /** 任务实体 - 补偿 MQ 消息 */
+    private TaskEntity taskEntity;
+
 
     public static CreditAccountEntity buildCreditAccountEntity(String userId, BigDecimal amount) {
         return CreditAccountEntity.builder()
@@ -45,6 +53,18 @@ public class TradeAggregate {
                 .tradeAmount(amount)
                 .outBusinessNo(outBusinessNo)
                 .build();
+    }
+
+    public static TaskEntity createTaskEntity(String userId, String topic, String messageId, BaseEvent.EventMessage<CreditAdjustSuccessMessageEvent.CreditAdjustSuccessMessage> message){
+
+        TaskEntity taskEntity = new TaskEntity();
+        taskEntity.setUserId(userId);
+        taskEntity.setTopic(topic);
+        taskEntity.setMessageId(messageId);
+        taskEntity.setMessage(message);
+        taskEntity.setState(TaskStateVO.create);
+        return taskEntity;
+
     }
 
 }

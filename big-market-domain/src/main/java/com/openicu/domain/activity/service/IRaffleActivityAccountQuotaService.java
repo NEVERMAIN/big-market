@@ -1,6 +1,7 @@
 package com.openicu.domain.activity.service;
 
 import com.openicu.domain.activity.model.entity.ActivityAccountEntity;
+import com.openicu.domain.activity.model.entity.DeliveryOrderEntity;
 import com.openicu.domain.activity.model.entity.SkuRechargeEntity;
 
 /**
@@ -37,4 +38,11 @@ public interface IRaffleActivityAccountQuotaService {
      * @return
      */
     ActivityAccountEntity queryActivityAccountEntity(String userId, Long activityId);
+
+    /**
+     * 订单出货 - 积分充值
+     * @param deliveryOrderEntity
+     */
+    void updateOrder(DeliveryOrderEntity deliveryOrderEntity);
+
 }

@@ -39,7 +39,7 @@
     </insert>
 
 
-    <insert id="addAccountQuota" parameterType="com.openicu.infrastructure.persistent.po.RaffleActivityAccountMonth">
+    <update id="addAccountQuota" parameterType="com.openicu.infrastructure.persistent.po.RaffleActivityAccountMonth">
 
         update raffle_activity_account_month
         set month_count_surplus = month_count_surplus + #{monthCountSurplus},
@@ -47,7 +47,7 @@
             update_time         = now()
         where user_id = #{userId} and activity_id = #{activityId} and month = #{month}
 
-    </insert>
+    </update>
 
 
 </mapper>

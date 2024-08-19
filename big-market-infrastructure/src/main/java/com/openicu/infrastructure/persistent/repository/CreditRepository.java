@@ -1,18 +1,24 @@
 package com.openicu.infrastructure.persistent.repository;
 
+import com.alibaba.fastjson.JSON;
 import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.award.model.valobj.AccountStatusVO;
 import com.openicu.domain.credit.model.aggregate.TradeAggregate;
 import com.openicu.domain.credit.model.entity.CreditAccountEntity;
 import com.openicu.domain.credit.model.entity.CreditOrderEntity;
+import com.openicu.domain.credit.model.entity.TaskEntity;
 import com.openicu.domain.credit.repository.ICreditRepository;
+import com.openicu.infrastructure.event.EventPublisher;
+import com.openicu.infrastructure.persistent.dao.ITaskDao;
 import com.openicu.infrastructure.persistent.dao.IUserCreditAccountDao;
 import com.openicu.infrastructure.persistent.dao.IUserCreditOrderDao;
+import com.openicu.infrastructure.persistent.po.Task;
 import com.openicu.infrastructure.persistent.po.UserCreditAccount;
 import com.openicu.infrastructure.persistent.po.UserCreditOrder;
 import com.openicu.infrastructure.persistent.redis.IRedisService;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Lock;
 import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -37,6 +43,9 @@ public class CreditRepository implements ICreditRepository {
     private IUserCreditAccountDao userCreditAccountDao;
 
     @Resource
+    private ITaskDao taskDao;
+
+    @Resource
     private IRedisService redisService;
 
     @Resource
@@ -45,6 +54,9 @@ public class CreditRepository implements ICreditRepository {
     @Resource
     private TransactionTemplate transactionTemplate;
 
+    @Resource
+    private EventPublisher eventPublisher;
+
 
     @Override
     public void saveUserCreditOrder(TradeAggregate tradeAggregate) {
@@ -52,6 +64,8 @@ public class CreditRepository implements ICreditRepository {
         String userId = tradeAggregate.getUserId();
         CreditOrderEntity creditOrderEntity = tradeAggregate.getCreditOrderEntity();
         CreditAccountEntity creditAccountEntity = tradeAggregate.getCreditAccountEntity();
+        TaskEntity taskEntity = tradeAggregate.getTaskEntity();
+
 
         // 积分账户
         UserCreditAccount userCreditAccountReq = new UserCreditAccount();
@@ -70,10 +84,20 @@ public class CreditRepository implements ICreditRepository {
         userCreditOrderReq.setTradeAmount(creditOrderEntity.getTradeAmount());
         userCreditOrderReq.setOutBusinessNo(creditOrderEntity.getOutBusinessNo());
 
-        RLock Lock = redisService.getLock(Constants.RedisKey.USER_CREDIT_ACCOUNT_LOCK + userId + Constants.UNDERLINE + creditOrderEntity.getOutBusinessNo());
+        // 构建消息
+        Task task = new Task();
+        task.setUserId(taskEntity.getUserId());
+        task.setTopic(taskEntity.getTopic());
+        task.setMessageId(taskEntity.getMessageId());
+        task.setMessage(JSON.toJSONString(taskEntity.getMessage()));
+        task.setState(taskEntity.getState().getCode());
+
+
+        RLock lock = redisService.getLock(Constants.RedisKey.USER_CREDIT_ACCOUNT_LOCK + userId + Constants.UNDERLINE + creditOrderEntity.getOutBusinessNo());
         try {
-            Lock.lock(3, TimeUnit.SECONDS);
+            lock.lock(3, TimeUnit.SECONDS);
             dbRouter.doRouter(userId);
+
             transactionTemplate.execute(status -> {
 
                 try {
@@ -89,6 +113,9 @@ public class CreditRepository implements ICreditRepository {
                     // 2.保存账户订单
                     userCreditOrderDao.insert(userCreditOrderReq);
 
+                    // 3.写入任务
+                    taskDao.insert(task);
+
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly();
                     log.error("调整账户积分额度异常，唯一索引冲突 userId:{} orderId:{}", userId, creditOrderEntity.getOrderId(), e);
@@ -101,10 +128,19 @@ public class CreditRepository implements ICreditRepository {
 
         } finally {
             dbRouter.clear();
-            Lock.unlock();
-
+            lock.unlock();
         }
 
+        try{
+            // 发送消息【在事务外执行,如果失败还有任务补偿】
+            eventPublisher.publish(task.getTopic(),task.getMessage());
+            // 更新数据库记录, task 任务表
+            taskDao.updateTaskMessageCompleted(task);
+            log.info("调整账户积分记录,发送MQ消息完成 userId:{} orderId:{} topic:{}",userId,creditOrderEntity.getOrderId(),task.getTopic());
+        }catch (Exception e){
+            log.error("调整账户积分记录,发送MQ消息失败 userId:{} topic:{}",userId,task.getTopic(),e);
+            taskDao.updateTaskSendMessageFail(task);
+        }
 
     }
 }

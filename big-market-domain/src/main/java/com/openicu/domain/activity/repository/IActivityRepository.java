@@ -48,15 +48,6 @@ public interface IActivityRepository {
      */
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
 
-    /**
-     * 保存订单聚合体。
-     * <p>
-     * 该方法用于保存订单相关的所有信息，包括订单本身、订单项、支付信息等。这是一个非常重要的业务操作，
-     * 在用户成功下单时需要调用此方法来持久化订单数据，确保订单信息的准确性和可追溯性。
-     *
-     * @param createOrderAggregate 待保存的订单聚合体，包含订单相关的所有信息。
-     */
-    void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate);
 
     /**
      * 缓存活动商品库存
@@ -176,6 +167,30 @@ public interface IActivityRepository {
      */
     List<Long> querySkuList();
 
-
+    /**
+     * 查询活动账户
+     * @param userId
+     * @param activityId
+     * @return
+     */
     ActivityAccountEntity queryActivityAccountEntity(String userId, Long activityId);
+
+    /**
+     * 保存积分支付的订单
+     * @param createQuotaOrderAggregate
+     */
+    void doSaveCreditOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
+
+    /**
+     * 保存不用支付的订单
+     * @param createQuotaOrderAggregate
+     */
+    void doSaveNoPayOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
+
+    /**
+     * 更新订单 - 订单状态为 wait_pay
+     * @param deliveryOrderEntity
+     */
+    void updateOrder(DeliveryOrderEntity deliveryOrderEntity);
+
 }
