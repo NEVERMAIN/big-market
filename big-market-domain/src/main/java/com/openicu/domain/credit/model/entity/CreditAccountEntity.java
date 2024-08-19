@@ -18,8 +18,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CreditAccountEntity {
 
+    /** 用户ID */
     private String userId;
-
+    /** 调整额度 */
     private BigDecimal adjustAmount;
 
 }

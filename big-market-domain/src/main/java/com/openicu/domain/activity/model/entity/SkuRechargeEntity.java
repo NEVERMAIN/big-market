@@ -21,7 +21,7 @@ public class SkuRechargeEntity {
     private String userId;
     /** 商品SKU activity + activity_count */
     private Long sku;
-    /** 幂等性业务单号 */
+    /** 外部透传 - 幂等性业务单号 */
     private String outBusinessNo;
     /** 交易类型 */
     private OrderTradeTypeVO orderTradeType;

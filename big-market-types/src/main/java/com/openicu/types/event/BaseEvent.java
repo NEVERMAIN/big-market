@@ -8,14 +8,23 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @description: 基础时间
+ * @description: 基础消息类
  * @author: 云奇迹
  * @date: 2024/7/14
  */
 public abstract class BaseEvent<T> {
 
+    /**
+     * 构建消息
+     * @param data
+     * @return
+     */
     public abstract EventMessage<T> buildEventMessage(T data);
 
+    /**
+     * 消息主题
+     * @return
+     */
     public abstract String topic();
 
 

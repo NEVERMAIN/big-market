@@ -21,7 +21,6 @@ public interface IRaffleActivityOrderDao {
      * 保存抽奖活动订单
      * @param raffleActivityOrder 抽奖活动订单持久化对象
      */
-    @DBRouter(key = "userId")
     void insert(RaffleActivityOrder raffleActivityOrder);
 
     /**

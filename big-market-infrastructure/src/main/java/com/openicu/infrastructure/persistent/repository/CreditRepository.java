@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Repository
-public class CreditRepository implements ICreditRepository {
+public class  CreditRepository implements ICreditRepository {
 
     @Resource
     private IUserCreditOrderDao userCreditOrderDao;
@@ -59,13 +59,12 @@ public class CreditRepository implements ICreditRepository {
 
 
     @Override
-    public void saveUserCreditOrder(TradeAggregate tradeAggregate) {
+    public void saveUserCreditTradeOrder(TradeAggregate tradeAggregate) {
 
         String userId = tradeAggregate.getUserId();
         CreditOrderEntity creditOrderEntity = tradeAggregate.getCreditOrderEntity();
         CreditAccountEntity creditAccountEntity = tradeAggregate.getCreditAccountEntity();
         TaskEntity taskEntity = tradeAggregate.getTaskEntity();
-
 
         // 积分账户
         UserCreditAccount userCreditAccountReq = new UserCreditAccount();
@@ -75,7 +74,7 @@ public class CreditRepository implements ICreditRepository {
         userCreditAccountReq.setAvailableAmount(creditAccountEntity.getAdjustAmount());
         userCreditAccountReq.setAccountStatus(AccountStatusVO.open.getCode());
 
-        // 积分订单
+        // 创建积分订单流水
         UserCreditOrder userCreditOrderReq = new UserCreditOrder();
         userCreditOrderReq.setUserId(creditOrderEntity.getUserId());
         userCreditOrderReq.setOrderId(creditOrderEntity.getOrderId());
@@ -97,7 +96,7 @@ public class CreditRepository implements ICreditRepository {
         try {
             lock.lock(3, TimeUnit.SECONDS);
             dbRouter.doRouter(userId);
-
+            // 编程式事务
             transactionTemplate.execute(status -> {
 
                 try {
@@ -133,6 +132,7 @@ public class CreditRepository implements ICreditRepository {
 
         try{
             // 发送消息【在事务外执行,如果失败还有任务补偿】
+            // credit_adjust_success
             eventPublisher.publish(task.getTopic(),task.getMessage());
             // 更新数据库记录, task 任务表
             taskDao.updateTaskMessageCompleted(task);
@@ -143,4 +143,5 @@ public class CreditRepository implements ICreditRepository {
         }
 
     }
+
 }

@@ -16,6 +16,10 @@ import java.util.List;
 @DBRouterStrategy(splitTable = true)
 public interface IUserBehaviorRebateOrderDao {
 
+    /**
+     * 保存用户行为返利订单
+     * @param userBehaviorRebateOrder
+     */
     @DBRouter(key = "userId")
     void insert(UserBehaviorRebateOrder userBehaviorRebateOrder);
 

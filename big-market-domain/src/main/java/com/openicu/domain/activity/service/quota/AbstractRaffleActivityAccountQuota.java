@@ -56,7 +56,8 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
         actionChain.action(activitySkuEntity, activityEntity, activityCountEntity);
 
         // 4. 构建订单聚合对象
-        CreateQuotaOrderAggregate createOrderAggregate = buildOrderAggregate(skuRechargeEntity, activitySkuEntity, activityEntity, activityCountEntity);
+        CreateQuotaOrderAggregate createOrderAggregate =
+                buildOrderAggregate(skuRechargeEntity, activitySkuEntity, activityEntity, activityCountEntity);
 
         // 5. 交易策略 -【积分兑换,支付类订单】【返利无支付交易订单,直接充值到账】【订单状态变更交易类型策略】
         ITradePolicy tradePolicy = tradePolicyMap.get(skuRechargeEntity.getOrderTradeType().getCode());

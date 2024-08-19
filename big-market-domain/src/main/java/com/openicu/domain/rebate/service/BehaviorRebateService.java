@@ -49,6 +49,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
 
             // 拼装业务ID: 用户ID_返利类型_外部透彻业务ID
             String bizId = behaviorEntity.getUserId() + Constants.UNDERLINE + dailyBehaviorRebateVO.getRebateType() + Constants.UNDERLINE + behaviorEntity.getOutBusinessNo();
+            // 1. 组装活动返利的订单
             BehaviorRebateOrderEntity behaviorRebateOrderEntity = BehaviorRebateOrderEntity.builder()
                     .userId(behaviorEntity.getUserId())
                     .orderId(RandomStringUtils.randomNumeric(12))
@@ -62,7 +63,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
 
             orderIds.add(behaviorRebateOrderEntity.getOrderId());
 
-            // .MQ消息
+            // 2.组装MQ消息
             SendRebateMessageEvent.RebateMessage rebateMessage = SendRebateMessageEvent.RebateMessage.builder()
                     .userId(behaviorEntity.getUserId())
                     .rebateType(dailyBehaviorRebateVO.getRebateType())
@@ -71,11 +72,11 @@ public class BehaviorRebateService implements IBehaviorRebateService {
                     .bizId(bizId)
                     .build();
 
-            // . 构建事件消息
+            // 2.1.构建事件消息
             BaseEvent.EventMessage<SendRebateMessageEvent.RebateMessage> rebateMessageEventMessage =
                     sendRebateMessageEvent.buildEventMessage(rebateMessage);
 
-            // .组装任务对象
+            // 2.2.组装任务对象
             TaskEntity taskEntity = new TaskEntity();
             taskEntity.setUserId(behaviorEntity.getUserId());
             taskEntity.setTopic(sendRebateMessageEvent.topic());
@@ -83,6 +84,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
             taskEntity.setMessage(rebateMessageEventMessage);
             taskEntity.setState(TaskStateVO.create);
 
+            // 3. 组装聚合对象
             BehaviorRebateAggregate behaviorRebateAggregate = BehaviorRebateAggregate.builder()
                     .userId(behaviorEntity.getUserId())
                     .behaviorRebateOrderEntity(behaviorRebateOrderEntity)

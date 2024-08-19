@@ -84,13 +84,13 @@ public class RaffleActivityAccountQuotaServiceTest {
     public void test_credit_pay_trade(){
 
         SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
-        skuRechargeEntity.setUserId("chen");
+        skuRechargeEntity.setUserId("nunt");
         skuRechargeEntity.setSku(9011L);
         // outBusinessNo 作为幂等仿重使用，同一个业务单号2次使用会抛出索引冲突
         skuRechargeEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(11));
         skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
         String orderId = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
-        log.info("测试结果: {}", orderId);
+        log.info("测试结果: orderId:{}", orderId);
 
     }
 

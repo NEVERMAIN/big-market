@@ -22,7 +22,6 @@ public class RebateNoPayTradePolicy implements ITradePolicy {
         this.activityRepository = activityRepository;
     }
 
-
     @Override
     public void trade(CreateQuotaOrderAggregate createQuotaOrderAggregate) {
 

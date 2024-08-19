@@ -99,10 +99,10 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                         userBehaviorRebateOrder.setOutBusinessNo(behaviorRebateOrderEntity.getOutBusinessNo());
                         userBehaviorRebateOrder.setBizId(behaviorRebateOrderEntity.getBizId());
 
-                        // 保存
+                        // 保存用户行为返利流水
                         userBehaviorRebateOrderDao.insert(userBehaviorRebateOrder);
 
-                        // 任务对象
+                        // 组装任务对象
                         TaskEntity taskEntity = behaviorRebateAggregate.getTaskEntity();
                         Task task = new Task();
                         task.setUserId(taskEntity.getUserId());
@@ -140,7 +140,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
             task.setMessageId(taskEntity.getMessageId());
             try {
 
-                // 发送消息【在事务外执行,如果失败还有任务补偿】
+                // 发送消息 send_rebate【在事务外执行,如果失败还有任务补偿】
                 eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
                 // 更新数据库记录, task 任务表
                 taskDao.updateTaskMessageCompleted(task);
@@ -151,7 +151,6 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                 taskDao.updateTaskSendMessageFail(task);
 
             }
-
         }
 
     }

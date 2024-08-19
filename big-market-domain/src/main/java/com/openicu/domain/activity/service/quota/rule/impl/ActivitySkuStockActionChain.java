@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @description:
+ * @description: 活动商品库存处理
  * @author: 云奇迹
  * @date: 2024/7/9
  */

@@ -53,7 +53,7 @@ public class RebateMessageCustomer {
 
             switch (rebateMessage.getRebateType()) {
                 case "sku":
-                    // 2.入账消息
+                    // 抽奖活动账户
                     SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
                     skuRechargeEntity.setUserId(rebateMessage.getUserId());
                     skuRechargeEntity.setSku(Long.valueOf(rebateMessage.getRebateConfig()));
@@ -62,6 +62,7 @@ public class RebateMessageCustomer {
                     raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
                     break;
                 case "integral":
+                    // 积分返利
                     TradeEntity tradeEntity = new TradeEntity();
                     tradeEntity.setUserId(rebateMessage.getUserId());
                     tradeEntity.setTradeName(TradeNameVO.REBATE);
@@ -73,7 +74,6 @@ public class RebateMessageCustomer {
                 default:
                     break;
             }
-
 
         } catch (AppException e) {
 
@@ -89,8 +89,6 @@ public class RebateMessageCustomer {
             throw e;
 
         }
-
-
     }
 
 }

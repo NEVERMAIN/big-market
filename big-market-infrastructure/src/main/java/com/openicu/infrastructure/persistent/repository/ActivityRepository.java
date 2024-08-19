@@ -330,20 +330,7 @@ public class ActivityRepository implements IActivityRepository {
 
             // 1. 创建交易订单
             ActivityOrderEntity activityOrderEntity = createQuotaOrderAggregate.getActivityOrderEntity();
-            RaffleActivityOrder raffleActivityOrderReq = new RaffleActivityOrder();
-            raffleActivityOrderReq.setUserId(activityOrderEntity.getUserId());
-            raffleActivityOrderReq.setSku(activityOrderEntity.getSku());
-            raffleActivityOrderReq.setActivityId(activityOrderEntity.getActivityId());
-            raffleActivityOrderReq.setActivityName(activityOrderEntity.getActivityName());
-            raffleActivityOrderReq.setStrategyId(activityOrderEntity.getStrategyId());
-            raffleActivityOrderReq.setOrderId(activityOrderEntity.getOrderId());
-            raffleActivityOrderReq.setOrderTime(activityOrderEntity.getOrderTime());
-            raffleActivityOrderReq.setTotalCount(activityOrderEntity.getTotalCount());
-            raffleActivityOrderReq.setDayCount(activityOrderEntity.getDayCount());
-            raffleActivityOrderReq.setMonthCount(activityOrderEntity.getMonthCount());
-            raffleActivityOrderReq.setPayAmount(activityOrderEntity.getPayAmount());
-            raffleActivityOrderReq.setState(activityOrderEntity.getState().getCode());
-            raffleActivityOrderReq.setOutBusinessNo(activityOrderEntity.getOutBusinessNo());
+            RaffleActivityOrder raffleActivityOrderReq = buildRaffleActivityOrder(activityOrderEntity);
 
             // 以用户ID作为切分键
             dbRouter.doRouter(createQuotaOrderAggregate.getUserId());
@@ -370,6 +357,31 @@ public class ActivityRepository implements IActivityRepository {
 
     }
 
+    /**
+     * 构建抽奖活动订单
+     * @param activityOrderEntity
+     * @return
+     */
+    private static RaffleActivityOrder buildRaffleActivityOrder(ActivityOrderEntity activityOrderEntity) {
+
+        RaffleActivityOrder raffleActivityOrderReq = new RaffleActivityOrder();
+        raffleActivityOrderReq.setUserId(activityOrderEntity.getUserId());
+        raffleActivityOrderReq.setSku(activityOrderEntity.getSku());
+        raffleActivityOrderReq.setActivityId(activityOrderEntity.getActivityId());
+        raffleActivityOrderReq.setActivityName(activityOrderEntity.getActivityName());
+        raffleActivityOrderReq.setStrategyId(activityOrderEntity.getStrategyId());
+        raffleActivityOrderReq.setOrderId(activityOrderEntity.getOrderId());
+        raffleActivityOrderReq.setOrderTime(activityOrderEntity.getOrderTime());
+        raffleActivityOrderReq.setTotalCount(activityOrderEntity.getTotalCount());
+        raffleActivityOrderReq.setDayCount(activityOrderEntity.getDayCount());
+        raffleActivityOrderReq.setMonthCount(activityOrderEntity.getMonthCount());
+        raffleActivityOrderReq.setPayAmount(activityOrderEntity.getPayAmount());
+        raffleActivityOrderReq.setState(activityOrderEntity.getState().getCode());
+        raffleActivityOrderReq.setOutBusinessNo(activityOrderEntity.getOutBusinessNo());
+        return raffleActivityOrderReq;
+
+    }
+
     @Override
     public void cacheActivitySkuStockCount(String cacheKey, Integer stockCount) {
         // 1.如果已经缓存,则直接返回
@@ -385,6 +397,7 @@ public class ActivityRepository implements IActivityRepository {
         long surplus = redisService.decr(cacheKey);
         if (surplus == 0) {
             // 库存消耗完以后,发送MQ消息,更新数据库库存。设置商品库存为0
+            // activity_sku_stock_zero
             eventPublisher.publish(activitySkuStockZeroMessageEvent.topic(), activitySkuStockZeroMessageEvent.buildEventMessage(sku));
         } else if (surplus < 0) {
             // 库存小于 0 , 恢复为 0 个
@@ -399,7 +412,7 @@ public class ActivityRepository implements IActivityRepository {
         long expireMills = endDateTime.getTime() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
         boolean lock = redisService.setNx(lockKey, expireMills, TimeUnit.MILLISECONDS);
         if (!lock) {
-            log.info("活动 sku 库存加锁失败 lockKey:{}", lockKey);
+            log.info("活动sku库存加锁失败 lockKey:{}", lockKey);
         }
         return lock;
     }

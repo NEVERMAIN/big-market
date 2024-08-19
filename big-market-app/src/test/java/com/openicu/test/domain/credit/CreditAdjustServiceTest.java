@@ -58,15 +58,14 @@ public class CreditAdjustServiceTest {
     public void test_createOrder_pay() throws InterruptedException {
 
         TradeEntity tradeEntity = new TradeEntity();
-        tradeEntity.setUserId("chen");
+        tradeEntity.setUserId("nunt");
         tradeEntity.setTradeName(TradeNameVO.CONVERT_SKU);
         tradeEntity.setTradeType(TradeTypeVO.REVERSE);
         tradeEntity.setAmount(new BigDecimal("-1.68"));
-        tradeEntity.setOutBusinessNo("65104589128");
+        tradeEntity.setOutBusinessNo("04997719891");
         creditAdjustService.createOrder(tradeEntity);
 
         new CountDownLatch(1).await();
-
 
     }
 

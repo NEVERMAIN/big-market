@@ -27,7 +27,6 @@
             set stock_count_surplus = 0,
                 update_time = now()
         where sku = #{sku}
-
     </update>
 
 
