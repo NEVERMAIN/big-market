@@ -32,7 +32,7 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
 
 
     @Override
-    public String createOrder(SkuRechargeEntity skuRechargeEntity) {
+    public String  createOrder(SkuRechargeEntity skuRechargeEntity) {
 
         // 1.参数校验
         String userId = skuRechargeEntity.getUserId();

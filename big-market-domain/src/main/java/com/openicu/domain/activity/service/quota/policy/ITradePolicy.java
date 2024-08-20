@@ -10,7 +10,7 @@ import com.openicu.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 public interface ITradePolicy {
 
     /**
-     * 交易
+     * 交易方法
      * @param createQuotaOrderAggregate
      */
     void trade(CreateQuotaOrderAggregate createQuotaOrderAggregate);
