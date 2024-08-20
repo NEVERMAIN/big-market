@@ -45,4 +45,12 @@ public interface IRaffleActivityOrderDao {
      * @return
      */
     int updateOrderCompleted(RaffleActivityOrder raffleActivityOrderReq);
+
+    /**
+     * 查询未支付订单
+     * @param raffleActivityOrderReq
+     * @return
+     */
+    @DBRouter(key = "userId")
+    RaffleActivityOrder queryUnpaidActivityOrder(RaffleActivityOrder raffleActivityOrderReq);
 }

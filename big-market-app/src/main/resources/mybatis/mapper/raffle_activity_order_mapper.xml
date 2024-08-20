@@ -67,5 +67,28 @@
 
     </select>
 
+    <select id="queryUnpaidActivityOrder"
+            resultMap="dataMap">
+        select user_id,
+               sku,
+               activity_id,
+               activity_name,
+               strategy_id,
+               order_id,
+               order_time,
+               total_count,
+               day_count,
+               month_count,
+               pay_amount,
+               state,
+               out_business_no
+        from raffle_activity_order
+        where user_id = #{userId}
+          AND sku = #{sku}
+          AND state = 'wait_pay'
+          AND order_time >= NOW() - INTERVAL 1 MONTH
+            limit 1
+    </select>
+
 
 </mapper>

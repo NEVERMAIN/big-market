@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Repository
-public class  CreditRepository implements ICreditRepository {
+public class CreditRepository implements ICreditRepository {
 
     @Resource
     private IUserCreditOrderDao userCreditOrderDao;
@@ -130,18 +130,34 @@ public class  CreditRepository implements ICreditRepository {
             lock.unlock();
         }
 
-        try{
+        try {
             // 发送消息【在事务外执行,如果失败还有任务补偿】
             // credit_adjust_success
-            eventPublisher.publish(task.getTopic(),task.getMessage());
+            eventPublisher.publish(task.getTopic(), task.getMessage());
             // 更新数据库记录, task 任务表
             taskDao.updateTaskMessageCompleted(task);
-            log.info("调整账户积分记录,发送MQ消息完成 userId:{} orderId:{} topic:{}",userId,creditOrderEntity.getOrderId(),task.getTopic());
-        }catch (Exception e){
-            log.error("调整账户积分记录,发送MQ消息失败 userId:{} topic:{}",userId,task.getTopic(),e);
+            log.info("调整账户积分记录,发送MQ消息完成 userId:{} orderId:{} topic:{}", userId, creditOrderEntity.getOrderId(), task.getTopic());
+        } catch (Exception e) {
+            log.error("调整账户积分记录,发送MQ消息失败 userId:{} topic:{}", userId, task.getTopic(), e);
             taskDao.updateTaskSendMessageFail(task);
         }
 
+    }
+
+    @Override
+    public CreditAccountEntity queryUserCreditAccount(String userId) {
+        UserCreditAccount userCreditAccountReq = new UserCreditAccount();
+        userCreditAccountReq.setUserId(userId);
+        try {
+            dbRouter.doRouter(userId);
+            UserCreditAccount userCreditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
+            return CreditAccountEntity.builder()
+                    .userId(userId)
+                    .adjustAmount(userCreditAccount.getAvailableAmount())
+                    .build();
+        } finally {
+            dbRouter.clear();
+        }
     }
 
 }

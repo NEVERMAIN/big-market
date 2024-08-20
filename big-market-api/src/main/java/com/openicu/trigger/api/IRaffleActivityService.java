@@ -3,6 +3,7 @@ package com.openicu.trigger.api;
 import com.openicu.trigger.api.dto.*;
 import com.openicu.types.model.Response;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -46,6 +47,26 @@ public interface IRaffleActivityService {
      * @return
      */
     Response<UserActivityAccountResponseDTO> queryUserActivityAccount(UserActivityAccountRequestDTO request);
-    
+
+    /**
+     * 积分兑换商品接口
+     * @param request
+     * @return
+     */
+    Response<Boolean> creditPayExchangeSku(SkuProductShopCartRequestDTO request);
+
+    /**
+     * 查询活动商品列表接口
+     * @param activityId
+     * @return
+     */
+    Response<List<SkuProductResponseDTO>> querySkuProductListByActivityId(Long activityId);
+
+    /**
+     * 查询用户积分额度接口
+     * @param userId
+     * @return
+     */
+    Response<BigDecimal> queryUserCreditAccount(String userId);
 
 }

@@ -1,6 +1,7 @@
 package com.openicu.test.domain.activity;
 
 import com.openicu.domain.activity.model.entity.SkuRechargeEntity;
+import com.openicu.domain.activity.model.entity.UnpaidActivityOrderEntity;
 import com.openicu.domain.activity.model.valobj.OrderTradeTypeVO;
 import com.openicu.domain.activity.service.IRaffleActivityAccountQuotaService;
 import com.openicu.domain.activity.service.armory.IActivityArmory;
@@ -46,9 +47,9 @@ public class RaffleActivityAccountQuotaServiceTest {
         // outBusinessNo 作为幂等性防重使用,同一个业务号2次使用会抛出索引冲突
         skuRechargeEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(11));
         skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.rebate_no_pay_trade);
-        String orderId = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
+        UnpaidActivityOrderEntity order = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
 
-        log.info("测试结果:{} ",orderId);
+        log.info("测试结果:{} ",order);
 
     }
 
@@ -69,8 +70,8 @@ public class RaffleActivityAccountQuotaServiceTest {
                 // outBusinessNo 作为幂等仿重使用，同一个业务单号2次使用会抛出索引冲突 Duplicate entry '700091009111' for key 'uq_out_business_no' 确保唯一性。
                 skuRechargeEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(12));
                 skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.rebate_no_pay_trade);
-                String orderId = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
-                log.info("测试结果：{}", orderId);
+                raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
+                log.info("测试结果：{}");
 
             }catch (AppException e){
                 log.warn(e.getInfo());
@@ -89,8 +90,8 @@ public class RaffleActivityAccountQuotaServiceTest {
         // outBusinessNo 作为幂等仿重使用，同一个业务单号2次使用会抛出索引冲突
         skuRechargeEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(11));
         skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
-        String orderId = raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
-        log.info("测试结果: orderId:{}", orderId);
+         raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
+        log.info("测试结果: orderId:{}");
 
     }
 

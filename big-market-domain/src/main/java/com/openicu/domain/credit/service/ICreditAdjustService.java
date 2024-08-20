@@ -1,5 +1,6 @@
 package com.openicu.domain.credit.service;
 
+import com.openicu.domain.credit.model.entity.CreditAccountEntity;
 import com.openicu.domain.credit.model.entity.TradeEntity;
 
 /**
@@ -16,5 +17,10 @@ public interface ICreditAdjustService {
      */
     String createOrder(TradeEntity tradeEntity);
 
-
+    /**
+     * 查询用户积分额度
+     * @param userId
+     * @return
+     */
+    CreditAccountEntity queryUserCreditAccount(String userId);
 }
