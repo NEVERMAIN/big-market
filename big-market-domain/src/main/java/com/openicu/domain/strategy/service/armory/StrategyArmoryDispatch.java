@@ -123,7 +123,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     private double convert(double min) {
         double current = min;
         double max = 1;
-        while (current < 1) {
+        while (current % 1 != 0) {
             current = current * 10;
             max = max * 10;
         }
