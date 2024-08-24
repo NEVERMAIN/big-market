@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 20/08/2024 01:08:46
+ Date: 25/08/2024 00:29:35
 */
 
 SET NAMES utf8mb4;
@@ -135,12 +135,15 @@ CREATE TABLE `raffle_activity_sku`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_sku`(`sku`) USING BTREE,
   INDEX `idx_activity_id_activity_count_id`(`activity_id`, `activity_count_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of raffle_activity_sku
 -- ----------------------------
-INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 100000, 99982, 1.68, '2024-03-16 11:41:09', '2024-08-19 18:06:35');
+INSERT INTO `raffle_activity_sku` VALUES (1, 9011, 100301, 11101, 100000, 99887, 200.00, '2024-03-16 11:41:09', '2024-06-22 08:49:32');
+INSERT INTO `raffle_activity_sku` VALUES (2, 9012, 100301, 11102, 100000, 99885, 100.00, '2024-03-16 11:41:09', '2024-06-22 11:46:15');
+INSERT INTO `raffle_activity_sku` VALUES (3, 9013, 100301, 11103, 100000, 99884, 20.00, '2024-03-16 11:41:09', '2024-06-22 11:45:55');
+INSERT INTO `raffle_activity_sku` VALUES (4, 9014, 100301, 11104, 100000, 99866, 5.00, '2024-03-16 11:41:09', '2024-06-22 11:45:50');
 
 -- ----------------------------
 -- Table structure for rule_tree
