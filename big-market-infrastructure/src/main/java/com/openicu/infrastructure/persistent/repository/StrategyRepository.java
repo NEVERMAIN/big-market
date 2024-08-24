@@ -406,6 +406,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public Map<String, Integer> queryAwardRuleLockCount(String[] treeIds) {
+
         if (null == treeIds || treeIds.length == 0) return new HashMap<>();
         List<RuleTreeNode> ruleTreeNodeList = ruleTreeNodeDao.queryRuleLocks(treeIds);
         HashMap<String, Integer> resultMap = new HashMap<>();

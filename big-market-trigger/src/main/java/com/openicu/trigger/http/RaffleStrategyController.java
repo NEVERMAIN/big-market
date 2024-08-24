@@ -84,7 +84,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO request) {
 
         try {
-            log.info("查询抽奖奖品列表配开始 userId:{} activityId：{}", request.getUserId(), request.getActivityId());
+            log.info("查询抽奖奖品列表配置开始 userId:{} activityId：{}", request.getUserId(), request.getActivityId());
             // 1.参数校验
             if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());

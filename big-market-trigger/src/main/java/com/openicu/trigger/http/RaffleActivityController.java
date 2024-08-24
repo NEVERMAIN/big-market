@@ -21,10 +21,6 @@ import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.openicu.domain.rebate.service.IBehaviorRebateService;
 import com.openicu.domain.strategy.model.entity.RaffleAwardEntity;
 import com.openicu.domain.strategy.model.entity.RaffleFactorEntity;
-import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
-import com.openicu.domain.strategy.model.valobj.RuleWeightVO;
-import com.openicu.domain.strategy.service.IRaffleAward;
-import com.openicu.domain.strategy.service.IRaffleRule;
 import com.openicu.domain.strategy.service.IRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyArmory;
 import com.openicu.trigger.api.IRaffleActivityService;
@@ -32,7 +28,6 @@ import com.openicu.trigger.api.dto.*;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import com.openicu.types.model.Response;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +39,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description:
@@ -270,6 +264,7 @@ public class RaffleActivityController implements IRaffleActivityService {
             log.info("查询用户活动账户开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
             ActivityAccountEntity activityAccountEntity =
                     raffleActivityAccountQuotaService.queryActivityAccountEntity(request.getUserId(), request.getActivityId());
+
             UserActivityAccountResponseDTO userActivityAccountResponseDTO = UserActivityAccountResponseDTO.builder()
                     .totalCount(activityAccountEntity.getTotalCount())
                     .totalCountSurplus(activityAccountEntity.getTotalCountSurplus())

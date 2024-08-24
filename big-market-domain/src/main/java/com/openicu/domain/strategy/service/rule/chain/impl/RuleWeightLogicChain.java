@@ -30,7 +30,9 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
     @Resource
     private IStrategyDispatch strategyDispatch;
 
-    // 根据用户ID查询用户抽奖消耗的积分值
+    /**
+     * 根据用户ID查询用户抽奖消耗的积分值
+     */
     public Long userScore = 0L;
 
     /**
@@ -51,7 +53,6 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
             log.warn("抽奖责任链-权重告警【策略配置权重，但ruleValue未配置相应值】 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
             return next().logic(userId, strategyId);
         }
-
 
         // 转换 Keys 值,并默认排序
         List<Long> analyticalSortedKeys = new ArrayList<>(analyticalValueGroup.keySet());
