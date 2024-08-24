@@ -247,7 +247,8 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public void updateOrder(DeliveryOrderEntity deliveryOrderEntity) {
 
-        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_UPDATE_LOCK + deliveryOrderEntity.getUserId());
+        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_UPDATE_LOCK + deliveryOrderEntity.getUserId() +
+                Constants.UNDERLINE + deliveryOrderEntity.getOutBusinessNo());
         try {
             lock.lock(3, TimeUnit.SECONDS);
 
@@ -257,8 +258,8 @@ public class ActivityRepository implements IActivityRepository {
             raffleActivityOrderReq.setOutBusinessNo(deliveryOrderEntity.getOutBusinessNo());
             RaffleActivityOrder raffleActivityOrderRes = raffleActivityOrderDao.queryRaffleActivityOrder(raffleActivityOrderReq);
 
-            if(null == raffleActivityOrderRes){
-                if(lock.isLocked()) lock.unlock();
+            if (null == raffleActivityOrderRes) {
+                if (lock.isLocked()) lock.unlock();
                 return;
             }
 
@@ -327,7 +328,7 @@ public class ActivityRepository implements IActivityRepository {
 
         } finally {
             dbRouter.clear();
-            if(lock.isLocked()){
+            if (lock.isLocked()) {
                 lock.unlock();
             }
         }
@@ -386,14 +387,14 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public BigDecimal queryUserCreditAccountAmount(String userId) {
 
-        try{
+        try {
             dbRouter.doRouter(userId);
             UserCreditAccount userCreditAccountReq = new UserCreditAccount();
             userCreditAccountReq.setUserId(userId);
             UserCreditAccount userCreditAccountRes = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
-            if(null == userCreditAccountRes) return null;
+            if (null == userCreditAccountRes) return null;
             return userCreditAccountRes.getAvailableAmount();
-        }finally {
+        } finally {
             dbRouter.clear();
         }
 

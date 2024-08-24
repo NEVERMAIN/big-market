@@ -92,6 +92,7 @@ public interface IActivityRepository {
 
     /**
      * 清空阻塞队列中的信息
+     * @param sku 商品SKU
      */
     void clearQueueValue(Long sku);
 
