@@ -120,7 +120,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     /**
      * 转换计算: 只根据小数位来计算,如[0.1返回100],[0.009返回1000],[0.0018返回10000]
      */
-    private double convert(double min) {
+    private double convertOld01(double min) {
         double current = min;
         double max = 1;
         while (current % 1 != 0) {
@@ -129,6 +129,58 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         }
         return max;
     }
+
+       /**
+     * 将给定的分钟数转换为乘数。
+     * 此方法用于确定分钟数的精度，以进行转换。
+     * 如果分钟数为0，则返回1，表示不需要转换。
+     * 对于非零数字，计算小数位数，并返回10的该次幂，
+     * 这可用于将分钟数转换为整数而不丢失精度。
+     *
+     * @param min 要转换的分钟数。
+     * @return 用于转换所需的乘数。
+     */
+    private double convertold02(double min) {
+        if (min == 0) return 1D;
+
+        // 将数字转换为字符串，以便计算小数位数
+        String minStr = Double.toString(min);
+        int decimalPlaces = 0;
+
+        // 查找小数点的位置
+        int decimalPointIndex = minStr.indexOf('.');
+        if (decimalPointIndex != -1) {
+            // 计算小数点后数字的数量
+            decimalPlaces = minStr.length() - decimalPointIndex - 1;
+        }
+
+        // 返回10的次幂，次幂为小数位数
+        return Math.pow(10, decimalPlaces);
+    }
+
+    private double convert(double min) {
+        if (0 == min) return 1D;
+
+        String minStr = String.valueOf(min);
+
+        // 小数点前
+        String beginVale = minStr.substring(0, minStr.indexOf("."));
+        int beginLength = 0;
+        if (Double.parseDouble(beginVale) > 0) {
+            beginLength = minStr.substring(0, minStr.indexOf(".")).length();
+        }
+
+        // 小数点后
+        String endValue = minStr.substring(minStr.indexOf(".") + 1);
+        int endLength = 0;
+        if (Double.parseDouble(endValue) > 0) {
+            endLength = minStr.substring(minStr.indexOf(".") + 1).length();
+        }
+
+        return Math.pow(10, beginLength + endLength);
+    }
+
+
 
     /**
      * 缓存奖品库存到 Redis

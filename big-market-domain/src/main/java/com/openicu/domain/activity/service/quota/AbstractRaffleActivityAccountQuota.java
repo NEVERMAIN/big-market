@@ -45,8 +45,10 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
         }
 
         // 2.查询未支付订单【一个月以内的未支付订单】
-        UnpaidActivityOrderEntity unpaidCreditOrder = activityRepository.queryUnpaidActivityOrder(skuRechargeEntity);
-        if (null != unpaidCreditOrder) return unpaidCreditOrder;
+        if(OrderTradeTypeVO.credit_pay_trade.equals(skuRechargeEntity.getOrderTradeType())){
+            UnpaidActivityOrderEntity unpaidCreditOrder = activityRepository.queryUnpaidActivityOrder(skuRechargeEntity);
+            if (null != unpaidCreditOrder) return unpaidCreditOrder;
+        }
 
         // 3.查询基础信息
         // 3.1. 通过 sku 查询活动信息
