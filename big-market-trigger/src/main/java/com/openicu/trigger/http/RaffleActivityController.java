@@ -325,6 +325,12 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .data(true)
                     .build();
 
+        } catch (AppException e) {
+            log.error("积分兑换商品失败 userId:{} sku:{}", request.getUserId(), request.getSku(), e);
+            return Response.<Boolean>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
         } catch (Exception e) {
             log.error("积分兑换商品失败 userId:{} sku:{}", request.getUserId(), request.getSku(), e);
             return Response.<Boolean>builder()
@@ -337,6 +343,7 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     }
 
+    @RequestMapping(value = "query_sku_product_list_by_activity_id", method = RequestMethod.POST)
     @Override
     public Response<List<SkuProductResponseDTO>> querySkuProductListByActivityId(Long activityId) {
 
@@ -388,6 +395,7 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     }
 
+    @RequestMapping(value = "query_user_credit_account", method = RequestMethod.POST)
     @Override
     public Response<BigDecimal> queryUserCreditAccount(String userId) {
 

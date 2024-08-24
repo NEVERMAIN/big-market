@@ -34,4 +34,12 @@ public interface IUserCreditAccountDao {
      * @return 用户信用账户信息
      */
     UserCreditAccount queryUserCreditAccount(UserCreditAccount userCreditAccountReq);
+
+    /**
+     * 扣减用户信用账户金额
+     * @param userCreditAccountReq
+     * @return
+     */
+    int updateSubtractionAmount(UserCreditAccount userCreditAccountReq);
+
 }

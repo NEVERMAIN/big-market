@@ -5,6 +5,7 @@ import com.openicu.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import com.openicu.domain.activity.model.entity.*;
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -207,4 +208,10 @@ public interface IActivityRepository {
      */
     List<SkuProductEntity> querySkuProductEntityListByActivityId(Long activityId);
 
+    /**
+     * 查询用户积分账户余额
+     * @param userId
+     * @return
+     */
+    BigDecimal queryUserCreditAccountAmount(String userId);
 }

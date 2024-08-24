@@ -41,7 +41,6 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
     }
 
 
-
     @Override
     public RaffleAwardEntity performRaffle(RaffleFactorEntity raffleFactorEntity) {
 

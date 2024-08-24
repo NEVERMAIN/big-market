@@ -17,6 +17,8 @@ import com.openicu.infrastructure.persistent.po.UserCreditAccount;
 import com.openicu.infrastructure.persistent.po.UserCreditOrder;
 import com.openicu.infrastructure.persistent.redis.IRedisService;
 import com.openicu.types.common.Constants;
+import com.openicu.types.enums.ResponseCode;
+import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Lock;
 import org.redisson.api.RLock;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -106,7 +109,18 @@ public class CreditRepository implements ICreditRepository {
                     if (null == userCreditAccount) {
                         userCreditAccountDao.insert(userCreditAccountReq);
                     } else {
-                        userCreditAccountDao.updateAddAmount(userCreditAccountReq);
+                        BigDecimal availableAmount = userCreditAccountReq.getAvailableAmount();
+                        if(availableAmount.compareTo(BigDecimal.ZERO) >= 0){
+                            userCreditAccountDao.updateAddAmount(userCreditAccountReq);
+                        }else{
+                            int subtractionCount = userCreditAccountDao.updateSubtractionAmount(userCreditAccountReq);
+                            if(1 != subtractionCount){
+                                status.setRollbackOnly();
+                                throw new AppException(ResponseCode.USER_CREDIT_ACCOUNT_NO_AVAILABLE_ACCOUNT.getCode(),
+                                        ResponseCode.USER_CREDIT_ACCOUNT_NO_AVAILABLE_ACCOUNT.getInfo());
+                            }
+                        }
+
                     }
 
                     // 2.保存账户订单
@@ -127,7 +141,9 @@ public class CreditRepository implements ICreditRepository {
 
         } finally {
             dbRouter.clear();
-            lock.unlock();
+            if(lock.isLocked()){
+                lock.unlock();
+            }
         }
 
         try {
@@ -151,9 +167,13 @@ public class CreditRepository implements ICreditRepository {
         try {
             dbRouter.doRouter(userId);
             UserCreditAccount userCreditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
+            BigDecimal availableAmount = BigDecimal.ZERO;
+            if(null != userCreditAccount){
+                availableAmount = userCreditAccount.getAvailableAmount();
+            }
             return CreditAccountEntity.builder()
                     .userId(userId)
-                    .adjustAmount(userCreditAccount.getAvailableAmount())
+                    .adjustAmount(availableAmount)
                     .build();
         } finally {
             dbRouter.clear();
