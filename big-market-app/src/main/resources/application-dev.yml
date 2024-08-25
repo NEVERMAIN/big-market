@@ -115,6 +115,21 @@ redis:
       ping-interval: 60000
       keep-alive: true
 
+# dubbo
+dubbo:
+  application:
+    name: big-market
+    version: 1.0
+  registry:
+    id: nacos-registry
+    address: nacos://139.9.212.188:8848
+  protocol:
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: com.openicu.trigger.api
+
+
 # 日志
 logging:
   level:

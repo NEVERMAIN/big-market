@@ -556,17 +556,20 @@ public class ActivityRepository implements IActivityRepository {
         String userId = partakeRaffleActivityEntity.getUserId();
         Long activityId = partakeRaffleActivityEntity.getActivityId();
         // 1.从数据库查询未消费的订单
-        UserRaffleOrder userRaffleOrder = userRaffleOrderDao.queryNoUsedRaffleOrder(userId, activityId);
-        if (null == userRaffleOrder) return null;
+        UserRaffleOrder userRaffleOrderReq = new UserRaffleOrder();
+        userRaffleOrderReq.setUserId(userId);
+        userRaffleOrderReq.setActivityId(activityId);
+        UserRaffleOrder userRaffleOrderRes = userRaffleOrderDao.queryNoUsedRaffleOrder(userRaffleOrderReq);
+        if (null == userRaffleOrderRes) return null;
         // 2.构建用户抽奖订单的实体对象
         return UserRaffleOrderEntity.builder()
-                .userId(userRaffleOrder.getUserId())
-                .activityId(userRaffleOrder.getActivityId())
-                .activityName(userRaffleOrder.getActivityName())
-                .strategyId(userRaffleOrder.getStrategyId())
-                .orderId(userRaffleOrder.getOrderId())
-                .orderTime(userRaffleOrder.getOrderTime())
-                .orderState(UserRaffleOrderState.valueOf(userRaffleOrder.getOrderState()))
+                .userId(userRaffleOrderRes.getUserId())
+                .activityId(userRaffleOrderRes.getActivityId())
+                .activityName(userRaffleOrderRes.getActivityName())
+                .strategyId(userRaffleOrderRes.getStrategyId())
+                .orderId(userRaffleOrderRes.getOrderId())
+                .orderTime(userRaffleOrderRes.getOrderTime())
+                .orderState(UserRaffleOrderState.valueOf(userRaffleOrderRes.getOrderState()))
                 .build();
     }
 

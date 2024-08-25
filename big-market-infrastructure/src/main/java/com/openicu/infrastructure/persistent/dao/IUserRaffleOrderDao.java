@@ -21,7 +21,7 @@ public interface IUserRaffleOrderDao {
      * @return
      */
     @DBRouter(key = "userId")
-    UserRaffleOrder queryNoUsedRaffleOrder(String userId, Long activityId);
+    UserRaffleOrder queryNoUsedRaffleOrder(UserRaffleOrder userRaffleOrder);
 
     /**
      * 创建用户抽奖订单

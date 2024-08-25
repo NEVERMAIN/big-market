@@ -2,6 +2,7 @@ package com.openicu.trigger.api.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
  * @date: 2024/8/20
  */
 @Data
-public class SkuProductResponseDTO {
+public class SkuProductResponseDTO implements Serializable {
 
     /** 商品sku */
     private Long sku;
@@ -28,7 +29,7 @@ public class SkuProductResponseDTO {
     private ActivityCount activityCount;
 
     @Data
-    public static class ActivityCount{
+    public static class ActivityCount implements Serializable{
         /** 总次数 */
         private Integer totalCount;
         /** 日次数 */

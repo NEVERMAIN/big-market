@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleStrategyRuleWeightResponseDTO {
+public class RaffleStrategyRuleWeightResponseDTO implements Serializable {
 
     private Integer ruleWeightCount;
 
@@ -26,7 +27,7 @@ public class RaffleStrategyRuleWeightResponseDTO {
 
 
     @Data
-    public static class StrategyAward {
+    public static class StrategyAward implements Serializable {
 
         /** 奖品ID */
         private Integer awardId;

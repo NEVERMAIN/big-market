@@ -24,6 +24,11 @@ public interface IUserBehaviorRebateOrderDao {
     void insert(UserBehaviorRebateOrder userBehaviorRebateOrder);
 
 
+    /**
+     * 根据业务单号查询返利订单
+     * @param userBehaviorRebateOrder
+     * @return
+     */
     @DBRouter(key = "userId")
     List<UserBehaviorRebateOrder> queryOrderByOutBusinessNo(UserBehaviorRebateOrder userBehaviorRebateOrder);
 }

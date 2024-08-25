@@ -34,7 +34,7 @@
 
     </update>
 
-    <select id="queryNoUsedRaffleOrder" resultMap="dataMap">
+    <select id="queryNoUsedRaffleOrder"  parameterType="com.openicu.infrastructure.persistent.po.UserRaffleOrder"   resultMap="dataMap">
         SELECT user_id, activity_id, activity_name, strategy_id, order_id, order_time, order_state
         FROM user_raffle_order
         WHERE user_id = #{userId}
