@@ -33,7 +33,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @CrossOrigin("${app.config.cross-origin}")
-@RequestMapping("/api/${app.config.api-version}/raffle/")
+@RequestMapping("/api/${app.config.api-version}/raffle/strategy")
 @DubboService(version = "1.0")
 public class RaffleStrategyController implements IRaffleStrategyService {
 
