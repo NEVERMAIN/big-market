@@ -136,10 +136,6 @@ dubbo:
   provider:
     timeout: 3000
 
-# nacos
-nacos:
-  discovery:
-    server-addr: 139.9.212.188:8848
 
 # 日志
 logging:
