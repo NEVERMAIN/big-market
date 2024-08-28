@@ -25,9 +25,10 @@ import com.openicu.domain.strategy.service.IRaffleStrategy;
 import com.openicu.domain.strategy.service.armory.IStrategyArmory;
 import com.openicu.trigger.api.IRaffleActivityService;
 import com.openicu.trigger.api.dto.*;
+import com.openicu.trigger.api.response.Response;
+import com.openicu.types.annotation.DCCValue;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
-import com.openicu.types.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -82,6 +83,12 @@ public class RaffleActivityController implements IRaffleActivityService {
     @Resource
     private ICreditAdjustService creditAdjustService;
 
+    /**
+     * dcc 统一配置中心动态配置降级开关
+     */
+    @DCCValue("degradeSwitch:open")
+    private String degradeSwitch;
+
 
     @RequestMapping(value = "armory", method = RequestMethod.GET)
     @Override
@@ -121,6 +128,13 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
 
             log.info("活动抽奖开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
+            if(!"open".equals(degradeSwitch)){
+                log.info("活动抽奖已降级,退出活动抽奖 userId:{} activityId:{}",request.getUserId(),request.getActivityId());
+                return Response.<ActivityDrawResponseDTO>builder()
+                        .code(ResponseCode.DEGRADE_SWITCH.getCode())
+                        .info(ResponseCode.DEGRADE_SWITCH.getInfo())
+                        .build();
+            }
             // 1.参数校验
             if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());

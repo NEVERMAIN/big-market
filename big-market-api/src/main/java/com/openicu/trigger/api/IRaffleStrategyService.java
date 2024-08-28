@@ -2,8 +2,7 @@ package com.openicu.trigger.api;
 
 
 import com.openicu.trigger.api.dto.*;
-import com.openicu.types.model.Response;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.openicu.trigger.api.response.Response;
 
 import java.util.List;
 

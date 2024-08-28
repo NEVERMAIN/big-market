@@ -119,6 +119,12 @@
             <artifactId>nacos-discovery-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- Zookeeper -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+        </dependency>
+
 
 
         <!--<dependency>-->

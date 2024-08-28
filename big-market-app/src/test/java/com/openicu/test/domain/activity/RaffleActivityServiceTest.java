@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.openicu.trigger.api.IRaffleActivityService;
 import com.openicu.trigger.api.dto.ActivityDrawRequestDTO;
 import com.openicu.trigger.api.dto.ActivityDrawResponseDTO;
-import com.openicu.types.model.Response;
+import com.openicu.trigger.api.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

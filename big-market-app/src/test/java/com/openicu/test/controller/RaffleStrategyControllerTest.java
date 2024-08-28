@@ -3,7 +3,7 @@ package com.openicu.test.controller;
 import com.alibaba.fastjson.JSON;
 import com.openicu.trigger.api.IRaffleStrategyService;
 import com.openicu.trigger.api.dto.*;
-import com.openicu.types.model.Response;
+import com.openicu.trigger.api.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -141,8 +141,20 @@ nacos:
   discovery:
     server-addr: 139.9.212.188:8848
 
+
+
 # 日志
 logging:
   level:
     root: info
   config: classpath:logback-spring.xml
+
+# Zookeeper
+zookeeper:
+  sdk:
+    config:
+      connect-string: 139.9.212.188:2181
+      base-sleep-time-ms: 1000
+      max-retries: 3
+      session-timeout-ms: 18000
+      connection-timeout-ms: 30000
