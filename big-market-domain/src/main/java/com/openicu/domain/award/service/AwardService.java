@@ -78,7 +78,7 @@ public class AwardService implements IAwardService{
         }
         // 奖品服务
         IDistributeAward distributeAward = distributeAwardMap.get(awardKey);
-        if(null == distributeAward){
+        if (null == distributeAward) {
             log.error("分发奖品，对应的服务不存在。awardKey:{}", awardKey);
             throw new RuntimeException("分发奖品，奖品" + awardKey + "对应的服务不存在");
         }

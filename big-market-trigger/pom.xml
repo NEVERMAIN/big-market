@@ -62,6 +62,11 @@
             <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
         </dependency>
 
+        <!--<dependency>-->
+        <!--    <groupId>com.netflix.hystrix</groupId>-->
+        <!--    <artifactId>hystrix-core</artifactId>-->
+        <!--</dependency>-->
+
 
         <!-- 系统模块 -->
         <dependency>

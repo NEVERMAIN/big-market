@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.CuratorCache;
+import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
@@ -69,8 +71,15 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
         if (null == objBean) return;
 
         try {
+            Class<?> objBeanClass = objBean.getClass();
+            // 检查 objBean 是否是代理对象
+            if (AopUtils.isAopProxy(objBean)) {
+                // 获取代理对象的目标对象
+                objBeanClass = AopUtils.getTargetClass(objBean);
+            }
+
             String fieldName = dccValuePath.substring(dccValuePath.lastIndexOf("/") + 1);
-            Field field = objBean.getClass().getDeclaredField(fieldName);
+            Field field = objBeanClass.getDeclaredField(fieldName);
             setField(objBean, field, new String(data.getData()));
         } catch (Exception e) {
             throw new RuntimeException("Failed to update field: " + dccValuePath, e);
@@ -87,8 +96,16 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-        Class<?> beanClass = bean.getClass();
-        Field[] fields = beanClass.getDeclaredFields();
+        Class<?> targetBeanClass = bean.getClass();
+        Object targetBeanObject = bean;
+        // 检查 objBean 是否是代理对象
+        if(AopUtils.isAopProxy(bean)){
+            // 获取代理对象的目标对象
+            targetBeanClass = AopUtils.getTargetClass(bean);
+            targetBeanObject = AopProxyUtils.getSingletonTarget(bean);
+        }
+
+        Field[] fields = targetBeanClass.getDeclaredFields();
         for (Field field : fields) {
             if (!field.isAnnotationPresent(DCCValue.class)) {
                 continue;
@@ -106,12 +123,13 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
             String defaultValue = splits.length == 2 ? splits[1] : null;
 
             try {
+
                 // 1.判断当前节点是否存在,不存在则创建出 zookeeper 节点
                 String keyPath = BASE_CONFIG_PATH_CONFIG.concat("/").concat(key);
                 if (null == client.checkExists().forPath(keyPath)) {
                     client.create().creatingParentsIfNeeded().forPath(keyPath);
                     if (StringUtils.isNotBlank(defaultValue)) {
-                        setField(bean, field, defaultValue);
+                        setField(targetBeanObject, field, defaultValue);
                     }
                     log.info("DCC 节点监听 创建节点 {}", keyPath);
 
@@ -119,7 +137,7 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
 
                     String configValue = new String(client.getData().forPath(keyPath));
                     if (StringUtils.isNotBlank(configValue)) {
-                        setField(bean, field, configValue);
+                        setField(targetBeanObject, field, configValue);
                         log.info("DCC 节点监听 设置配置 {} {} {}", keyPath, field.getName(), configValue);
                     }
                 }
@@ -128,7 +146,7 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
                 throw new RuntimeException();
             }
 
-            dccObjGroup.put(BASE_CONFIG_PATH_CONFIG.concat("/").concat(key), bean);
+            dccObjGroup.put(BASE_CONFIG_PATH_CONFIG.concat("/").concat(key), targetBeanObject);
 
         }
 
