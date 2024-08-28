@@ -3,6 +3,7 @@ package com.openicu.domain.strategy.service.rule.chain.impl;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
 import com.openicu.domain.strategy.service.rule.chain.AbstractLogicChain;
 import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+import com.openicu.types.annotation.DCCValue;
 import com.openicu.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -24,10 +25,21 @@ public class BackListLogicChain extends AbstractLogicChain {
     @Resource
     private IStrategyRepository repository;
 
+    /** 黑名单控制开关 */
+    @DCCValue("blackListSwitch:close")
+    private String blackListSwitch;
+
     @Override
     public DefaultChainFactory.StrategyAwardVO logic(String userId, Long strategyId) {
 
         log.info("抽奖责任链-黑名单开始 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
+
+        // 判断开关是否关闭
+       if(!"open".equals(blackListSwitch)){
+           // 过滤其他责任链
+           log.info("抽奖责任链-黑名单校验已关闭 userId:{} strategyId:{} ruleModel:{} blackListSwitch:{}", userId, strategyId, ruleModel(),blackListSwitch);
+           return next().logic(userId, strategyId);
+       }
 
         // 查询规则值配置
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
