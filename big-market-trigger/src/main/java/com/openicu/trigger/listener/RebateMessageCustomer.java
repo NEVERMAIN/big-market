@@ -81,12 +81,12 @@ public class RebateMessageCustomer {
                 log.warn("监听用户返利行为信息,消费失败 topic: {} message: {}", topic, message);
                 return;
             }
-            throw e;
+//            throw e;
 
         } catch (Exception e) {
 
             log.error("监听用户返利信息,消费失败 topic: {} message: {}", topic, message, e);
-            throw e;
+//            throw e;
 
         }
     }

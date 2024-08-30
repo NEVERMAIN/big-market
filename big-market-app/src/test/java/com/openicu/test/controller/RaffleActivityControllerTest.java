@@ -38,21 +38,20 @@ public class RaffleActivityControllerTest {
     @Test
     public void test_draw() throws InterruptedException {
 
-        ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
-        request.setActivityId(100301L);
-        request.setUserId("星耀");
-        Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
+            ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
+            request.setActivityId(100301L);
+            request.setUserId("chen");
+            Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
-        log.info("请求参数:{}",JSON.toJSONString(request));
-        log.info("测试结果:{}",JSON.toJSONString(response));
+            log.info("请求参数:{}",JSON.toJSONString(request));
+            log.info("测试结果:{}",JSON.toJSONString(response));
 
-        new CountDownLatch(1).await();
     }
 
     @Test
     public void test_calendarSignRebate() throws InterruptedException {
 
-        Response<Boolean> response = raffleActivityService.calendarSignRebate("星耀");
+        Response<Boolean> response = raffleActivityService.calendarSignRebate("chen");
         log.info("测试结果：{}", JSON.toJSONString(response));
 
         new CountDownLatch(1).await();
