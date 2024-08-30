@@ -70,6 +70,7 @@ public class AwardService implements IAwardService{
 
     @Override
     public void distributeAward(DistributeAwardEntity distributeAwardEntity) {
+
         // 奖品 key
         String awardKey = awardRepository.queryAwardKey(distributeAwardEntity.getAwardId());
         if(null == awardKey){

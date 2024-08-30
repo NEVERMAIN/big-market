@@ -1,286 +1,302 @@
-/*
- Navicat Premium Data Transfer
+# ************************************************************
+# Sequel Ace SQL dump
+# 版本号： 20050
+#
+# https://sequel-ace.com/
+# https://github.com/Sequel-Ace/Sequel-Ace
+#
+# 主机: 127.0.0.1 (MySQL 8.0.32)
+# 数据库: nacos_config
+# 生成时间: 2023-11-03 06:44:40 +0000
+# ************************************************************
 
- Source Server         : localhost_MySQL
- Source Server Type    : MySQL
- Source Server Version : 50719
- Source Host           : localhost:3306
- Source Schema         : nacos
 
- Target Server Type    : MySQL
- Target Server Version : 50719
- File Encoding         : 65001
-
- Date: 25/08/2024 02:16:27
-*/
-
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE='NO_AUTO_VALUE_ON_ZERO', SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- ----------------------------
--- Table structure for config_info
--- ----------------------------
+CREATE database if NOT EXISTS `nacos_config` default character set utf8mb4 collate utf8mb4_0900_ai_ci;
+
+use `nacos_config`;
+
+# 转储表 config_info
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `config_info`;
-CREATE TABLE `config_info`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'group_id',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT 'source user',
-  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'source ip',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'app_name',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
-  `c_desc` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'configuration description',
-  `c_use` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'configuration usage',
-  `effect` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '配置生效的描述',
-  `type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '配置的类型',
-  `c_schema` text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT '配置的模式',
-  `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密钥',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfo_datagrouptenant`(`data_id`, `group_id`, `tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of config_info
--- ----------------------------
+CREATE TABLE `config_info` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `data_id` varchar(255) COLLATE utf8mb3_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8mb3_bin DEFAULT NULL,
+  `content` longtext COLLATE utf8mb3_bin NOT NULL COMMENT 'content',
+  `md5` varchar(32) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'md5',
+  `gmt_create` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  `gmt_modified` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'ä¿®æ”¹æ—¶é—´',
+  `src_user` text COLLATE utf8mb3_bin COMMENT 'source user',
+  `src_ip` varchar(20) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'source ip',
+  `app_name` varchar(128) COLLATE utf8mb3_bin DEFAULT NULL,
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'ç§Ÿæˆ·å­—æ®µ',
+  `c_desc` varchar(256) COLLATE utf8mb3_bin DEFAULT NULL,
+  `c_use` varchar(64) COLLATE utf8mb3_bin DEFAULT NULL,
+  `effect` varchar(64) COLLATE utf8mb3_bin DEFAULT NULL,
+  `type` varchar(64) COLLATE utf8mb3_bin DEFAULT NULL,
+  `c_schema` text COLLATE utf8mb3_bin,
+  `encrypted_data_key` text COLLATE utf8mb3_bin NOT NULL COMMENT 'ç§˜é’¥',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='config_info';
 
--- ----------------------------
--- Table structure for config_info_aggr
--- ----------------------------
+
+
+# 转储表 config_info_aggr
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `config_info_aggr`;
-CREATE TABLE `config_info_aggr`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `datum_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '内容',
-  `gmt_modified` datetime NOT NULL COMMENT '修改时间',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'app_name',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfoaggr_datagrouptenantdatum`(`data_id`, `group_id`, `tenant_id`, `datum_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '增加租户字段' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of config_info_aggr
--- ----------------------------
+CREATE TABLE `config_info_aggr` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `data_id` varchar(255) COLLATE utf8mb3_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'group_id',
+  `datum_id` varchar(255) COLLATE utf8mb3_bin NOT NULL COMMENT 'datum_id',
+  `content` longtext COLLATE utf8mb3_bin NOT NULL COMMENT 'å†…å®¹',
+  `gmt_modified` datetime NOT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
+  `app_name` varchar(128) COLLATE utf8mb3_bin DEFAULT NULL,
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'ç§Ÿæˆ·å­—æ®µ',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_configinfoaggr_datagrouptenantdatum` (`data_id`,`group_id`,`tenant_id`,`datum_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='å¢žåŠ ç§Ÿæˆ·å­—æ®µ';
 
--- ----------------------------
--- Table structure for config_info_beta
--- ----------------------------
+
+
+# 转储表 config_info_beta
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `config_info_beta`;
-CREATE TABLE `config_info_beta`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'app_name',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `beta_ips` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'betaIps',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT 'source user',
-  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'source ip',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
-  `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密钥',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfobeta_datagrouptenant`(`data_id`, `group_id`, `tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_beta' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of config_info_beta
--- ----------------------------
+CREATE TABLE `config_info_beta` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `data_id` varchar(255) COLLATE utf8mb3_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'group_id',
+  `app_name` varchar(128) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext COLLATE utf8mb3_bin NOT NULL COMMENT 'content',
+  `beta_ips` varchar(1024) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'betaIps',
+  `md5` varchar(32) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'md5',
+  `gmt_create` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  `gmt_modified` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'ä¿®æ”¹æ—¶é—´',
+  `src_user` text COLLATE utf8mb3_bin COMMENT 'source user',
+  `src_ip` varchar(20) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'source ip',
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'ç§Ÿæˆ·å­—æ®µ',
+  `encrypted_data_key` text COLLATE utf8mb3_bin NOT NULL COMMENT 'ç§˜é’¥',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_configinfobeta_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='config_info_beta';
 
--- ----------------------------
--- Table structure for config_info_tag
--- ----------------------------
+
+
+# 转储表 config_info_tag
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `config_info_tag`;
-CREATE TABLE `config_info_tag`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
-  `tag_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'app_name',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT 'source user',
-  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'source ip',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfotag_datagrouptenanttag`(`data_id`, `group_id`, `tenant_id`, `tag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_tag' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of config_info_tag
--- ----------------------------
+CREATE TABLE `config_info_tag` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `data_id` varchar(255) COLLATE utf8mb3_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'group_id',
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'tenant_id',
+  `tag_id` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'tag_id',
+  `app_name` varchar(128) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext COLLATE utf8mb3_bin NOT NULL COMMENT 'content',
+  `md5` varchar(32) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'md5',
+  `gmt_create` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  `gmt_modified` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'ä¿®æ”¹æ—¶é—´',
+  `src_user` text COLLATE utf8mb3_bin COMMENT 'source user',
+  `src_ip` varchar(20) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'source ip',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_configinfotag_datagrouptenanttag` (`data_id`,`group_id`,`tenant_id`,`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='config_info_tag';
 
--- ----------------------------
--- Table structure for config_tags_relation
--- ----------------------------
+
+
+# 转储表 config_tags_relation
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `config_tags_relation`;
-CREATE TABLE `config_tags_relation`  (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `tag_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
-  `tag_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'tag_type',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
-  `nid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'nid, 自增长标识',
-  PRIMARY KEY (`nid`) USING BTREE,
-  UNIQUE INDEX `uk_configtagrelation_configidtag`(`id`, `tag_name`, `tag_type`) USING BTREE,
-  INDEX `idx_tenant_id`(`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_tag_relation' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of config_tags_relation
--- ----------------------------
+CREATE TABLE `config_tags_relation` (
+  `id` bigint NOT NULL COMMENT 'id',
+  `tag_name` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'tag_name',
+  `tag_type` varchar(64) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'tag_type',
+  `data_id` varchar(255) COLLATE utf8mb3_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'group_id',
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'tenant_id',
+  `nid` bigint NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`nid`),
+  UNIQUE KEY `uk_configtagrelation_configidtag` (`id`,`tag_name`,`tag_type`),
+  KEY `idx_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='config_tag_relation';
 
--- ----------------------------
--- Table structure for group_capacity
--- ----------------------------
+
+
+# 转储表 group_capacity
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `group_capacity`;
-CREATE TABLE `group_capacity`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
-  `quota` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-  `usage` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '使用量',
-  `max_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-  `max_aggr_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数，，0表示使用默认值',
-  `max_aggr_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-  `max_history_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_group_id`(`group_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '集群、各Group容量信息表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of group_capacity
--- ----------------------------
+CREATE TABLE `group_capacity` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®ID',
+  `group_id` varchar(128) COLLATE utf8mb3_bin NOT NULL DEFAULT '' COMMENT 'Group IDï¼Œç©ºå­—ç¬¦è¡¨ç¤ºæ•´ä¸ªé›†ç¾¤',
+  `quota` int unsigned NOT NULL DEFAULT '0' COMMENT 'é…é¢ï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `usage` int unsigned NOT NULL DEFAULT '0' COMMENT 'ä½¿ç”¨é‡',
+  `max_size` int unsigned NOT NULL DEFAULT '0' COMMENT 'å•ä¸ªé…ç½®å¤§å°ä¸Šé™ï¼Œå•ä½ä¸ºå­—èŠ‚ï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `max_aggr_count` int unsigned NOT NULL DEFAULT '0' COMMENT 'èšåˆå­é…ç½®æœ€å¤§ä¸ªæ•°ï¼Œï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `max_aggr_size` int unsigned NOT NULL DEFAULT '0' COMMENT 'å•ä¸ªèšåˆæ•°æ®çš„å­é…ç½®å¤§å°ä¸Šé™ï¼Œå•ä½ä¸ºå­—èŠ‚ï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `max_history_count` int unsigned NOT NULL DEFAULT '0' COMMENT 'æœ€å¤§å˜æ›´åŽ†å²æ•°é‡',
+  `gmt_create` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  `gmt_modified` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_group_id` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='é›†ç¾¤ã€å„Groupå®¹é‡ä¿¡æ¯è¡¨';
 
--- ----------------------------
--- Table structure for his_config_info
--- ----------------------------
+
+
+# 转储表 his_config_info
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `his_config_info`;
-CREATE TABLE `his_config_info`  (
-  `id` bigint(20) UNSIGNED NOT NULL COMMENT 'id',
-  `nid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'nid, 自增标识',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'app_name',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT 'source user',
-  `src_ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'source ip',
-  `op_type` char(10) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'operation type',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
-  `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密钥',
-  PRIMARY KEY (`nid`) USING BTREE,
-  INDEX `idx_gmt_create`(`gmt_create`) USING BTREE,
-  INDEX `idx_gmt_modified`(`gmt_modified`) USING BTREE,
-  INDEX `idx_did`(`data_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '多租户改造' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of his_config_info
--- ----------------------------
+CREATE TABLE `his_config_info` (
+  `id` bigint unsigned NOT NULL,
+  `nid` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `data_id` varchar(255) COLLATE utf8mb3_bin NOT NULL,
+  `group_id` varchar(128) COLLATE utf8mb3_bin NOT NULL,
+  `app_name` varchar(128) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext COLLATE utf8mb3_bin NOT NULL,
+  `md5` varchar(32) COLLATE utf8mb3_bin DEFAULT NULL,
+  `gmt_create` datetime NOT NULL DEFAULT '2010-05-05 00:00:00',
+  `gmt_modified` datetime NOT NULL DEFAULT '2010-05-05 00:00:00',
+  `src_user` text COLLATE utf8mb3_bin,
+  `src_ip` varchar(20) COLLATE utf8mb3_bin DEFAULT NULL,
+  `op_type` char(10) COLLATE utf8mb3_bin DEFAULT NULL,
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'ç§Ÿæˆ·å­—æ®µ',
+  `encrypted_data_key` text COLLATE utf8mb3_bin NOT NULL COMMENT 'ç§˜é’¥',
+  PRIMARY KEY (`nid`),
+  KEY `idx_gmt_create` (`gmt_create`),
+  KEY `idx_gmt_modified` (`gmt_modified`),
+  KEY `idx_did` (`data_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='å¤šç§Ÿæˆ·æ”¹é€ ';
 
--- ----------------------------
--- Table structure for permissions
--- ----------------------------
+
+
+# 转储表 permissions
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `permissions`;
-CREATE TABLE `permissions`  (
-  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'role',
-  `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'resource',
-  `action` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'action',
-  UNIQUE INDEX `uk_role_permission`(`role`, `resource`, `action`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of permissions
--- ----------------------------
+CREATE TABLE `permissions` (
+  `role` varchar(50) NOT NULL,
+  `resource` varchar(512) NOT NULL,
+  `action` varchar(8) NOT NULL,
+  UNIQUE KEY `uk_role_permission` (`role`,`resource`,`action`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- ----------------------------
--- Table structure for roles
--- ----------------------------
+
+
+# 转储表 roles
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles`  (
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'username',
-  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'role',
-  UNIQUE INDEX `idx_user_role`(`username`, `role`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of roles
--- ----------------------------
-INSERT INTO `roles` VALUES ('nacos', 'ROLE_ADMIN');
+CREATE TABLE `roles` (
+  `username` varchar(50) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  UNIQUE KEY `uk_username_role` (`username`,`role`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- ----------------------------
--- Table structure for tenant_capacity
--- ----------------------------
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+
+INSERT INTO `roles` (`username`, `role`)
+VALUES
+	('nacos','ROLE_ADMIN');
+
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# 转储表 tenant_capacity
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `tenant_capacity`;
-CREATE TABLE `tenant_capacity`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
-  `quota` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-  `usage` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '使用量',
-  `max_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-  `max_aggr_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数',
-  `max_aggr_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-  `max_history_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_tenant_id`(`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '租户容量信息表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of tenant_capacity
--- ----------------------------
+CREATE TABLE `tenant_capacity` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ä¸»é”®ID',
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
+  `quota` int unsigned NOT NULL DEFAULT '0' COMMENT 'é…é¢ï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `usage` int unsigned NOT NULL DEFAULT '0' COMMENT 'ä½¿ç”¨é‡',
+  `max_size` int unsigned NOT NULL DEFAULT '0' COMMENT 'å•ä¸ªé…ç½®å¤§å°ä¸Šé™ï¼Œå•ä½ä¸ºå­—èŠ‚ï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `max_aggr_count` int unsigned NOT NULL DEFAULT '0' COMMENT 'èšåˆå­é…ç½®æœ€å¤§ä¸ªæ•°',
+  `max_aggr_size` int unsigned NOT NULL DEFAULT '0' COMMENT 'å•ä¸ªèšåˆæ•°æ®çš„å­é…ç½®å¤§å°ä¸Šé™ï¼Œå•ä½ä¸ºå­—èŠ‚ï¼Œ0è¡¨ç¤ºä½¿ç”¨é»˜è®¤å€¼',
+  `max_history_count` int unsigned NOT NULL DEFAULT '0' COMMENT 'æœ€å¤§å˜æ›´åŽ†å²æ•°é‡',
+  `gmt_create` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  `gmt_modified` datetime NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='ç§Ÿæˆ·å®¹é‡ä¿¡æ¯è¡¨';
 
--- ----------------------------
--- Table structure for tenant_info
--- ----------------------------
+
+
+# 转储表 tenant_info
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `tenant_info`;
-CREATE TABLE `tenant_info`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `kp` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'kp',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_id',
-  `tenant_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT 'tenant_name',
-  `tenant_desc` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'tenant_desc',
-  `create_source` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'create_source',
-  `gmt_create` bigint(20) NOT NULL COMMENT '创建时间',
-  `gmt_modified` bigint(20) NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_tenant_info_kptenantid`(`kp`, `tenant_id`) USING BTREE,
-  INDEX `idx_tenant_id`(`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'tenant_info' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of tenant_info
--- ----------------------------
+CREATE TABLE `tenant_info` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `kp` varchar(128) COLLATE utf8mb3_bin NOT NULL COMMENT 'kp',
+  `tenant_id` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'tenant_id',
+  `tenant_name` varchar(128) COLLATE utf8mb3_bin DEFAULT '' COMMENT 'tenant_name',
+  `tenant_desc` varchar(256) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'tenant_desc',
+  `create_source` varchar(32) COLLATE utf8mb3_bin DEFAULT NULL COMMENT 'create_source',
+  `gmt_create` bigint NOT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `gmt_modified` bigint NOT NULL COMMENT 'ä¿®æ”¹æ—¶é—´',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_tenant_info_kptenantid` (`kp`,`tenant_id`),
+  KEY `idx_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='tenant_info';
 
--- ----------------------------
--- Table structure for users
--- ----------------------------
+
+
+# 转储表 users
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users`  (
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'username',
-  `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'password',
-  `enabled` tinyint(1) NOT NULL COMMENT 'enabled',
-  PRIMARY KEY (`username`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', 1);
+CREATE TABLE `users` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(500) NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-SET FOREIGN_KEY_CHECKS = 1;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`username`, `password`, `enabled`)
+VALUES
+	('nacos','$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu',1);
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

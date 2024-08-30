@@ -294,18 +294,26 @@ public class StrategyRepository implements IStrategyRepository {
     /**
      * 将策略奖品库存键值对象放入延迟队列中。
      */
-    @Override
-    public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
+@Override
+public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
+    String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + strategyAwardStockKeyVO.getSku();
 
-        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + strategyAwardStockKeyVO.getSku();
+    try {
         // 从Redis服务中获取指定缓存键对应的阻塞队列。
         RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
         // 获取阻塞队列对应的延迟队列，用于实现延迟处理功能。
         RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
-        // 将策略奖品库存键值对象加入延迟队列，并设置延迟时间为3秒。
+
+        // 将策略奖品库存键值对象加入延迟队列，并设置延迟时间。
         delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
 
+        log.info("StrategyAwardStockKeyVO added to delayed queue with delay: {} seconds", 3);
+    } catch (Exception e) {
+        log.error("Error while adding StrategyAwardStockKeyVO to delayed queue: ", e);
+        // 可以在这里添加重试机制或其他错误处理逻辑
     }
+}
+
 
 
     /**

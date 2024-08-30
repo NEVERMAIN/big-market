@@ -1,10 +1,10 @@
-# 命令执行 docker-compose -f docker-compose-environment.yml up -d
+# 命令执行 docker-compose -f docker-compose-environment-private.yml up -d
 version: '3.9'
 services:
   # 注册中心 https://github.com/nacos-group/nacos-docker - 其他配置可参考(集群)
   # http://127.0.0.1:8848/nacos 【账号：nacos 密码：nacos】
   nacos:
-    image: nacos/nacos-server:v2.2.3-slim
+    image: 116.198.201.187:5000/nacos-server:v2.2.3-slim
     container_name: nacos
     restart: always
     ports:
@@ -30,7 +30,7 @@ services:
         condition: service_healthy
 
   mysql:
-    image: mysql:8.0.32
+    image: 116.198.201.187:5000/mysql:8.0.32
     container_name: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -53,7 +53,7 @@ services:
 
   # phpmyadmin https://hub.docker.com/_/phpmyadmin
   phpmyadmin:
-    image: phpmyadmin:5.2.1
+    image: 116.198.201.187:5000/phpmyadmin:5.2.1
     container_name: phpmyadmin
     hostname: phpmyadmin
     ports:
@@ -70,7 +70,7 @@ services:
 
   # Redis
   redis:
-    image: redis:6.2
+    image: 116.198.201.187:5000/redis:6.2
     container_name: redis
     restart: always
     hostname: redis
@@ -91,7 +91,7 @@ services:
   # RedisAdmin https://github.com/joeferner/redis-commander
   # 账密 admin/admin
   redis-admin:
-    image: spryker/redis-commander:0.8.0
+    image: 116.198.201.187:5000/redis-commander:0.8.0
     container_name: redis-admin
     hostname: redis-commander
     restart: always
@@ -114,7 +114,7 @@ services:
   # 账密 admin/admin
   # rabbitmq-plugins enable rabbitmq_management
   rabbitmq:
-    image: rabbitmq:3.12.9
+    image: 116.198.201.187:5000/rabbitmq:3.12.9
     container_name: rabbitmq
     restart: always
     ports:
@@ -128,7 +128,7 @@ services:
       - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
 
   zookeeper:
-    image: zookeeper:3.9.0
+    image: 116.198.201.187:5000/zookeeper:3.9.0
     container_name: zookeeper
     restart: always
     hostname: zoo1
@@ -140,10 +140,11 @@ services:
     networks:
       - my-network
 
+
   # canal-server 伪装成mysql的从库
   # docker cp canal-server:/home/admin/canal-server/conf/example/instance.properties /Users/xiaofuge/Documents/develop/github/xfg-studio/xfg-dev-tech-canal/docs/dev-ops/canal
   canal-server:
-    image: canal/canal-server:v1.1.7
+    image: 116.198.201.187:5000/canal-server:v1.1.7
     container_name: canal-server
     restart: unless-stopped
     ports:
@@ -159,7 +160,7 @@ services:
   # docker cp canal-adapter:/opt/canal-adapter/conf/application.yml /Users/xiaofuge/Documents/develop/github/xfg-studio/xfg-dev-tech-canal/docs/dev-ops/canal-adapter
   # docker cp canal-adapter:/opt/canal-adapter/conf/rdb/mytest_user.yml /Users/xiaofuge/Documents/develop/github/xfg-studio/xfg-dev-tech-canal/docs/dev-ops/canal-adapter/rdb
   canal-adapter:
-    image: coopersoft/canal-adapter:v1.1.6
+    image: 116.198.201.187:5000/canal-adapter:v1.1.6
     container_name: canal-adapter
     restart: unless-stopped
     ports:
@@ -173,7 +174,7 @@ services:
       - my-network
 
   elasticsearch:
-    image: elasticsearch:7.17.14
+    image: 116.198.201.187:5000/elasticsearch:7.17.14
     ports:
       - '9200:9200'
       - '9300:9300'
@@ -188,7 +189,7 @@ services:
       - my-network
 
   kibana:
-    image: kibana:7.17.14
+    image: 116.198.201.187:5000/kibana:7.17.14
     container_name: kibana
     restart: always
     volumes:
