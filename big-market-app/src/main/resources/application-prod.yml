@@ -28,7 +28,7 @@ app:
 # Spring 配置 rabbitmq
 spring:
   rabbitmq:
-    addresses: 139.9.212.188
+    addresses: 117.72.93.43
     port: 5672
     username: admin
     password: admin
@@ -109,8 +109,8 @@ mybatis:
 redis:
   sdk:
     config:
-      host: 127.0.0.1
-      port: 6379
+      host: 117.72.93.43
+      port: 16379
       pool-size: 10
       min-idle-size: 5
       idle-timeout: 30000
@@ -121,26 +121,25 @@ redis:
       keep-alive: true
 
 # dubbo
-dubbo:
-  application:
-    name: big-market
-    version: 1.0
-  registry:
-    id: nacos-registry
-    address: nacos://139.9.212.188:8848
-  protocol:
-    name: dubbo
-    port: -1
-  scan:
-    base-packages: com.openicu.trigger.api
-  provider:
-    timeout: 3000
+#dubbo:
+#  application:
+#    name: big-market
+#    version: 1.0
+#  registry:
+#    id: nacos-registry
+#    address: nacos://117.72.93.43:8848
+#  protocol:
+#    name: dubbo
+#    port: -1
+#  scan:
+#    base-packages: com.openicu.trigger.api
+#  provider:
+#    timeout: 3000
 
 # nacos
-nacos:
-  discovery:
-    server-addr: 139.9.212.188:8848
-
+#nacos:
+#  discovery:
+#    server-addr: 117.72.93.43:8848
 
 # 日志
 logging:
@@ -152,7 +151,7 @@ logging:
 zookeeper:
   sdk:
     config:
-      connect-string: 139.9.212.188:2181
+      connect-string: 117.72.93.43:2181
       base-sleep-time-ms: 1000
       max-retries: 3
       session-timeout-ms: 18000
