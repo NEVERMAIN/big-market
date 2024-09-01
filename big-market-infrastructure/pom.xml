@@ -36,6 +36,8 @@
             <groupId>plus.gaga.middleware</groupId>
             <artifactId>db-router-spring-boot-starter</artifactId>
         </dependency>
+
+
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.openicu</groupId>

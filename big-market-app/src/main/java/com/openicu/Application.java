@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-/**
- * @author 云奇迹
- */
+
 @SpringBootApplication
 @Configurable
 @EnableScheduling

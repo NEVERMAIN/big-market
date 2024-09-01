@@ -1,0 +1,71 @@
+package com.openicu.config;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.elasticsearch.xpack.sql.jdbc.EsDataSource;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+
+/**
+ * @description: 数据源配置类
+ * @author: 云奇迹
+ * @date: 2024/9/1
+ */
+@Configuration
+public class DataSourceConfig {
+
+
+    @Configuration
+    @MapperScan(basePackages = "com.openicu.infrastructure.elasticsearch", sqlSessionFactoryRef = "elasticsearchSqlSessionFactory")
+    static class ElasticsearchMyBatisConfig {
+
+        @Bean("elasticsearchDataSource")
+        @ConfigurationProperties(prefix = "spring.elasticsearch.datasource")
+        public DataSource igniteDataSource(Environment environment) {
+            return new EsDataSource();
+        }
+
+        @Bean("elasticsearchSqlSessionFactory")
+        public SqlSessionFactory elasticsearchSqlSessionFactory(
+                @Qualifier("elasticsearchDataSource") DataSource elasticsearchDataSource) throws Exception {
+
+            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+            factoryBean.setDataSource(elasticsearchDataSource);
+            factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                    .getResources("classpath:/mybatis/mapper/elasticsearch/*.xml"));
+            return factoryBean.getObject();
+
+        }
+
+    }
+
+
+    @Configuration
+    @MapperScan(basePackages = "com.openicu.infrastructure.dao", sqlSessionFactoryRef = "mysqlSqlSessionFactory")
+    static class MysqlMyBatisConfig  {
+
+        @Bean("mysqlSqlSessionFactory")
+        public SqlSessionFactory mysqlSqlSessionFactory(
+                @Qualifier("mysqlDataSource") DataSource mysqlDataSource) throws Exception {
+            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+            factoryBean.setDataSource(mysqlDataSource);
+            factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                    .getResources("classpath:/mybatis/mapper/mysql/*.xml"));
+            return factoryBean.getObject();
+        }
+
+    }
+
+
+
+
+
+}
