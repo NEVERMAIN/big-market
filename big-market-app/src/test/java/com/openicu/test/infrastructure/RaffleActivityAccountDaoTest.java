@@ -1,8 +1,7 @@
 package com.openicu.test.infrastructure;
-import java.util.Date;
 
-import com.openicu.infrastructure.persistent.dao.IRaffleActivityAccountDao;
-import com.openicu.infrastructure.persistent.po.RaffleActivityAccount;
+import com.openicu.infrastructure.dao.IRaffleActivityAccountDao;
+import com.openicu.infrastructure.dao.po.RaffleActivityAccount;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

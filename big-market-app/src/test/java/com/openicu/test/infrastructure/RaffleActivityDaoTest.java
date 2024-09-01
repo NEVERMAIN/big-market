@@ -1,8 +1,8 @@
 package com.openicu.test.infrastructure;
 
 import com.alibaba.fastjson.JSON;
-import com.openicu.infrastructure.persistent.dao.IRaffleActivityDao;
-import com.openicu.infrastructure.persistent.po.RaffleActivity;
+import com.openicu.infrastructure.dao.IRaffleActivityDao;
+import com.openicu.infrastructure.dao.po.RaffleActivity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

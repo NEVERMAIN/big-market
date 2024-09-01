@@ -1,6 +1,6 @@
 package com.openicu.test;
 
-import com.openicu.infrastructure.persistent.redis.IRedisService;
+import com.openicu.infrastructure.redis.IRedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

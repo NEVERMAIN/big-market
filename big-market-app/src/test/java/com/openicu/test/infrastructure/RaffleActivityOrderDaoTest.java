@@ -1,7 +1,7 @@
 package com.openicu.test.infrastructure;
 
-import com.openicu.infrastructure.persistent.dao.IRaffleActivityOrderDao;
-import com.openicu.infrastructure.persistent.po.RaffleActivityOrder;
+import com.openicu.infrastructure.dao.IRaffleActivityOrderDao;
+import com.openicu.infrastructure.dao.po.RaffleActivityOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jeasy.random.EasyRandom;

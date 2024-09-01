@@ -3,8 +3,6 @@ package com.openicu.test.domain.award;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;
 import com.openicu.domain.award.model.valobj.AwardStateVO;
 import com.openicu.domain.award.service.IAwardService;
-import com.openicu.infrastructure.persistent.po.UserAwardRecord;
-import jodd.util.RandomString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package com.openicu.test.infrastructure;
 
-import com.openicu.infrastructure.persistent.dao.IRaffleActivityCountDao;
-import com.openicu.infrastructure.persistent.po.RaffleActivityCount;
+import com.openicu.infrastructure.dao.IRaffleActivityCountDao;
+import com.openicu.infrastructure.dao.po.RaffleActivityCount;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
