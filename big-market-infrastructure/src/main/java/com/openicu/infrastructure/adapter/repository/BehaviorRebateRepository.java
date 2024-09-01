@@ -76,6 +76,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
     public void saveUserRebateRecord(String userId, List<BehaviorRebateAggregate> behaviorRebateAggregateList) {
 
         try {
+
             dbRouter.doRouter(userId);
             transactionTemplate.execute(status -> {
 

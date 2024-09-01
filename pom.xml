@@ -119,6 +119,13 @@
                 <version>4.3.0</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/plus.gaga.middleware/db-router-spring-boot-starter -->
+            <dependency>
+                <groupId>plus.gaga.middleware</groupId>
+                <artifactId>db-router-spring-boot-starter</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-amqp -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -153,25 +160,13 @@
                 <version>3.1.4</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/plus.gaga.middleware/db-router-spring-boot-starter -->
-            <dependency>
-                <groupId>plus.gaga.middleware</groupId>
-                <artifactId>db-router-spring-boot-starter</artifactId>
-                <version>1.0.4</version>
-            </dependency>
+
 
             <!--&lt;!&ndash; 业务监控系统 SDK &ndash;&gt;-->
             <!--<dependency>-->
             <!--    <groupId>gaga.plus</groupId>-->
             <!--    <artifactId>business-behavior-monitor-sdk</artifactId>-->
             <!--    <version>1.0-SNAPSHOT</version>-->
-            <!--</dependency>-->
-
-            <!-- https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core -->
-            <!--<dependency>-->
-            <!--    <groupId>com.netflix.hystrix</groupId>-->
-            <!--    <artifactId>hystrix-core</artifactId>-->
-            <!--    <version>1.5.18</version>-->
             <!--</dependency>-->
 
             <dependency>
@@ -186,7 +181,6 @@
                 <artifactId>x-pack-sql-jdbc</artifactId>
                 <version>7.17.14</version>
             </dependency>
-
 
 
             <!-- 工程模块 -->
