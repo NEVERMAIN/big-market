@@ -40,7 +40,7 @@ public class RaffleActivityControllerTest {
 
         ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
         request.setActivityId(100301L);
-        request.setUserId("星耀");
+        request.setUserId("zookeeper");
         Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
         log.info("请求参数:{}",JSON.toJSONString(request));
@@ -52,7 +52,7 @@ public class RaffleActivityControllerTest {
     @Test
     public void test_calendarSignRebate() throws InterruptedException {
 
-        Response<Boolean> response = raffleActivityService.calendarSignRebate("curator");
+        Response<Boolean> response = raffleActivityService.calendarSignRebate("zookeeper");
         log.info("测试结果：{}", JSON.toJSONString(response));
 
         new CountDownLatch(1).await();
@@ -60,26 +60,23 @@ public class RaffleActivityControllerTest {
     }
 
     @Test
-    public void test_isCalendarSignRebate() throws InterruptedException {
-        Response<Boolean> response = raffleActivityService.isCalendarSignRebate("星耀");
+    public void test_isCalendarSignRebate() {
+        Response<Boolean> response = raffleActivityService.isCalendarSignRebate("zookeeper");
         log.info("测试结果: {}",JSON.toJSONString(response));
 
-        new CountDownLatch(1).await();
 
     }
 
     @Test
-    public void test_queryUserActivityAccount() throws InterruptedException {
+    public void test_queryUserActivityAccount() {
 
         UserActivityAccountRequestDTO request = new UserActivityAccountRequestDTO();
         request.setActivityId(100301L);
-        request.setUserId("星耀");
+        request.setUserId("zookeeper");
         // 1. 查询数据
         Response<UserActivityAccountResponseDTO> response = raffleActivityService.queryUserActivityAccount(request);
         log.info("请求参数: {}",JSON.toJSONString(request));
         log.info("测试结果: {}",JSON.toJSONString(response));
-
-        new CountDownLatch(1).await();
 
 
     }
