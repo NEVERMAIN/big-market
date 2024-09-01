@@ -1,0 +1,18 @@
+dataSourceKey: big_market_02
+destination: example
+groupId: g1
+esMapping:
+  _index: big_market.user_credit_order
+  _id: _id
+  sql: "select  t.order_id as _id, 
+                t.user_id as _user_id,
+                t.order_id as _order_id,
+                t.trade_name as _trade_name,
+                t.trade_type as _trade_type,
+                t.trade_amount as _trade_amount,
+                t.out_business_no as _out_business_no,
+                t.create_time as _create_time,
+                t.update_time as _update_time
+        from user_credit_order_000 t"
+  etlCondition: "where t.update_time>={}"
+  commitBatch: 3000
