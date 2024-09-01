@@ -152,6 +152,7 @@ logging:
 zookeeper:
   sdk:
     config:
+      enable: true
       connect-string: 117.72.93.43:2181
       base-sleep-time-ms: 1000
       max-retries: 3
