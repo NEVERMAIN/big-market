@@ -42,7 +42,7 @@ public class RaffleActivityControllerTest {
 
             ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
             request.setActivityId(100301L);
-            request.setUserId("spring");
+            request.setUserId("cloud");
             Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
             log.info("请求参数:{}",JSON.toJSONString(request));
@@ -54,7 +54,7 @@ public class RaffleActivityControllerTest {
     @Test
     public void test_calendarSignRebate() throws InterruptedException {
 
-        Response<Boolean> response = raffleActivityService.calendarSignRebate("spring");
+        Response<Boolean> response = raffleActivityService.calendarSignRebate("cloud");
         log.info("测试结果：{}", JSON.toJSONString(response));
 
         new CountDownLatch(1).await();
