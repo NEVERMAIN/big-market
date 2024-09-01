@@ -1,7 +1,5 @@
 package com.openicu.infrastructure.persistent.dao;
 
-import com.openicu.domain.activity.model.entity.ActivityCountEntity;
-import com.openicu.infrastructure.persistent.po.RaffleActivityAccount;
 import com.openicu.infrastructure.persistent.po.RaffleActivityCount;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,6 +1,6 @@
 package com.openicu.infrastructure.persistent.dao;
 
-import com.myapp.middleware.db.router.annotation.DBRouter;
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import com.openicu.infrastructure.persistent.po.RaffleActivityAccountDay;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,7 +1,6 @@
 package com.openicu.trigger.job;
 
-import com.myapp.middleware.db.router.annotation.DBRouterStrategy;
-import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
+import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.task.model.entity.TaskEntity;
 import com.openicu.domain.task.service.ITaskService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +41,8 @@ public class SendMessageTaskJob {
                 int finalDbIdx = dbIdx;
                 executor.execute(()->{
                     try{
-                        dbRouter.setDbKey(finalDbIdx);
-                        dbRouter.setTbKey(0);
+                        dbRouter.setDBKey(finalDbIdx);
+                        dbRouter.setTBKey(0);
                         List<TaskEntity> taskEntityList = taskService.queryNoSendMessageTaskList();
                         if(taskEntityList.isEmpty()) return;
                         // 发送 MQ 消息

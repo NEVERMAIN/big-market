@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.openicu</groupId>
@@ -30,8 +31,9 @@
         </dependency>
 
         <!-- 路由组件 -->
+        <!-- https://mvnrepository.com/artifact/plus.gaga.middleware/db-router-spring-boot-starter -->
         <dependency>
-            <groupId>com.myapp.middleware</groupId>
+            <groupId>plus.gaga.middleware</groupId>
             <artifactId>db-router-spring-boot-starter</artifactId>
         </dependency>
         <!-- 系统模块 -->

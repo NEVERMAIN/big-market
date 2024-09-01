@@ -1,7 +1,7 @@
 package com.openicu.infrastructure.persistent.repository;
 
+import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import com.alibaba.fastjson.JSON;
-import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.award.model.valobj.AccountStatusVO;
 import com.openicu.domain.credit.model.aggregate.TradeAggregate;
 import com.openicu.domain.credit.model.entity.CreditAccountEntity;
@@ -20,7 +20,6 @@ import com.openicu.types.common.Constants;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Lock;
 import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;

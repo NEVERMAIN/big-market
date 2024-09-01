@@ -1,6 +1,5 @@
 package com.openicu.infrastructure.persistent.dao;
 
-import com.myapp.middleware.db.router.annotation.DBRouter;
 import com.openicu.infrastructure.persistent.po.UserCreditAccount;
 import org.apache.ibatis.annotations.Mapper;
 

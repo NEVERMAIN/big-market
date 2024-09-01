@@ -1,7 +1,6 @@
 package com.openicu.infrastructure.persistent.dao;
 
 import com.openicu.infrastructure.persistent.po.DailyBehaviorRebate;
-import com.openicu.infrastructure.persistent.po.UserBehaviorRebateOrder;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

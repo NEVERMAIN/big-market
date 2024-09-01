@@ -1,14 +1,13 @@
 package com.openicu.infrastructure.persistent.repository;
 
+import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import com.alibaba.fastjson.JSON;
-import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.rebate.model.aggregate.BehaviorRebateAggregate;
 import com.openicu.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 import com.openicu.domain.rebate.model.entity.TaskEntity;
 import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.openicu.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 import com.openicu.domain.rebate.repository.IBehaviorRebateRepository;
-import com.openicu.domain.rebate.service.BehaviorRebateService;
 import com.openicu.infrastructure.event.EventPublisher;
 import com.openicu.infrastructure.persistent.dao.IDailyBehaviorRebateDao;
 import com.openicu.infrastructure.persistent.dao.ITaskDao;
@@ -19,16 +18,13 @@ import com.openicu.infrastructure.persistent.po.UserBehaviorRebateOrder;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description:

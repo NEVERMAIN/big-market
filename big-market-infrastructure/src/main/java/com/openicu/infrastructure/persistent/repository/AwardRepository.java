@@ -1,7 +1,7 @@
 package com.openicu.infrastructure.persistent.repository;
 
+import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import com.alibaba.fastjson.JSON;
-import com.myapp.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.award.model.aggregate.GiveOutPrizesAggregate;
 import com.openicu.domain.award.model.aggregate.UserAwardRecordAggregate;
 import com.openicu.domain.award.model.entity.UserAwardRecordEntity;

@@ -1,9 +1,8 @@
 package com.openicu.infrastructure.persistent.dao;
 
-import com.myapp.middleware.db.router.annotation.DBRouter;
-import com.myapp.middleware.db.router.annotation.DBRouterStrategy;
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
+import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import com.openicu.infrastructure.persistent.po.RaffleActivityOrder;
-import com.openicu.infrastructure.persistent.po.UserRaffleOrder;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
