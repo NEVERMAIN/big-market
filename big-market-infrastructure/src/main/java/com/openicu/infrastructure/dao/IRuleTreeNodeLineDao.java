@@ -13,6 +13,11 @@ import java.util.List;
 @Mapper
 public interface IRuleTreeNodeLineDao {
 
+    /**
+     * 根据规则树ID查询规则树节点
+     * @param treeId
+     * @return
+     */
     List<RuleTreeNodeLine> queryRuleTreeNodeLineListByTreeId(String treeId);
 
 }

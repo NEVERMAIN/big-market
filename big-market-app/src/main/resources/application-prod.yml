@@ -124,20 +124,20 @@ redis:
       keep-alive: true
 
 #### dubbo
-#dubbo:
-#  application:
-#    name: big-market
-#    version: 1.0
-#  registry:
-#    id: nacos-registry
-#    address: nacos://139.9.212.188:8848
-#  protocol:
-#    name: dubbo
-#    port: -1
-#  scan:
-#    base-packages: com.openicu.trigger.api
-#  provider:
-#    timeout: 3000
+dubbo:
+  application:
+    name: big-market
+    version: 1.0
+  registry:
+    id: nacos-registry
+    address: N/A
+  protocol:
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: com.openicu.trigger.api
+  provider:
+    timeout: 3000
 #
 #### nacos
 #nacos:

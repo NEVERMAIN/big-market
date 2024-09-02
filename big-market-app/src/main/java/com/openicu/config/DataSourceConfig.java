@@ -1,5 +1,6 @@
 package com.openicu.config;
 
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.elasticsearch.xpack.sql.jdbc.EsDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -12,7 +13,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 /**
  * @description: 数据源配置类
@@ -50,22 +50,19 @@ public class DataSourceConfig {
 
     @Configuration
     @MapperScan(basePackages = "com.openicu.infrastructure.dao", sqlSessionFactoryRef = "mysqlSqlSessionFactory")
-    static class MysqlMyBatisConfig  {
+    static class MysqlMyBatisConfig {
 
         @Bean("mysqlSqlSessionFactory")
-        public SqlSessionFactory mysqlSqlSessionFactory(
-                @Qualifier("mysqlDataSource") DataSource mysqlDataSource) throws Exception {
+        public SqlSessionFactory mysqlSqlSessionFactory(DataSource mysqlDataSource, Interceptor dbRouterDynamicMybatisPlugin) throws Exception {
             SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
             factoryBean.setDataSource(mysqlDataSource);
+            factoryBean.setPlugins(dbRouterDynamicMybatisPlugin);
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
                     .getResources("classpath:/mybatis/mapper/mysql/*.xml"));
             return factoryBean.getObject();
         }
 
     }
-
-
-
 
 
 }

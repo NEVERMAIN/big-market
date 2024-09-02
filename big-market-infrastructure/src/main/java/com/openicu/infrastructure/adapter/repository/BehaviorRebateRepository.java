@@ -1,20 +1,20 @@
 package com.openicu.infrastructure.adapter.repository;
 
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.openicu.domain.rebate.model.aggregate.BehaviorRebateAggregate;
 import com.openicu.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 import com.openicu.domain.rebate.model.entity.TaskEntity;
 import com.openicu.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.openicu.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 import com.openicu.domain.rebate.repository.IBehaviorRebateRepository;
-import com.openicu.infrastructure.event.EventPublisher;
 import com.openicu.infrastructure.dao.IDailyBehaviorRebateDao;
 import com.openicu.infrastructure.dao.ITaskDao;
 import com.openicu.infrastructure.dao.IUserBehaviorRebateOrderDao;
 import com.openicu.infrastructure.dao.po.DailyBehaviorRebate;
 import com.openicu.infrastructure.dao.po.Task;
 import com.openicu.infrastructure.dao.po.UserBehaviorRebateOrder;
+import com.openicu.infrastructure.event.EventPublisher;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
