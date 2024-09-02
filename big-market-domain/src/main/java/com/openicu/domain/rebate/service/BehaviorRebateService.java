@@ -41,14 +41,16 @@ public class BehaviorRebateService implements IBehaviorRebateService {
         // 1.查询返利配置
         List<DailyBehaviorRebateVO> dailyBehaviorRebateVOList =
                 behaviorRebateRepository.queryDailyBehaviorRebateConfig(behaviorEntity.getBehaviorTypeVO());
-
+        if (null == dailyBehaviorRebateVOList || dailyBehaviorRebateVOList.isEmpty()) return new ArrayList<>();
         // 2.构建聚合对象
         List<String> orderIds = new ArrayList<>();
         List<BehaviorRebateAggregate> behaviorRebateAggregateList = new ArrayList<>();
         for (DailyBehaviorRebateVO dailyBehaviorRebateVO : dailyBehaviorRebateVOList) {
 
             // 拼装业务ID: 用户ID_返利类型_外部透彻业务ID
-            String bizId = behaviorEntity.getUserId() + Constants.UNDERLINE + dailyBehaviorRebateVO.getRebateType() + Constants.UNDERLINE + behaviorEntity.getOutBusinessNo();
+            String bizId = behaviorEntity.getUserId() + Constants.UNDERLINE +
+                    dailyBehaviorRebateVO.getRebateType() + Constants.UNDERLINE +
+                    behaviorEntity.getOutBusinessNo();
             // 1. 组装活动返利的订单
             BehaviorRebateOrderEntity behaviorRebateOrderEntity = BehaviorRebateOrderEntity.builder()
                     .userId(behaviorEntity.getUserId())
@@ -96,7 +98,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
         }
 
         // 3.存储聚合对象数据
-        behaviorRebateRepository.saveUserRebateRecord(behaviorEntity.getUserId(),behaviorRebateAggregateList);
+        behaviorRebateRepository.saveUserRebateRecord(behaviorEntity.getUserId(), behaviorRebateAggregateList);
 
         // 4.返回订单ID集合
         return orderIds;
@@ -104,7 +106,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
 
     @Override
     public List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo) {
-        return behaviorRebateRepository.queryOrderByOutBusinessNo(userId,outBusinessNo);
+        return behaviorRebateRepository.queryOrderByOutBusinessNo(userId, outBusinessNo);
 
     }
 }
