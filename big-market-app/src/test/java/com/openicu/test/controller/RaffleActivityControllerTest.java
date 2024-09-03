@@ -38,15 +38,17 @@ public class RaffleActivityControllerTest {
     @Test
     public void test_draw() throws InterruptedException {
 
-        ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
-        request.setActivityId(100301L);
-        request.setUserId("zookeeper");
-        Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
+        for (int i = 0; i < 10; i++) {
 
-        log.info("请求参数:{}",JSON.toJSONString(request));
-        log.info("测试结果:{}",JSON.toJSONString(response));
+            ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
+            request.setActivityId(100301L);
+            request.setUserId("dubbo");
+            Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
-        new CountDownLatch(1).await();
+            log.info("请求参数:{}",JSON.toJSONString(request));
+            log.info("测试结果:{}",JSON.toJSONString(response));
+        }
+
     }
 
     @Test
