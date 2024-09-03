@@ -257,19 +257,19 @@ public class StrategyRepository implements IStrategyRepository {
         redisService.setAtomicLong(cacheKey, awardCount);
     }
 
-
+    /**
+     * 扣减库存并加锁操作，decr和 0对比，如果是incr操作就和总量对比，和总量对比可以动态添加库存
+     * @param strategyId
+     * @param awardId
+     * @param cacheKey 缓存Key
+     * @param endDateTime 活动结束时间
+     * @return
+     */
     @Override
     public Boolean subtractionAwardStock(Long strategyId, Integer awardId, String cacheKey, Date endDateTime) {
 
         long surplus = redisService.decr(cacheKey);
-        if (surplus == 0) {
-            // 发送消息给MQ,清空延迟队列
-            eventPublisher.publish(strategyAwardStockZeroMessageEvent.topic(),
-                    strategyAwardStockZeroMessageEvent.buildEventMessage(StrategyAwardStockKeyVO.builder()
-                            .strategyId(strategyId)
-                            .awardId(awardId)
-                            .build()));
-        }
+
         if (surplus < 0) {
             // 库存小于0，恢复为0个
             redisService.setValue(cacheKey, 0);
@@ -289,6 +289,16 @@ public class StrategyRepository implements IStrategyRepository {
         if (!lock) {
             log.info("策略奖品库存加锁失败 {}", lockKey);
         }
+
+        if (surplus == 0) {
+            // 发送消息给MQ,清空延迟队列
+            eventPublisher.publish(strategyAwardStockZeroMessageEvent.topic(),
+                    strategyAwardStockZeroMessageEvent.buildEventMessage(StrategyAwardStockKeyVO.builder()
+                            .strategyId(strategyId)
+                            .awardId(awardId)
+                            .build()));
+        }
+
         return lock;
     }
 

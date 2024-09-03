@@ -44,6 +44,9 @@ spring:
   elasticsearch.datasource:
     driverClassName: org.elasticsearch.xpack.sql.jdbc.EsDriver
     url: jdbc:es://139.9.212.188:9200
+  cloud:
+    .zookeeper:
+      enabled: false
 
 # 多数据源路由配置，库数量 * 表数量 为2的次幂，如2库4表
 # mysql 5.x 配置 driver-class-name: com.mysql.jdbc.Driver    mysql-connector-java 5.1.34

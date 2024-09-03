@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ public class ZooKeeperClientConfig {
 
     /** 多参数构建 Zookeeper 客户端连接 */
     @Bean(name = "zookeeperClient")
+    @ConditionalOnProperty(value = "zookeeper.sdk.config.enable", havingValue = "true", matchIfMissing = false)
     public CuratorFramework createWithOptions(ZookeeperClientConfigProperties properties) {
 
         // 1. 创建一个指数退避重试策略对象，用于在连接丢失或操作失败时重试

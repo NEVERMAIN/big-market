@@ -28,6 +28,7 @@ public class RaffleActivityControllerTest {
     @Resource
     private IRaffleActivityService raffleActivityService;
 
+
     @Test
     public void test_armory(){
         Response<Boolean> response = raffleActivityService.armory(100301L);

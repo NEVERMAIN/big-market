@@ -9,6 +9,7 @@ import org.apache.curator.framework.recipes.cache.CuratorCache;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,14 +30,19 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
 
     private static final String BASE_CONFIG_PATH_CONFIG = BASE_CONFIG_PATH + "/config";
 
-    /** Zookeeper 客户端 */
-    private final CuratorFramework client;
+    /**
+     *  Zookeeper 客户端
+     */
+    @Autowired(required = false)
+    private  CuratorFramework client;
 
     private final Map<String, Object> dccObjGroup = new HashMap<>();
 
-    public DCCValueBeanFactory(CuratorFramework client) throws Exception {
+    public DCCValueBeanFactory() throws Exception {
 
-        this.client = client;
+        if( null == client){
+            return;
+        }
 
         // 节点判断
         if (null == client.checkExists().forPath(BASE_CONFIG_PATH_CONFIG)) {
@@ -95,6 +101,8 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
      */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+
+        if (client == null) return bean;
 
         Class<?> targetBeanClass = bean.getClass();
         Object targetBeanObject = bean;

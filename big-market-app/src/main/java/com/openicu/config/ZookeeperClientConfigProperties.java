@@ -12,6 +12,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "zookeeper.sdk.config", ignoreInvalidFields = true)
 public class ZookeeperClientConfigProperties {
 
+    /** 状态 true 开启 ; close 关闭 */
+    private boolean enable;
+
     /** 数据库连接字符串，用于建立数据库连接 */
     private String connectString;
 
