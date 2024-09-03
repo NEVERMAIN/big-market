@@ -31,6 +31,7 @@ public class RaffleActivityControllerTest {
 
     @Test
     public void test_armory(){
+
         Response<Boolean> response = raffleActivityService.armory(100301L);
         log.info("测试结果:{}", JSON.toJSONString(response));
 
@@ -55,7 +56,7 @@ public class RaffleActivityControllerTest {
     @Test
     public void test_calendarSignRebate() throws InterruptedException {
 
-        Response<Boolean> response = raffleActivityService.calendarSignRebate("bona");
+        Response<Boolean> response = raffleActivityService.calendarSignRebate("hafie");
         log.info("测试结果：{}", JSON.toJSONString(response));
 
         new CountDownLatch(1).await();

@@ -72,6 +72,7 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
      * @param data
      */
     private void handleNodeChanged(ChildData data) {
+
         String dccValuePath = data.getPath();
         Object objBean = dccObjGroup.get(dccValuePath);
         if (null == objBean) return;
