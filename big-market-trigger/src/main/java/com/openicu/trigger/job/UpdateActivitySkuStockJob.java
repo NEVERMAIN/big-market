@@ -2,13 +2,19 @@ package com.openicu.trigger.job;
 
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import com.openicu.domain.activity.service.IRaffleActivitySkuStockService;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -25,9 +31,21 @@ public class UpdateActivitySkuStockJob {
     @Resource
     private ThreadPoolExecutor executor;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Resource
+    private RedissonClient redissonClient;
+
+    /**
+     * 本地化注解:  @Scheduled(cron = "0/5 * * * * ?")
+     * 分布式注解:  @XxlJob("UpdateActivitySkuStockJob")
+     */
+    @XxlJob("UpdateActivitySkuStockJob")
     public void exec() {
+        RLock lock = redissonClient.getLock("big-market-UpdateActivitySkuStockJob");
+        boolean isLock = false;
         try {
+            // 1.抢占锁执行定时任务
+            isLock = lock.tryLock(3, 0, TimeUnit.SECONDS);
+            if (!isLock) return;
 
             List<Long> skuList = skuStock.querySkuList();
             if (skuList.isEmpty()) {
@@ -50,6 +68,10 @@ public class UpdateActivitySkuStockJob {
 
         } catch (Exception e) {
             log.error("定时任务,更新活动sku库存失败", e);
+        } finally {
+            if (isLock) {
+                lock.unlock();
+            }
         }
 
     }
