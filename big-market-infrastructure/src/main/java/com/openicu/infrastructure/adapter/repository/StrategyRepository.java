@@ -6,6 +6,7 @@ import com.openicu.domain.strategy.model.entity.StrategyEntity;
 import com.openicu.domain.strategy.model.entity.StrategyRuleEntity;
 import com.openicu.domain.strategy.model.valobj.*;
 import com.openicu.domain.strategy.resposity.IStrategyRepository;
+import com.openicu.domain.strategy.service.IRaffleStrategy;
 import com.openicu.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import com.openicu.infrastructure.dao.*;
 import com.openicu.infrastructure.dao.po.*;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @description: 策略仓储实现
@@ -34,6 +36,9 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Resource
     private IRaffleActivityDao raffleActivityDao;
+
+    @Resource
+    private IStrategyAwardDao strategyAwardDao;
 
     @Resource
     private IRaffleActivityAccountDayDao raffleActivityAccountDayDao;
@@ -294,26 +299,25 @@ public class StrategyRepository implements IStrategyRepository {
     /**
      * 将策略奖品库存键值对象放入延迟队列中。
      */
-@Override
-public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
-    String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + strategyAwardStockKeyVO.getSku();
+    @Override
+    public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
 
-    try {
-        // 从Redis服务中获取指定缓存键对应的阻塞队列。
-        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
-        // 获取阻塞队列对应的延迟队列，用于实现延迟处理功能。
-        RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + Constants.UNDERLINE + strategyAwardStockKeyVO.getStrategyId() + strategyAwardStockKeyVO.getAwardId();
 
-        // 将策略奖品库存键值对象加入延迟队列，并设置延迟时间。
-        delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
+        try {
+            // 从Redis服务中获取指定缓存键对应的阻塞队列。
+            RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
+            // 获取阻塞队列对应的延迟队列，用于实现延迟处理功能。
+            RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
 
-        log.info("StrategyAwardStockKeyVO added to delayed queue with delay: {} seconds", 3);
-    } catch (Exception e) {
-        log.error("Error while adding StrategyAwardStockKeyVO to delayed queue: ", e);
-        // 可以在这里添加重试机制或其他错误处理逻辑
+            // 将策略奖品库存键值对象加入延迟队列，并设置延迟时间。
+            delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
+
+            log.info("StrategyAwardStockKeyVO added to delayed queue with delay: {} seconds", 3);
+        } catch (Exception e) {
+            log.error("Error while adding StrategyAwardStockKeyVO to delayed queue: ", e);
+        }
     }
-}
-
 
 
     /**
@@ -321,10 +325,18 @@ public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStoc
      */
     @Override
     public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
         // 通过缓存键值获取对应的Redis阻塞队列。
         RBlockingQueue<StrategyAwardStockKeyVO> destinationQueue = redisService.getBlockingQueue(cacheKey);
         // 从阻塞队列中获取并移除一个元素，如果队列为空，则会阻塞直到有元素可用。
+        return destinationQueue.poll();
+    }
+
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue(Long strategyId, Integer awardId) throws InterruptedException {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY + Constants.UNDERLINE + strategyId + Constants.UNDERLINE + awardId;
+        RBlockingQueue<StrategyAwardStockKeyVO> destinationQueue = redisService.getBlockingQueue(cacheKey);
         return destinationQueue.poll();
     }
 
@@ -480,7 +492,7 @@ public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStoc
         }
 
         // 设置缓存 - 实际场景中，这类数据，可以在活动下架的时候统一清空缓存。
-        redisService.setValue(cacheKey,ruleWeightVOList);
+        redisService.setValue(cacheKey, ruleWeightVOList);
 
         return ruleWeightVOList;
 
@@ -488,6 +500,7 @@ public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStoc
 
     @Override
     public Integer queryActivityAccountTotalUseCount(String userId, Long strategyId) {
+
         Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
         RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(RaffleActivityAccount.builder()
                 .userId(userId)
@@ -495,6 +508,23 @@ public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStoc
                 .build());
         // 返回计算使用量
         return raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus();
+
+    }
+
+    @Override
+    public List<StrategyAwardStockKeyVO> queryOpenActivityStrategyAwardList() {
+
+        // 1.查询开启的活动的策略奖品
+        List<StrategyAward> strategyAwardList = strategyAwardDao.queryOpenActivityStrategyAwardList();
+        if (null == strategyAwardList || strategyAwardList.isEmpty()) return null;
+
+        return strategyAwardList.stream().map(strategyAward ->
+                StrategyAwardStockKeyVO.builder()
+                        .strategyId(strategyAward.getStrategyId())
+                        .awardId(strategyAward.getAwardId())
+                        .build()
+        ).collect(Collectors.toList());
+
 
     }
 }

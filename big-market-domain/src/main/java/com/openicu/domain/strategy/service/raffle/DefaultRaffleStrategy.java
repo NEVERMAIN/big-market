@@ -74,6 +74,12 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     }
 
     @Override
+    public StrategyAwardStockKeyVO takeQueueValue(Long strategyId, Integer awardId) throws InterruptedException {
+
+        return repository.takeQueueValue(strategyId,awardId);
+    }
+
+    @Override
     public void clearQueueValue() {
         repository.clearQueueValue();
     }
@@ -108,6 +114,11 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     @Override
     public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
         return repository.queryAwardRuleWeight(strategyId);
+    }
+
+    @Override
+    public List<StrategyAwardStockKeyVO> queryOpenActivityStrategyAwardList() {
+        return repository.queryOpenActivityStrategyAwardList();
     }
 
     @Override

@@ -31,8 +31,10 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
     @Resource
     private IStrategyDispatch strategyDispatch;
 
-    // 按需选择需要的计算策略，旧版是 AnalyticalNotEqual 算法，新增加 = 算法。使用时可以实例化 AnalyticalEqual 即可。这个操作也可以从数据库中配置处理。
-    private final IAnalytical analytical = new AnalyticalNotEqual();
+    /**
+     * 按需选择需要的计算策略，旧版是 AnalyticalNotEqual 算法，新增加 = 算法。使用时可以实例化 AnalyticalEqual 即可。这个操作也可以从数据库中配置处理。
+     */
+    private final IAnalytical analytical = new AnalyticalEqual();
 
 
     /**
@@ -81,11 +83,13 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
     }
 
     /**
-     * 4000:102,103,104,105
-     * 5000:102,103,104,105,106,107
-     * 6000:102,103,104,105,106,107,108,109
+     * 10:102,103 70:106,107 1000:104,105
+     * 10:102,103
+     * 70:106,107
+     * 1000:104,105
      */
     private Map<Integer, String> getAnalyticalValue(String ruleValue) {
+
         String[] ruleValueGroups = ruleValue.split(Constants.SPACE);
         Map<Integer, String> ruleValueMap = new HashMap<>();
         for (String ruleValueKey : ruleValueGroups) {
@@ -119,14 +123,20 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
         String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Integer userScore);
     }
 
+    /**
+     * 获取范围权重值 = n
+     */
     static class AnalyticalEqual implements IAnalytical {
 
         @Override
         public String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Integer userScore) {
-            return "";
+            return analyticalValueGroup.get(userScore);
         }
     }
 
+    /**
+     * 获取范围权重值 > n
+     */
     static class AnalyticalNotEqual implements IAnalytical {
 
         @Override

@@ -1,7 +1,10 @@
 package com.openicu.infrastructure.dao;
 
 import com.openicu.infrastructure.dao.po.RaffleActivity;
+import com.openicu.infrastructure.dao.po.StrategyAward;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @description: 抽奖活动配置DAO

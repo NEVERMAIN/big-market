@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @description:
@@ -21,20 +22,30 @@ public class UpdateActivitySkuStockJob {
     @Resource
     private IRaffleActivitySkuStockService skuStock;
 
+    @Resource
+    private ThreadPoolExecutor executor;
+
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {
         try {
 
             List<Long> skuList = skuStock.querySkuList();
-            if(skuList.isEmpty()){
+            if (skuList.isEmpty()) {
                 return;
             }
 
             for (Long sku : skuList) {
-                ActivitySkuStockKeyVO activitySkuStockKeyVO = skuStock.takeQueueValue(sku);
-                if (null == activitySkuStockKeyVO) return;
-                log.info("定时任务，更新活动sku库存 sku:{} activityId:{}", activitySkuStockKeyVO.getSku(), activitySkuStockKeyVO.getActivityId());
-                skuStock.updateActivitySkuStock(activitySkuStockKeyVO.getSku());
+                executor.execute(() -> {
+                    ActivitySkuStockKeyVO activitySkuStockKeyVO = null;
+                    try {
+                        activitySkuStockKeyVO = skuStock.takeQueueValue(sku);
+                    } catch (InterruptedException e) {
+                        log.error("定时任务，更新活动sku库存失败 sku: {} topic: {}", sku, activitySkuStockKeyVO.getActivityId());
+                    }
+                    if (null == activitySkuStockKeyVO) return;
+                    log.info("定时任务，更新活动sku库存 sku:{} activityId:{}", activitySkuStockKeyVO.getSku(), activitySkuStockKeyVO.getActivityId());
+                    skuStock.updateActivitySkuStock(activitySkuStockKeyVO.getSku());
+                });
             }
 
         } catch (Exception e) {

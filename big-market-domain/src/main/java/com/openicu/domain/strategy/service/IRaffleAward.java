@@ -2,6 +2,7 @@ package com.openicu.domain.strategy.service;
 
 import com.openicu.domain.strategy.model.entity.StrategyAwardEntity;
 import com.openicu.domain.strategy.model.valobj.RuleWeightVO;
+import com.openicu.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 import java.util.List;
 
@@ -33,5 +34,7 @@ public interface IRaffleAward {
      * @return 返回一个List，包含该策略下所有奖励规则的权重信息
      */
     List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
+
+    List<StrategyAwardStockKeyVO> queryOpenActivityStrategyAwardList();
 
 }
