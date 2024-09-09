@@ -73,6 +73,7 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
         log.info("创建活动抽奖单完成 userId:{} activityId:{} orderId:{}", userId, activityId, userRaffleOrder.getOrderId());
         // 8.返回订单信息
         return userRaffleOrder;
+
     }
 
 

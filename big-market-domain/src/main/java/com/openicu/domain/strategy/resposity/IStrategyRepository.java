@@ -204,8 +204,11 @@ public interface IStrategyRepository {
      */
     Map<String, Integer> queryAwardRuleLockCount(String[] treeIds);
 
-    Long queryActivitySkuByActivityId(Long activityId);
-
+    /**
+     * 查询权重奖品列表
+     * @param strategyId
+     * @return
+     */
     List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
 
     /**
@@ -216,6 +219,10 @@ public interface IStrategyRepository {
      */
     Integer queryActivityAccountTotalUseCount(String userId, Long strategyId);
 
+    /**
+     * 查询运行的抽奖策略奖品列表
+     * @return
+     */
     List<StrategyAwardStockKeyVO> queryOpenActivityStrategyAwardList();
 
 }

@@ -40,16 +40,13 @@ public class RaffleActivityControllerTest {
     @Test
     public void test_draw() throws InterruptedException {
 
-        for (int i = 0; i < 10; i++) {
-
             ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
             request.setActivityId(100301L);
-            request.setUserId("Hbase");
+            request.setUserId("chen");
             Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
             log.info("请求参数:{}",JSON.toJSONString(request));
             log.info("测试结果:{}",JSON.toJSONString(response));
-        }
 
     }
 

@@ -445,11 +445,6 @@ public class StrategyRepository implements IStrategyRepository {
         return resultMap;
     }
 
-    @Override
-    public Long queryActivitySkuByActivityId(Long activityId) {
-        RaffleActivitySku raffleActivitySku = raffleActivitySkuDao.queryActivitySkuByActivityId(activityId);
-        return raffleActivitySku.getSku();
-    }
 
     @Override
     public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
@@ -504,6 +499,7 @@ public class StrategyRepository implements IStrategyRepository {
         return ruleWeightVOList;
 
     }
+
 
     @Override
     public Integer queryActivityAccountTotalUseCount(String userId, Long strategyId) {

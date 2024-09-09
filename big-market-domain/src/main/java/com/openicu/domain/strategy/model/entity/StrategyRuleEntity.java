@@ -44,6 +44,7 @@ public class StrategyRuleEntity {
      * @return
      */
     public Map<String, List<Integer>> getRuleWeightValues() {
+
         if (!RULE_WEIGHT.equals(ruleModel)) {
             return null;
         }

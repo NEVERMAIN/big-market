@@ -28,7 +28,7 @@ app:
 # Spring 配置 rabbitmq
 spring:
   rabbitmq:
-    addresses: 139.9.212.188
+    addresses: 117.72.93.43
     port: 5672
     username: admin
     password: admin
@@ -43,10 +43,7 @@ spring:
       credit_adjust_success: credit_adjust_success
   elasticsearch.datasource:
     driverClassName: org.elasticsearch.xpack.sql.jdbc.EsDriver
-    url: jdbc:es://117.72.93.43:9200
-  cloud:
-    zookeeper:
-      enabled: false
+    url: jdbc:es://139.9.212.188:9200
 
 # 多数据源路由配置，库数量 * 表数量 为2的次幂，如2库4表
 # mysql 5.x 配置 driver-class-name: com.mysql.jdbc.Driver    mysql-connector-java 5.1.34
@@ -61,7 +58,7 @@ mini-db-router:
       list: db01,db02
       db00:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://117.72.93.43:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://139.9.212.188:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
         password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
@@ -76,7 +73,7 @@ mini-db-router:
           connection-test-query: SELECT 1
       db01:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://117.72.93.43:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://139.9.212.188:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
         password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
@@ -91,7 +88,7 @@ mini-db-router:
           connection-test-query: SELECT 1
       db02:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://117.72.93.43:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://139.9.212.188:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
         password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
@@ -115,7 +112,7 @@ mybatis:
 redis:
   sdk:
     config:
-      host: 139.9.212.188
+      host: 117.72.93.43
       port: 16379
       pool-size: 10
       min-idle-size: 5
@@ -133,7 +130,7 @@ dubbo:
     version: 1.0
   registry:
     id: nacos-registry
-    address: N/A
+    address: nacos://117.72.93.43:8848
   protocol:
     name: dubbo
     port: -1
@@ -158,8 +155,8 @@ logging:
 zookeeper:
   sdk:
     config:
-      enable: false
-      connect-string: 139.9.212.188:2181
+      enable: true
+      connect-string: 117.72.93.43:2181
       base-sleep-time-ms: 1000
       max-retries: 3
       session-timeout-ms: 18000
@@ -171,7 +168,7 @@ xxl:
   job:
     accessToken: default_token
     admin:
-      addresses: http://139.9.212.188:9090/xxl-job-admin
+      addresses: http://117.72.93.43:9090/xxl-job-admin
     executor:
       ## 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
       address:

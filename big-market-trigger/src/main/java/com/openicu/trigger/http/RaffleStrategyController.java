@@ -81,6 +81,11 @@ public class RaffleStrategyController implements IRaffleStrategyService {
         }
     }
 
+    /**
+     * 查询抽奖奖品列表配置
+     * @param request 抽奖奖品列表查询请求参数
+     * @return
+     */
     @RequestMapping(value = "query_raffle_award_list", method = RequestMethod.POST)
     @Override
     public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO request) {
