@@ -3,6 +3,7 @@ package com.openicu.trigger.job;
 import com.openicu.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import com.openicu.domain.activity.service.IRaffleActivitySkuStockService;
 import com.xxl.job.core.handler.annotation.XxlJob;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -38,6 +39,7 @@ public class UpdateActivitySkuStockJob {
      * 本地化注解:  @Scheduled(cron = "0/5 * * * * ?")
      * 分布式注解:  @XxlJob("UpdateActivitySkuStockJob")
      */
+    @Timed(value = "UpdateActivitySkuStockJob",description = "更新活动sku库存任务")
     @XxlJob("UpdateActivitySkuStockJob")
     public void exec() {
         RLock lock = redissonClient.getLock("big-market-UpdateActivitySkuStockJob");

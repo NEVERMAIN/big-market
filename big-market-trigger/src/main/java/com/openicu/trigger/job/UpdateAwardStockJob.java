@@ -4,6 +4,7 @@ import com.openicu.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.openicu.domain.strategy.service.IRaffleAward;
 import com.openicu.domain.strategy.service.IRaffleStock;
 import com.xxl.job.core.handler.annotation.XxlJob;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -41,6 +42,7 @@ public class UpdateAwardStockJob {
      * 本地注解: @Scheduled(cron = "0/5 * * * * ?")
      * 分布式注解: @XxlJob("UpdateAwardStockJob")
      */
+    @Timed(value = "UpdateAwardStockJob",description = "更新奖品库存任务")
     @XxlJob("UpdateAwardStockJob")
     public void exec() {
 

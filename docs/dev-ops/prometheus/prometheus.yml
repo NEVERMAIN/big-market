@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'big-market-app'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'big-market-app-01:9081'
+        labels:
+          app: 'big-market-app'

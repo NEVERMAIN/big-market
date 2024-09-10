@@ -4,6 +4,7 @@ import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import com.openicu.domain.task.model.entity.TaskEntity;
 import com.openicu.domain.task.service.ITaskService;
 import com.xxl.job.core.handler.annotation.XxlJob;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -41,6 +42,7 @@ public class SendMessageTaskJob {
      * 本地化任务注解: @Scheduled(cron = "0/5 * * * * ?")
      * 分布式任务注解: @XxlJob("SendMessageTaskJob_DB1")
      */
+    @Timed(value = "SendMessageTaskJob_DB1", description = "发送MQ消息任务队列")
     @XxlJob("SendMessageTaskJob_DB1")
     public void exec_01() {
 
@@ -87,6 +89,7 @@ public class SendMessageTaskJob {
      * 本地化任务注解: @Scheduled(cron = "0/5 * * * * ?")
      * 分布式任务注解: @XxlJob("SendMessageTaskJob_DB2")
      */
+    @Timed(value = "SendMessageTaskJob_DB2", description = "发送MQ消息任务队列")
     @XxlJob("SendMessageTaskJob_DB2")
     public void exec_02() {
         RLock lock = redissonClient.getLock("big-market-SendMessageTaskJob_DB2");

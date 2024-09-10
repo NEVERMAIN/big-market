@@ -7,6 +7,7 @@ services:
     restart: always
     ports:
       - "9081:9081"
+      - "9090:9090"
     environment:
       - TZ=PRC
       - SERVER_PORT=9081
