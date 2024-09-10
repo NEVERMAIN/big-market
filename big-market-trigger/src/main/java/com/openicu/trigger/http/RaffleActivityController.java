@@ -100,6 +100,12 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
 
             log.info("活动装配,数据预热,开始 activityId:{}", activityId);
+
+            if (null == activityId) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode()
+                        , ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
             // 1.活动装配
             activityArmory.assembleActivitySkuByActivityId(activityId);
             // 2.策略装配
@@ -238,6 +244,9 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
 
             log.info("日历签到返利开始 userId:{}", userId);
+            if (StringUtils.isBlank(userId)) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
 
             BehaviorEntity behaviorEntity = new BehaviorEntity();
             behaviorEntity.setUserId(userId);
@@ -283,6 +292,10 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
 
             log.info("查询用户是否完成日历签到返利开始 userId:{}", userId);
+            if (StringUtils.isBlank(userId)) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
             String outBusinessNo = dateFormatDay.format(new Date());
             List<BehaviorRebateOrderEntity> behaviorRebateOrderEntityList = behaviorRebateService.queryOrderByOutBusinessNo(userId, outBusinessNo);
             log.info("查询用户是否完成日历签到返利完成 userId:{} orders.size:{}", userId, behaviorRebateOrderEntityList.size());
@@ -314,6 +327,10 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
 
             log.info("查询用户活动账户开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
+            if (null == request || StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
             ActivityAccountEntity activityAccountEntity =
                     raffleActivityAccountQuotaService.queryActivityAccountEntity(request.getUserId(), request.getActivityId());
 
@@ -352,6 +369,10 @@ public class RaffleActivityController implements IRaffleActivityService {
 
         try {
             log.info("积分兑换商品开始 userId:{} sku:{}", request.getUserId(), request.getSku());
+            if (null == request || StringUtils.isBlank(request.getUserId()) || null == request.getSku()) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
             // 1.创建兑换商品sku订单,outBusinessNo 每次创建出一个单号
             UnpaidActivityOrderEntity unpaidActivityOrder = raffleActivityAccountQuotaService.createOrder(SkuRechargeEntity.builder()
                     .userId(request.getUserId())
@@ -401,6 +422,7 @@ public class RaffleActivityController implements IRaffleActivityService {
 
         try {
             log.info("查询sku商品集合开始 activityId:{}", activityId);
+
             // 1.参与校验
             if (null == activityId) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
@@ -454,6 +476,10 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
 
             log.info("查询用户积分值开始 userId:{}", userId);
+            if (StringUtils.isBlank(userId)) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
             CreditAccountEntity creditAccountEntity = creditAdjustService.queryUserCreditAccount(userId);
             log.info("查询用户积分值完成 userId:{} adjustAmount:{}", userId, creditAccountEntity.getAdjustAmount());
             return Response.<BigDecimal>builder()

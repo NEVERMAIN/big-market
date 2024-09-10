@@ -62,6 +62,10 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     public Response<Boolean> strategyArmory(Long strategyId) {
         try {
             log.info("抽奖策略装配开始 strategyId:{} ", strategyId);
+            if (null == strategyId) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
             boolean armoryStatus = strategyArmory.assembleLotteryStrategy(strategyId);
             Response<Boolean> response = Response.<Boolean>builder()
                     .code(ResponseCode.SUCCESS.getCode())
@@ -158,6 +162,9 @@ public class RaffleStrategyController implements IRaffleStrategyService {
 
         try {
             log.info("随机抽奖 strategyId:{}", requestDTO.getStrategyId());
+            if(null == requestDTO.getStrategyId()){
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
             // 1. 调用抽奖接口
             RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
                     .userId("system")
@@ -193,15 +200,15 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     }
 
     @Override
-    @RequestMapping(value = "query_raffle_strategy_rule_weight",method = RequestMethod.POST)
+    @RequestMapping(value = "query_raffle_strategy_rule_weight", method = RequestMethod.POST)
     public Response<List<RaffleStrategyRuleWeightResponseDTO>> queryRaffleStrategyRuleWeight(@RequestBody RaffleStrategyRuleWeightRequestDTO request) {
 
-        try{
+        try {
 
-            log.info("查询抽奖策略权重规则配置开始 userId:{} activityId:{}",request.getUserId(),request.getActivityId());
+            log.info("查询抽奖策略权重规则配置开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
             // 1.参数校验
-            if(StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()){
-                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(),ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
             }
 
             // 2.查询用户抽奖总数
@@ -243,7 +250,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
             return response;
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             log.error("查询抽奖策略权重规则配置失败 userId:{} activityId：{}", request.getUserId(), request.getActivityId(), e);
             return Response.<List<RaffleStrategyRuleWeightResponseDTO>>builder()
