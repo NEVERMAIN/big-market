@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * @description: Zookeeper 客户端配置类
@@ -15,7 +16,8 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2024/8/25
  */
 @Slf4j
-@Configuration
+@Order(1)
+@Configuration("zookeeperClientConfig")
 @EnableConfigurationProperties(ZookeeperClientConfigProperties.class)
 public class ZooKeeperClientConfig {
 
@@ -56,5 +58,12 @@ public class ZooKeeperClientConfig {
         return client;
 
     }
+
+    @Bean(name = "dccValueBeanFactory")
+    @ConditionalOnProperty(value = "zookeeper.sdk.config.enable", havingValue = "true", matchIfMissing = false)
+    public DCCValueBeanFactory dccValueBeanFactory(CuratorFramework client) throws Exception {
+        return new DCCValueBeanFactory(client);
+    }
+
 
 }

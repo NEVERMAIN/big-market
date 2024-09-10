@@ -19,6 +19,7 @@ import com.openicu.types.common.Constants;
 import com.openicu.types.enums.ResponseCode;
 import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Lock;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RLock;
@@ -158,9 +159,9 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public void doSaveNoPayOrder(CreateQuotaOrderAggregate createOrderAggregate) {
 
-        RLock Lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + createOrderAggregate.getUserId() + Constants.UNDERLINE + createOrderAggregate.getActivityId());
+        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + createOrderAggregate.getUserId() + Constants.UNDERLINE + createOrderAggregate.getActivityId());
         try {
-            Lock.lock(3, TimeUnit.SECONDS);
+            lock.lock(3, TimeUnit.SECONDS);
             // 1.订单对象
             ActivityOrderEntity activityOrderEntity = createOrderAggregate.getActivityOrderEntity();
             RaffleActivityOrder raffleActivityOrder = RaffleActivityOrder.builder()
@@ -236,7 +237,9 @@ public class ActivityRepository implements IActivityRepository {
             });
         } finally {
             dbRouter.clear();
-            Lock.unlock();
+            if(lock.isLocked() && lock.isHeldByCurrentThread()){
+                lock.unlock();
+            }
         }
 
     }
@@ -325,7 +328,7 @@ public class ActivityRepository implements IActivityRepository {
 
         } finally {
             dbRouter.clear();
-            if (lock.isLocked()) {
+            if (lock.isLocked() && lock.isHeldByCurrentThread()) {
                 lock.unlock();
             }
         }

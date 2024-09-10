@@ -4,6 +4,7 @@ import com.openicu.types.annotation.DCCValue;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.CuratorCache;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -23,7 +24,6 @@ import java.util.Map;
  * @date: 2024/8/25
  */
 @Slf4j
-@Configuration
 public class DCCValueBeanFactory implements BeanPostProcessor {
 
     private static final String BASE_CONFIG_PATH = "/big-market-dcc";
@@ -33,16 +33,14 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
     /**
      *  Zookeeper 客户端
      */
-    @Autowired(required = false)
     private  CuratorFramework client;
 
     private final Map<String, Object> dccObjGroup = new HashMap<>();
 
-    public DCCValueBeanFactory() throws Exception {
+    public DCCValueBeanFactory(CuratorFramework client) throws Exception {
 
-        if( null == client){
-            return;
-        }
+        if (null == client) return;
+        this.client = client;
 
         // 节点判断
         if (null == client.checkExists().forPath(BASE_CONFIG_PATH_CONFIG)) {
