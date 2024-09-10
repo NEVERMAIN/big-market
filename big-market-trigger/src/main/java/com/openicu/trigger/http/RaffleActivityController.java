@@ -365,7 +365,7 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @RequestMapping(value = "credit_pay_exchange_sku", method = RequestMethod.POST)
     @Override
-    public Response<Boolean> creditPayExchangeSku(SkuProductShopCartRequestDTO request) {
+    public Response<Boolean> creditPayExchangeSku(@RequestBody SkuProductShopCartRequestDTO request) {
 
         try {
             log.info("积分兑换商品开始 userId:{} sku:{}", request.getUserId(), request.getSku());

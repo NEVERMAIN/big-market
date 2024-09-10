@@ -9,7 +9,7 @@ services:
       - "9081:9081"
     environment:
       - TZ=PRC
-      - SERVER_PORT=8091
+      - SERVER_PORT=9081
       - APP_CONFIG_API_VERSION=v1
       - APP_CONFIG_CROSS_ORIGIN=*
     volumes:
