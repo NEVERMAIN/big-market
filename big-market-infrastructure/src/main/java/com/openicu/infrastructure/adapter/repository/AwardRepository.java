@@ -199,7 +199,6 @@ public class AwardRepository implements IAwardRepository {
                         userCreditAccountDao.updateAddAmount(userCreditAccountReq);
                     }
 
-
                     // 更新奖品记录
                     int updateAwardCount = userAwardRecordDao.updateAwardRecordCompletedState(userAwardRecordReq);
                     if (0 == updateAwardCount) {

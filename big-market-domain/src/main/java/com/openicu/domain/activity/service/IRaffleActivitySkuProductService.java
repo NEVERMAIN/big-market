@@ -14,7 +14,7 @@ public interface IRaffleActivitySkuProductService {
     /**
      * 根据活动id查询sku商品
      * @param activityId 活动id
-     * @return
+     * @return 商品集合
      */
     List<SkuProductEntity> querySkuProductEntityByActivityId(Long activityId);
 }

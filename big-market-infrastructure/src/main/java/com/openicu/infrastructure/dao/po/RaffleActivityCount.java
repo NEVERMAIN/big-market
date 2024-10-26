@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class RaffleActivityCount {
 
-    /** 自增ID */
+    /** 自增 ID */
     private Long id;
     /** 活动次数编号 */
     private Long activityCountId;

@@ -151,7 +151,8 @@ public class ActivityRepository implements IActivityRepository {
                 .build();
         // 3. 缓存数据
         // TODO 增加缓存有效期
-        redisService.setValue(cacheKey, activityCountEntity);
+        long expire = TimeUnit.DAYS.toMillis(7);
+        redisService.setValue(cacheKey, activityCountEntity,expire);
         return activityCountEntity;
 
     }

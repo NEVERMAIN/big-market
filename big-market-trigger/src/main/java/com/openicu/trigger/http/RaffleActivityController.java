@@ -189,7 +189,6 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .awardConfig(raffleAwardEntity.getAwardConfig())
                     .build();
 
-
             awardService.saveUserAwardRecord(userAwardRecord);
 
             // 5.返回结果

@@ -4,7 +4,6 @@ import com.openicu.domain.activity.model.entity.ActivitySkuEntity;
 import com.openicu.domain.activity.repository.IActivityRepository;
 import com.openicu.types.common.Constants;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.scanner.Constant;
 
 import javax.annotation.Resource;
 import java.util.Date;
