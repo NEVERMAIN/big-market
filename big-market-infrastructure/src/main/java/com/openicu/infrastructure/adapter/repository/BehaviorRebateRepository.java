@@ -59,6 +59,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
 
         List<DailyBehaviorRebate> dailyBehaviorRebateList =
                 dailyBehaviorRebateDao.queryDailyBehaviorRebateByBehaviorType(behaviorTypeVO.getCode());
+
         List<DailyBehaviorRebateVO> dailyBehaviorRebateVOList = new ArrayList<>(dailyBehaviorRebateList.size());
         for (DailyBehaviorRebate dailyBehaviorRebate : dailyBehaviorRebateList) {
             dailyBehaviorRebateVOList.add(DailyBehaviorRebateVO.builder()

@@ -144,6 +144,7 @@
             <groupId>com.openicu</groupId>
             <artifactId>big-market-infrastructure</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

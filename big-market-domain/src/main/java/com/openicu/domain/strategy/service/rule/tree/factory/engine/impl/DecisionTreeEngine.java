@@ -54,8 +54,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
             log.info("决策树引擎【{}】 treeId:{} node:{} code:{} info:{}",
                     ruleTreeVO.getTreeName(), ruleTreeVO.getTreeId(), nextNode,
                     ruleLogicCheckTypeVO.getCode(),
-                    ruleLogicCheckTypeVO.getInfo()
-            );
+                    ruleLogicCheckTypeVO.getInfo());
 
             // 获取下个节点
             nextNode = nextNode(ruleLogicCheckTypeVO.getCode(), ruleTreeNode.getTreeNodeLineVOList());
@@ -84,10 +83,9 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
                 return nodeLine.getRuleNodeTo();
             }
         }
-       // 如果没有匹配的节点，返回null
+       // 如果没有匹配的节点，返回 null
        return null;
     }
-
 
     /**
      * 根据规则限制类型判断某个值是否满足条件

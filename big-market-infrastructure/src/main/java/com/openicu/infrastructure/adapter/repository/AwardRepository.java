@@ -110,7 +110,6 @@ public class AwardRepository implements IAwardRepository {
             dbRouter.doRouter(userId);
             transactionTemplate.execute(status -> {
                 try {
-
                     // 1.写入记录
                     userAwardRecordDao.insert(userAwardRecord);
                     // 2.写入任务
@@ -123,7 +122,6 @@ public class AwardRepository implements IAwardRepository {
                         log.error("写入中奖记录，用户抽奖单已使用过，不可重复抽奖 userId: {} activityId: {} awardId: {}", userId, activityId, awardId);
                         throw new AppException(ResponseCode.ACTIVITY_ORDER_ERROR.getCode(), ResponseCode.ACTIVITY_ORDER_ERROR.getInfo());
                     }
-
                     return 1;
 
                 } catch (DuplicateKeyException e) {
@@ -145,9 +143,9 @@ public class AwardRepository implements IAwardRepository {
                 eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
                 // 2. 更新数据库记录, task 任务表
                 taskDao.updateTaskMessageCompleted(task);
-                log.info("写入中奖记录，发送MQ消息完成 userId: {} orderId:{} topic: {}", userId, userAwardRecordEntity.getOrderId(), task.getTopic());
+                log.info("写入中奖记录，发送 MQ 消息完成 userId: {} orderId:{} topic: {}", userId, userAwardRecordEntity.getOrderId(), task.getTopic());
             } catch (Exception e) {
-                log.error("写入中奖记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic());
+                log.error("写入中奖记录，发送 MQ 消息失败 userId: {} topic: {}", userId, task.getTopic());
                 taskDao.updateTaskSendMessageFail(task);
             }
         });

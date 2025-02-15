@@ -39,6 +39,7 @@
             <groupId>com.openicu</groupId>
             <artifactId>big-market-domain</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

@@ -235,7 +235,11 @@ public class RaffleActivityController implements IRaffleActivityService {
                 .build();
     }
 
-
+    /**
+     * 签到返利
+     * @param userId
+     * @return
+     */
     @Override
     @RequestMapping(value = "calendar_sign_rebate", method = RequestMethod.POST)
     public Response<Boolean> calendarSignRebate(@RequestParam String userId) {
@@ -362,13 +366,18 @@ public class RaffleActivityController implements IRaffleActivityService {
     }
 
 
+    /**
+     * 积分兑换
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "credit_pay_exchange_sku", method = RequestMethod.POST)
     @Override
     public Response<Boolean> creditPayExchangeSku(@RequestBody SkuProductShopCartRequestDTO request) {
 
         try {
             log.info("积分兑换商品开始 userId:{} sku:{}", request.getUserId(), request.getSku());
-            if (null == request || StringUtils.isBlank(request.getUserId()) || null == request.getSku()) {
+            if (StringUtils.isBlank(request.getUserId()) || null == request.getSku()) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
             }
 

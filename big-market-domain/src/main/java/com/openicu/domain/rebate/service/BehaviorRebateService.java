@@ -41,6 +41,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
         // 1.查询返利配置
         List<DailyBehaviorRebateVO> dailyBehaviorRebateVOList =
                 behaviorRebateRepository.queryDailyBehaviorRebateConfig(behaviorEntity.getBehaviorTypeVO());
+
         if (null == dailyBehaviorRebateVOList || dailyBehaviorRebateVOList.isEmpty()) return new ArrayList<>();
         // 2.构建聚合对象
         List<String> orderIds = new ArrayList<>();
@@ -51,6 +52,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
             String bizId = behaviorEntity.getUserId() + Constants.UNDERLINE +
                     dailyBehaviorRebateVO.getRebateType() + Constants.UNDERLINE +
                     behaviorEntity.getOutBusinessNo();
+
             // 1. 组装活动返利的订单
             BehaviorRebateOrderEntity behaviorRebateOrderEntity = BehaviorRebateOrderEntity.builder()
                     .userId(behaviorEntity.getUserId())

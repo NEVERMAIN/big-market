@@ -276,7 +276,7 @@ public class StrategyRepository implements IStrategyRepository {
             return false;
         }
 
-        // 1. 按照cacheKey decr 后的值，如 99、98、97 和 key 组成为库存锁的key进行使用。
+        // 1. 按照 cacheKey decr 后的值，如 99、98、97 和 key 组成为库存锁的key进行使用。
         // 2. 加锁为了兜底，如果后续有恢复库存，手动处理等，也不会超卖。因为所有的可用库存key，都被加锁了。
         String lockKey = cacheKey + Constants.UNDERLINE + surplus;
         Boolean lock = false;
@@ -291,7 +291,7 @@ public class StrategyRepository implements IStrategyRepository {
         }
 
         if (surplus == 0) {
-            // 发送消息给MQ,清空延迟队列
+            // 发送消息给 MQ ,清空延迟队列
             eventPublisher.publish(strategyAwardStockZeroMessageEvent.topic(),
                     strategyAwardStockZeroMessageEvent.buildEventMessage(StrategyAwardStockKeyVO.builder()
                             .strategyId(strategyId)

@@ -10,7 +10,7 @@ import java.util.Date;
 public interface IStrategyDispatch {
 
     /**
-     * 根据策略ID获取随机奖励ID。
+     * 根据策略 ID 获取随机奖励 ID。
      *
      * @param strategyId 策略ID，用于确定随机奖励的范围或方式。
      * @return 随机奖励的ID。
@@ -42,7 +42,5 @@ public interface IStrategyDispatch {
      * @return 扣减结果
      */
     Boolean subtractionAwardStock(Long strategyId, Integer awardId, Date endDateTime);
-
-
 
 }

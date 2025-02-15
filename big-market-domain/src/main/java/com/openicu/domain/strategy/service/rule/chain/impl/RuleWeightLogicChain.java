@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
      */
     private final IAnalytical analytical = new AnalyticalEqual();
 
-
     /**
      * 根据用户ID查询用户抽奖消耗的积分值
      */
@@ -54,10 +52,10 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
 
-        // 1.解析权重规则值 4000:102,103,104,105 拆解为；4000 -> 4000:102,103,104,105 便于比对判断
+        // 1.解析权重规则值 4000:102,103,104,105 拆解为 4000 -> 4000:102,103,104,105 便于比对判断
         Map<Integer, String> analyticalValueGroup = getAnalyticalValue(ruleValue);
         if (null == analyticalValueGroup || analyticalValueGroup.isEmpty()) {
-            log.warn("抽奖责任链-权重告警【策略配置权重，但ruleValue未配置相应值】 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
+            log.warn("抽奖责任链-权重告警【策略配置权重，但 ruleValue 未配置相应值】 userId:{} strategyId:{} ruleModel:{}", userId, strategyId, ruleModel());
             return next().logic(userId, strategyId);
         }
 
@@ -84,6 +82,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
     /**
      * 10:102,103 70:106,107 1000:104,105
+     * 拆分后:
      * 10:102,103
      * 70:106,107
      * 1000:104,105

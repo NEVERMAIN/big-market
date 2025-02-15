@@ -80,7 +80,6 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
      * 3. 那么「概率 * 1000」分别占比100个、20个、3个，总计是123个
      * 4. 后续的抽奖就用123作为随机数的范围值，生成的值100个都是0.1概率的奖品、20个是概率0.02的奖品、最后是3个是0.003的奖品。
      */
-
     private void assembleLotteryStrategy(String key, List<StrategyAwardEntity> strategyAwardEntityList) {
 
         // 1.获取最小概率值,列表为空返回0
@@ -89,10 +88,10 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
 
-        // 2. 用 1 % 0.0001 获取概率范围 百分位,千分位,万分位
+        // 2.用 1 % 0.0001 获取概率范围 百分位,千分位,万分位
         BigDecimal rateRange = BigDecimal.valueOf(convert(minAwardRate.doubleValue()));
 
-        // 3. 生成策略奖品概率查找表「这里指需要在list集合中，存放上对应的奖品占位即可，占位越多等于概率越高」
+        // 3.生成策略奖品概率查找表「这里指需要在 list 集合中，存放上对应的奖品占位即可，占位越多等于概率越高」
         List<Integer> strategyAwardSearchRateTables = new ArrayList<>(rateRange.intValue());
         for (StrategyAwardEntity strategyAwardEntity : strategyAwardEntityList) {
             Integer awardId = strategyAwardEntity.getAwardId();
@@ -181,7 +180,6 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     }
 
 
-
     /**
      * 缓存奖品库存到 Redis
      * @param strategyId 策略Id
@@ -211,6 +209,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
 
     @Override
     public Integer getRandomAwardId(String key) {
+
         // 1.分布式部署下,不一定为当前应用做的策略装配,也就是值不一定会保存到本应用,而是分布式应用,所以需要从 Redis 中获取
         int rateRange = repository.getRateRange(String.valueOf(key));
         // 2.通过生成的随机值,获取概率值奖品查找表的结果

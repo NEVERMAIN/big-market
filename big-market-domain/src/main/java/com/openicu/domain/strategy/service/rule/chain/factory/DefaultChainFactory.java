@@ -31,7 +31,6 @@ public class DefaultChainFactory {
      */
     private final Map<Long,ILogicChain> strategyChainGroup;
 
-
     public DefaultChainFactory(ApplicationContext applicationContext, IStrategyRepository repository) {
         this.applicationContext = applicationContext;
         this.repository = repository;
@@ -90,7 +89,7 @@ public class DefaultChainFactory {
          */
         private String logicModel;
         /**
-         * 抽奖奖品规则
+         * 抽奖奖品规则值
          */
         private String awardRuleValue;
     }
