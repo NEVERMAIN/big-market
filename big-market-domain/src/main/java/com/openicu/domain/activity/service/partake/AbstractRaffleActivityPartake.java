@@ -40,13 +40,13 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
         // 2.活动查询
         ActivityEntity activityEntity = activityRepository.queryRaffleActivityByActivityId(activityId);
 
-        // .校验:活动状态
+        // 校验:活动状态
         if (!ActivityStateVO.open.equals(activityEntity.getState())) {
             log.error("创建活动抽奖单失败，活动状态未开启 activityId:{} state:{}", activityId, activityEntity.getState());
             throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
         }
 
-        // .校验:活动日期[开始时间 <- 当前时间 -> 结束时间]
+        // 校验:活动日期[开始时间 <- 当前时间 -> 结束时间]
         if (activityEntity.getBeginDateTime().after(currentDay) || activityEntity.getEndDateTime().before(currentDay)) {
             throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
         }
