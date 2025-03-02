@@ -71,7 +71,6 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
-
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.openicu</groupId>
