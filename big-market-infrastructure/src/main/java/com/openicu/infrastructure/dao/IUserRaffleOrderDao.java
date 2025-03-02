@@ -4,6 +4,9 @@ import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import com.openicu.infrastructure.dao.po.UserRaffleOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @description: 用户中奖记录表DAO
@@ -34,4 +37,10 @@ public interface IUserRaffleOrderDao {
      */
     Integer updateUserRaffleOrderStateUsed(UserRaffleOrder userRaffleOrder);
 
+    /**
+     * 批处理插入10条记录
+     * @param build
+     * @param orderIds
+     */
+    void batchInsert(@Param("build") UserRaffleOrder build, List<String> orderIds);
 }

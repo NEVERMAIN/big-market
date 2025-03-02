@@ -3,6 +3,7 @@ package com.openicu.infrastructure.dao;
 import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import com.openicu.infrastructure.dao.po.RaffleActivityAccount;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @description: 抽奖活动账户DAO
@@ -38,19 +39,19 @@ public interface IRaffleActivityAccountDao {
      * @param raffleActivityAccount
      * @return
      */
-    int updateActivityAccountSubtractionQuota(RaffleActivityAccount raffleActivityAccount);
+    int updateActivityAccountSubtractionQuota(@Param("raffleActivityAccount") RaffleActivityAccount raffleActivityAccount, @Param("times") Integer times);
 
     /**
      * 更新用户活动总账户中的月次数的镜像余额
      * @param raffleActivityAccount
      */
-    void updateActivityAccountMonthSurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
+    void updateActivityAccountMonthSurplusImageQuota(@Param("raffleActivityAccount") RaffleActivityAccount raffleActivityAccount , @Param("times") Integer times);
 
     /**
      * 更新用户活动总账户中的日次数的镜像余额
      * @param raffleActivityAccount
      */
-    void updateActivityAccountDaySurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
+    void updateActivityAccountDaySurplusImageQuota(@Param("raffleActivityAccount") RaffleActivityAccount raffleActivityAccount, @Param("times") Integer times);
 
     /**
      * 查询用户活动总账户

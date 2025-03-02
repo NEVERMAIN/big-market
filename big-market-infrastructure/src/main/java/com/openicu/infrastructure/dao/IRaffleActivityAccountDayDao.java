@@ -3,6 +3,7 @@ package com.openicu.infrastructure.dao;
 import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import com.openicu.infrastructure.dao.po.RaffleActivityAccountDay;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @description: 抽奖活动账户表-日次数DAO
@@ -24,7 +25,7 @@ public interface IRaffleActivityAccountDayDao {
      * 减少用户账户日次数余额
      * @param raffleActivityAccountDay
      */
-    Integer updateActivityAccountMonthSubtractionQuota(RaffleActivityAccountDay raffleActivityAccountDay);
+    Integer updateActivityAccountDaySubtractionQuota(@Param("raffleActivityAccountDay") RaffleActivityAccountDay raffleActivityAccountDay, @Param("times") Integer times);
 
     /**
      * 创建活动账户日额度

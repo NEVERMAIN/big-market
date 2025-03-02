@@ -5,6 +5,7 @@ import com.openicu.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
 import com.openicu.domain.activity.model.entity.ActivityEntity;
 import com.openicu.domain.activity.model.entity.PartakeRaffleActivityEntity;
 import com.openicu.domain.activity.model.entity.UserRaffleOrderEntity;
+import com.openicu.domain.activity.model.entity.UserTenRaffleOrderEntity;
 import com.openicu.domain.activity.model.valobj.ActivityStateVO;
 import com.openicu.domain.activity.repository.IActivityRepository;
 import com.openicu.domain.activity.service.IRaffleActivityPartakeService;
@@ -59,7 +60,7 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
         }
 
         // 4.额度账户过滤 & 返回账户构建对象
-        CreatePartakeOrderAggregate createPartakeOrderAggregate = this.doFilterAccount(userId, activityId, currentDay);
+        CreatePartakeOrderAggregate createPartakeOrderAggregate = this.doFilterAccount(userId, activityId, currentDay,1);
 
         // 5.构建订单
         UserRaffleOrderEntity userRaffleOrder = buildUserRaffleOrder(userId, activityId, currentDay);
@@ -92,7 +93,7 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
      * @param currentDate 当前时间
      * @return CreatePartakeOrderAggregate
      */
-    protected abstract CreatePartakeOrderAggregate doFilterAccount(String userId, Long activityId, Date currentDate);
+    protected abstract CreatePartakeOrderAggregate doFilterAccount(String userId, Long activityId, Date currentDate,Integer times);
 
     /**
      * 构建用户参与活动的订单
@@ -103,4 +104,52 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
      */
     protected abstract UserRaffleOrderEntity buildUserRaffleOrder(String userId, Long activityId, Date currentDate);
 
+
+    protected abstract UserTenRaffleOrderEntity buildUserTenRaffleOrder(String userId, Long activityId, Date currentDate);
+
+
+    @Override
+    public UserTenRaffleOrderEntity createTenOrders(PartakeRaffleActivityEntity partakeRaffleActivityEntity) {
+        String userId = partakeRaffleActivityEntity.getUserId();
+        Long activityId = partakeRaffleActivityEntity.getActivityId();
+        Date currentDay = new Date();
+        // 2.活动查询
+        ActivityEntity activityEntity = activityRepository.queryRaffleActivityByActivityId(activityId);
+
+        // 校验:活动状态
+        if (!ActivityStateVO.open.equals(activityEntity.getState())) {
+            log.error("创建活动抽奖单失败，活动状态未开启 activityId:{} state:{}", activityId, activityEntity.getState());
+            throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
+        }
+
+        // 校验:活动日期[开始时间 <- 当前时间 -> 结束时间]
+        if (activityEntity.getBeginDateTime().after(currentDay) || activityEntity.getEndDateTime().before(currentDay)) {
+            throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
+        }
+
+        // 4.额度账户过滤 & 返回账户构建对象
+        CreatePartakeOrderAggregate createPartakeOrderAggregate = this.doFilterAccount(userId, activityId, currentDay,10);
+
+        // 5. 构建订单
+        UserTenRaffleOrderEntity userTenRaffleOrderEntity = buildUserTenRaffleOrder(userId, activityId, currentDay);
+
+        // 6. 填充抽奖单实体对象
+        createPartakeOrderAggregate.setUserTenRaffleOrderEntity(userTenRaffleOrderEntity);
+
+        // 7. 保存聚合对象 - 一个领域内的一个聚合是一个事务操作
+        activityRepository.saveCreatePartakeOrderAggregate(createPartakeOrderAggregate);
+
+        log.info("创建活动抽奖单完成 userId:{} activityId:{} orderId:{}", userId, activityId, userTenRaffleOrderEntity.getOrderIds());
+        // 8.返回订单信息
+        return userTenRaffleOrderEntity;
+
+    }
+
+    @Override
+    public UserTenRaffleOrderEntity createTenOrders(String userId, Long activityId) {
+        return createTenOrders(PartakeRaffleActivityEntity.builder()
+                .userId(userId)
+                .activityId(activityId)
+                .build());
+    }
 }

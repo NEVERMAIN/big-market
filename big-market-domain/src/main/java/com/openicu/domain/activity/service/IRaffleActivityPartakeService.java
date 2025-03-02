@@ -2,6 +2,7 @@ package com.openicu.domain.activity.service;
 
 import com.openicu.domain.activity.model.entity.PartakeRaffleActivityEntity;
 import com.openicu.domain.activity.model.entity.UserRaffleOrderEntity;
+import com.openicu.domain.activity.model.entity.UserTenRaffleOrderEntity;
 
 /**
  * @description: 抽奖活动参与服务
@@ -25,5 +26,18 @@ public interface IRaffleActivityPartakeService {
      */
     UserRaffleOrderEntity createOrder(String userId,Long activityId);
 
+    /**
+     * 10次抽奖
+     * @return
+     */
+    UserTenRaffleOrderEntity createTenOrders(PartakeRaffleActivityEntity partakeRaffleActivityEntity);
+
+    /**
+     * 10 次抽奖
+     * @param userId
+     * @param activityId
+     * @return
+     */
+    UserTenRaffleOrderEntity createTenOrders(String userId,Long activityId);
 
 }

@@ -17,8 +17,10 @@
     <update id="updateActivityAccountMonthSubtractionQuota">
 
         update raffle_activity_account_month
-            set month_count_surplus = month_count_surplus - 1
-        where user_id = #{userId} AND activity_id = #{activityId} AND month = #{month}
+            set month_count_surplus = month_count_surplus - #{times}
+        where user_id = #{raffleActivityAccountMonth.userId}
+                  AND activity_id = #{raffleActivityAccountMonth.activityId}
+                  AND month = #{raffleActivityAccountMonth.month}
 
     </update>
 

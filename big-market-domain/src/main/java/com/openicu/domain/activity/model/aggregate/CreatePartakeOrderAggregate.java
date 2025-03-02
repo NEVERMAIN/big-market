@@ -1,9 +1,6 @@
 package com.openicu.domain.activity.model.aggregate;
 
-import com.openicu.domain.activity.model.entity.ActivityAccountDayEntity;
-import com.openicu.domain.activity.model.entity.ActivityAccountEntity;
-import com.openicu.domain.activity.model.entity.ActivityAccountMonthEntity;
-import com.openicu.domain.activity.model.entity.UserRaffleOrderEntity;
+import com.openicu.domain.activity.model.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,5 +33,7 @@ public class CreatePartakeOrderAggregate {
     private ActivityAccountDayEntity activityAccountDayEntity;
     /** 抽奖单实体 */
     private UserRaffleOrderEntity userRaffleOrderEntity;
+    /** 十次抽奖单实体 */
+    private UserTenRaffleOrderEntity userTenRaffleOrderEntity;
 
 }

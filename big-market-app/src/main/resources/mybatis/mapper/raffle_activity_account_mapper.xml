@@ -40,34 +40,34 @@
 
 
 
-    <update id="updateActivityAccountSubtractionQuota" parameterType="com.openicu.infrastructure.dao.po.RaffleActivityAccount">
+    <update id="updateActivityAccountSubtractionQuota" >
         update raffle_activity_account
-        set total_count_surplus = total_count_surplus - 1,
-            day_count_surplus = day_count_surplus - 1,
-            month_count_surplus = month_count_surplus - 1,
+        set total_count_surplus = total_count_surplus - #{times},
+            day_count_surplus = day_count_surplus - #{times},
+            month_count_surplus = month_count_surplus - #{times},
             update_time = now()
-        where user_id = #{userId}
-          AND activity_id = #{activityId}
-          AND total_count_surplus > 0
-          AND day_count_surplus > 0
-          AND month_count_surplus > 0
+        where user_id = #{raffleActivityAccount.userId}
+          AND activity_id = #{raffleActivityAccount.activityId}
+          AND total_count_surplus >= #{times}
+          AND day_count_surplus >= #{times}
+          AND month_count_surplus >= #{times}
 
     </update>
 
-    <update id="updateActivityAccountMonthSurplusImageQuota" parameterType="com.openicu.infrastructure.dao.po.RaffleActivityAccount">
+    <update id="updateActivityAccountMonthSurplusImageQuota">
         update raffle_activity_account
         set
-            month_count_surplus = #{monthCountSurplus} - 1,
+            month_count_surplus = #{monthCountSurplus} - #{times},
             update_time = now()
-        where user_id = #{userId} AND activity_id = #{activityId}
+        where user_id = #{raffleActivityAccount.userId} AND activity_id = #{raffleActivityAccount.activityId}
     </update>
 
-    <update id="updateActivityAccountDaySurplusImageQuota" parameterType="com.openicu.infrastructure.dao.po.RaffleActivityAccount">
+    <update id="updateActivityAccountDaySurplusImageQuota">
         update raffle_activity_account
         set
-            day_count_surplus = #{dayCountSurplus} - 1,
+            day_count_surplus = #{dayCountSurplus} - #{times},
             update_time = now()
-        where user_id = #{userId} AND activity_id = #{activityId}
+        where user_id = #{raffleActivityAccount.userId} AND activity_id = #{raffleActivityAccount.activityId}
     </update>
 
     <select id="queryActivityAccountByUserId" resultMap="dataMap">

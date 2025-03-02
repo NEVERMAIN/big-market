@@ -32,13 +32,12 @@
     </update>
 
 
-    <update id="updateActivityAccountMonthSubtractionQuota"
-            parameterType="com.openicu.infrastructure.dao.po.RaffleActivityAccountDay">
+    <update id="updateActivityAccountDaySubtractionQuota">
         update raffle_activity_account_day
-        set day_count_surplus = day_count_surplus - 1
-        where user_id = #{userId}
-                  AND activity_id = #{activityId}
-                  AND day = #{day}
+        set day_count_surplus = day_count_surplus - #{times}
+        where user_id = #{raffleActivityAccountDay.userId}
+                  AND activity_id = #{raffleActivityAccountDay.activityId}
+                  AND day = #{raffleActivityAccountDay.day}
     </update>
 
     <select id="queryActivityAccountDayByUserId"

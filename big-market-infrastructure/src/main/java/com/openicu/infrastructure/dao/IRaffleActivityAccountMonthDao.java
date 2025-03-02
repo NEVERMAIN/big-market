@@ -3,6 +3,7 @@ package com.openicu.infrastructure.dao;
 import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import com.openicu.infrastructure.dao.po.RaffleActivityAccountMonth;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @description: 抽奖活动账户表-月次数DAO
@@ -32,7 +33,7 @@ public interface IRaffleActivityAccountMonthDao {
      * @param raffleActivityAccountMonth
      * @return
      */
-    int updateActivityAccountMonthSubtractionQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
+    int updateActivityAccountMonthSubtractionQuota(@Param("raffleActivityAccountMonth") RaffleActivityAccountMonth raffleActivityAccountMonth,@Param("times") Integer times);
 
     /**
      * 增加账户月额度

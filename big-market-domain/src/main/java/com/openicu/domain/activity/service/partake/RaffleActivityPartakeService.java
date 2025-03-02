@@ -11,6 +11,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -25,19 +26,18 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
     private final SimpleDateFormat dataFormatMonth = new SimpleDateFormat("yyyy-MM");
     private final SimpleDateFormat dataFormatDay = new SimpleDateFormat("yyyy-MM-dd");
 
-
     public RaffleActivityPartakeService(IActivityRepository activityRepository) {
         super(activityRepository);
     }
 
     @Override
-    protected CreatePartakeOrderAggregate doFilterAccount(String userId, Long activityId, Date currentDate) {
+    protected CreatePartakeOrderAggregate doFilterAccount(String userId, Long activityId, Date currentDate,Integer times) {
 
         // 1. 查询总账户额度
         ActivityAccountEntity activityAccountEntity = activityRepository.queryActivityAccountByUserId(userId,activityId);
 
         // 2.额度判断(只判断总剩余额度)
-        if(activityAccountEntity != null && activityAccountEntity.getTotalCountSurplus() <= 0){
+        if(activityAccountEntity != null && activityAccountEntity.getTotalCountSurplus() - times < 0){
             throw new AppException(ResponseCode.ACCOUNT_QUOTA_ERROR.getCode(),ResponseCode.ACCOUNT_QUOTA_ERROR.getInfo());
         }
 
@@ -46,7 +46,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
 
         // 3.查询月账户额度
         ActivityAccountMonthEntity activityAccountMonthEntity = activityRepository.queryActivityAccountMonthByUserId(userId,activityId,month);
-        if(null != activityAccountMonthEntity && activityAccountMonthEntity.getMonthCountSurplus() <= 0){
+        if(null != activityAccountMonthEntity && activityAccountMonthEntity.getMonthCountSurplus() - times < 0){
             throw new AppException(ResponseCode.ACCOUNT_MONTH_QUOTA_ERROR.getCode(),ResponseCode.ACCOUNT_MONTH_QUOTA_ERROR.getInfo());
         }
         // 创建月账户额度: true = 存在月账户额度 false = 不存在月账户额度
@@ -62,7 +62,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
 
         // 4.查询日账户额度
         ActivityAccountDayEntity activityAccountDayEntity = activityRepository.queryActivityAccountDayByUserId(userId,activityId,day);
-        if(null != activityAccountDayEntity && activityAccountDayEntity.getDayCountSurplus() <= 0){
+        if(null != activityAccountDayEntity && activityAccountDayEntity.getDayCountSurplus() - times < 0){
             throw new AppException(ResponseCode.ACCOUNT_DAY_QUOTA_ERROR.getCode(),ResponseCode.ACCOUNT_DAY_QUOTA_ERROR.getInfo());
         }
 
@@ -107,5 +107,29 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
         userRaffleOrderEntity.setEndDateTime(activityEntity.getEndDateTime());
 
         return userRaffleOrderEntity;
+    }
+
+    @Override
+    protected UserTenRaffleOrderEntity buildUserTenRaffleOrder(String userId, Long activityId, Date currentDate) {
+
+        // 1.查询活动的详细信息
+        ActivityEntity activityEntity = activityRepository.queryRaffleActivityByActivityId(activityId);
+        // 2. 构建订单
+        ArrayList<String> orderIds = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            String orderId = RandomStringUtils.randomNumeric(12);
+            orderIds.add(orderId);
+        }
+        UserTenRaffleOrderEntity userTenRaffleOrderEntity = new UserTenRaffleOrderEntity();
+        userTenRaffleOrderEntity.setOrderIds(orderIds);
+        userTenRaffleOrderEntity.setUserId(userId);
+        userTenRaffleOrderEntity.setActivityId(activityId);
+        userTenRaffleOrderEntity.setActivityName(activityEntity.getActivityName());
+        userTenRaffleOrderEntity.setStrategyId(activityEntity.getStrategyId());
+        userTenRaffleOrderEntity.setOrderTime(currentDate);
+        userTenRaffleOrderEntity.setOrderState(UserRaffleOrderState.create);
+        userTenRaffleOrderEntity.setEndDateTime(activityEntity.getEndDateTime());
+
+        return userTenRaffleOrderEntity;
     }
 }

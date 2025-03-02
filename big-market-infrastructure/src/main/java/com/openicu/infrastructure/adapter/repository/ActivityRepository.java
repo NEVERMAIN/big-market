@@ -152,7 +152,7 @@ public class ActivityRepository implements IActivityRepository {
         // 3. 缓存数据
         // TODO 增加缓存有效期
         long expire = TimeUnit.DAYS.toMillis(7);
-        redisService.setValue(cacheKey, activityCountEntity,expire);
+        redisService.setValue(cacheKey, activityCountEntity, expire);
         return activityCountEntity;
 
     }
@@ -238,7 +238,7 @@ public class ActivityRepository implements IActivityRepository {
             });
         } finally {
             dbRouter.clear();
-            if(lock.isLocked() && lock.isHeldByCurrentThread()){
+            if (lock.isLocked() && lock.isHeldByCurrentThread()) {
                 lock.unlock();
             }
         }
@@ -437,6 +437,7 @@ public class ActivityRepository implements IActivityRepository {
 
     /**
      * 构建抽奖活动订单
+     *
      * @param activityOrderEntity
      * @return
      */
@@ -652,6 +653,8 @@ public class ActivityRepository implements IActivityRepository {
         ActivityAccountDayEntity activityAccountDayEntity = createPartakeOrderAggregate.getActivityAccountDayEntity();
         ActivityAccountMonthEntity activityAccountMonthEntity = createPartakeOrderAggregate.getActivityAccountMonthEntity();
         UserRaffleOrderEntity userRaffleOrderEntity = createPartakeOrderAggregate.getUserRaffleOrderEntity();
+        UserTenRaffleOrderEntity userTenRaffleOrderEntity = createPartakeOrderAggregate.getUserTenRaffleOrderEntity();
+        Integer times = userRaffleOrderEntity != null ? 1 : userTenRaffleOrderEntity.getOrderIds().size();
 
         // 统一切换路由,以下事务内的所有操作,都走一个路由
         dbRouter.doRouter(userId);
@@ -665,7 +668,8 @@ public class ActivityRepository implements IActivityRepository {
                         RaffleActivityAccount.builder()
                                 .userId(userId)
                                 .activityId(activityId)
-                                .build()
+                                .build(),
+                        times
                 );
                 if (1 != totalCount) {
                     status.setRollbackOnly();
@@ -682,7 +686,8 @@ public class ActivityRepository implements IActivityRepository {
                                     .userId(userId)
                                     .activityId(activityId)
                                     .month(activityAccountMonthEntity.getMonth())
-                                    .build()
+                                    .build(),
+                            times
                     );
 
                     if (1 != updateMonthCount) {
@@ -701,7 +706,7 @@ public class ActivityRepository implements IActivityRepository {
                                     .activityId(activityId)
                                     .month(activityAccountMonthEntity.getMonth())
                                     .monthCount(activityAccountMonthEntity.getMonthCount())
-                                    .monthCountSurplus(activityAccountMonthEntity.getMonthCountSurplus() - 1)
+                                    .monthCountSurplus(activityAccountMonthEntity.getMonthCountSurplus() - times)
                                     .build()
                     );
 
@@ -711,7 +716,8 @@ public class ActivityRepository implements IActivityRepository {
                                     .userId(userId)
                                     .activityId(activityId)
                                     .monthCountSurplus(activityAccountMonthEntity.getMonthCountSurplus())
-                                    .build()
+                                    .build(),
+                            times
                     );
 
                 }
@@ -720,12 +726,13 @@ public class ActivityRepository implements IActivityRepository {
                 if (createPartakeOrderAggregate.isExistAccountDay()) {
 
                     // 3.1. 更新日次数余额
-                    int updateDayCount = raffleActivityAccountDayDao.updateActivityAccountMonthSubtractionQuota(
+                    int updateDayCount = raffleActivityAccountDayDao.updateActivityAccountDaySubtractionQuota(
                             RaffleActivityAccountDay.builder()
                                     .userId(userId)
                                     .activityId(activityId)
                                     .day(activityAccountDayEntity.getDay())
-                                    .build()
+                                    .build(),
+                            times
                     );
 
                     if (1 != updateDayCount) {
@@ -744,7 +751,7 @@ public class ActivityRepository implements IActivityRepository {
                                     .activityId(activityId)
                                     .day(activityAccountDayEntity.getDay())
                                     .dayCount(activityAccountDayEntity.getDayCount())
-                                    .dayCountSurplus(activityAccountDayEntity.getDayCountSurplus() - 1)
+                                    .dayCountSurplus(activityAccountDayEntity.getDayCountSurplus() - times)
                                     .build()
                     );
 
@@ -754,23 +761,40 @@ public class ActivityRepository implements IActivityRepository {
                                     .userId(userId)
                                     .activityId(activityId)
                                     .dayCountSurplus(activityAccountMonthEntity.getMonthCountSurplus())
-                                    .build()
+                                    .build(),
+                            times
                     );
 
                 }
 
+
                 // 4. 写入参与活动订单
-                userRaffleOrderDao.insert(
-                        UserRaffleOrder.builder()
-                                .userId(userRaffleOrderEntity.getUserId())
-                                .activityId(userRaffleOrderEntity.getActivityId())
-                                .activityName(userRaffleOrderEntity.getActivityName())
-                                .strategyId(userRaffleOrderEntity.getStrategyId())
-                                .orderId(userRaffleOrderEntity.getOrderId())
-                                .orderTime(userRaffleOrderEntity.getOrderTime())
-                                .orderState(userRaffleOrderEntity.getOrderState().getCode())
-                                .build()
-                );
+                if (userRaffleOrderEntity != null) {
+                    userRaffleOrderDao.insert(
+                            UserRaffleOrder.builder()
+                                    .userId(userRaffleOrderEntity.getUserId())
+                                    .activityId(userRaffleOrderEntity.getActivityId())
+                                    .activityName(userRaffleOrderEntity.getActivityName())
+                                    .strategyId(userRaffleOrderEntity.getStrategyId())
+                                    .orderId(userRaffleOrderEntity.getOrderId())
+                                    .orderTime(userRaffleOrderEntity.getOrderTime())
+                                    .orderState(userRaffleOrderEntity.getOrderState().getCode())
+                                    .build());
+                }
+
+                if (userTenRaffleOrderEntity != null) {
+                    userRaffleOrderDao.batchInsert(
+                            UserRaffleOrder.builder()
+                                    .userId(userRaffleOrderEntity.getUserId())
+                                    .activityId(userRaffleOrderEntity.getActivityId())
+                                    .activityName(userRaffleOrderEntity.getActivityName())
+                                    .strategyId(userRaffleOrderEntity.getStrategyId())
+                                    .orderId(userRaffleOrderEntity.getOrderId())
+                                    .orderTime(userRaffleOrderEntity.getOrderTime())
+                                    .orderState(userRaffleOrderEntity.getOrderState().getCode())
+                                    .build(), userTenRaffleOrderEntity.getOrderIds());
+                }
+
 
                 return 1;
 

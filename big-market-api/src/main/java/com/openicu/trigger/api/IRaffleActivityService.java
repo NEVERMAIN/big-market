@@ -28,6 +28,11 @@ public interface IRaffleActivityService {
     Response<ActivityDrawResponseDTO> draw(ActivityDrawRequestDTO request);
 
     /**
+     * 10 次抽奖接口
+     */
+    Response<List<ActivityDrawResponseDTO>> drawTen(ActivityDrawRequestDTO request);
+
+    /**
      * 签到返利接口
      * @param userId
      * @return

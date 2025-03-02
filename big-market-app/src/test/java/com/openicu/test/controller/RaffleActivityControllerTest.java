@@ -28,7 +28,6 @@ public class RaffleActivityControllerTest {
     @Resource
     private IRaffleActivityService raffleActivityService;
 
-
     @Test
     public void test_armory(){
 
@@ -65,7 +64,6 @@ public class RaffleActivityControllerTest {
         Response<Boolean> response = raffleActivityService.isCalendarSignRebate("bona");
         log.info("测试结果: {}",JSON.toJSONString(response));
 
-
     }
 
     @Test
@@ -78,7 +76,6 @@ public class RaffleActivityControllerTest {
         Response<UserActivityAccountResponseDTO> response = raffleActivityService.queryUserActivityAccount(request);
         log.info("请求参数: {}",JSON.toJSONString(request));
         log.info("测试结果: {}",JSON.toJSONString(response));
-
 
     }
 

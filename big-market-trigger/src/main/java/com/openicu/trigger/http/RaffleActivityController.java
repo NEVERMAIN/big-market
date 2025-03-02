@@ -217,6 +217,23 @@ public class RaffleActivityController implements IRaffleActivityService {
         }
     }
 
+    @RequestMapping(value = "draw/ten", method = RequestMethod.POST)
+    @Override
+    public Response<List<ActivityDrawResponseDTO>> drawTen(ActivityDrawRequestDTO request) {
+
+        // 1.参数校验
+        if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+        }
+
+        // 2. 参与活动,创建活动参与单并扣减可抽奖次数
+        UserTenRaffleOrderEntity tenRaffleOrderEntity = raffleActivityPartakeService.createTenOrders(request.getUserId(), request.getActivityId());
+        log.info("活动抽奖,创建订单 userId:{}  activityId:{}  orderIds:{} ", request.getUserId(), request.getActivityId(), tenRaffleOrderEntity.getOrderIds());
+
+
+        return null;
+    }
+
     public Response<ActivityDrawResponseDTO> drawRateLimiterError(@RequestBody ActivityDrawRequestDTO request) {
 
         log.info("活动抽奖限流 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
