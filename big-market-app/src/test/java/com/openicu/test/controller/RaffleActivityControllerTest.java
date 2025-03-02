@@ -42,7 +42,7 @@ public class RaffleActivityControllerTest {
 
             ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
             request.setActivityId(100301L);
-            request.setUserId("chen");
+            request.setUserId("Hbase");
             Response<ActivityDrawResponseDTO> response = raffleActivityService.draw(request);
 
             log.info("请求参数:{}",JSON.toJSONString(request));

@@ -52,7 +52,7 @@ mini-db-router:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://192.168.198.130:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
-        password: hsp
+        password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
         pool:
           pool-name: Retail_HikariCP
@@ -67,7 +67,7 @@ mini-db-router:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://192.168.198.130:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
-        password: hsp
+        password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
         pool:
           pool-name: Retail_HikariCP
@@ -82,7 +82,7 @@ mini-db-router:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://192.168.198.130:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
-        password: hsp
+        password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
         pool:
           pool-name: Retail_HikariCP

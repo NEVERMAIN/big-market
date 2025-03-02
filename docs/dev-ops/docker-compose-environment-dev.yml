@@ -105,18 +105,18 @@ services:
     volumes:
       - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
 
-  zookeeper:
-    image: zookeeper:3.9.0
-    container_name: zookeeper
-    restart: always
-    hostname: zoo1
-    ports:
-      - 2181:2181
-    environment:
-      ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181
-    networks:
-      - my-network
+#  zookeeper:
+#    image: zookeeper:3.9.0
+#    container_name: zookeeper
+#    restart: always
+#    hostname: zoo1
+#    ports:
+#      - 2181:2181
+#    environment:
+#      ZOO_MY_ID: 1
+#      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181
+#    networks:
+#      - my-network
 
 
   # http://127.0.0.1:9090/xxl-job-admin admin/123456 - 安装后稍等会访问即可
