@@ -54,7 +54,7 @@ import java.util.List;
 @RestController
 @CrossOrigin("${app.config.cross-origin}")
 @RequestMapping("/api/${app.config.api-version}/raffle/activity/")
-@DubboService(version = "1.0")
+//@DubboService(version = "1.0")
 public class RaffleActivityController implements IRaffleActivityService {
 
     private final SimpleDateFormat dateFormatDay = new SimpleDateFormat("yyyyMMdd");
@@ -138,7 +138,7 @@ public class RaffleActivityController implements IRaffleActivityService {
      *
      * 限流配置
      * RateLimiterAccessInterceptor
-     * key: 以用户ID作为拦截，这个用户访问次数限制
+     * key: 以用户 ID 作为拦截，这个用户访问次数限制
      * fallbackMethod：失败后的回调方法，方法出入参保持一样
      * permitsPerSecond：每秒的访问频次限制
      * blacklistCount：超过多少次都被限制了，还访问的，扔到黑名单里24小时
