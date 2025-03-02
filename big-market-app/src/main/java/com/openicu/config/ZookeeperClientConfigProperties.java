@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ZookeeperClientConfigProperties {
 
     /** 状态 true 开启 ; close 关闭 */
-    private boolean enable;
+    private boolean enable = false;
 
     /** 数据库连接字符串，用于建立数据库连接 */
     private String connectString;
