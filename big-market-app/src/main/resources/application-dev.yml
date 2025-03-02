@@ -159,7 +159,6 @@ dubbo:
   scan:
     base-packages: com.openicu.trigger.api
 
-
 # 日志
 logging:
   level:
