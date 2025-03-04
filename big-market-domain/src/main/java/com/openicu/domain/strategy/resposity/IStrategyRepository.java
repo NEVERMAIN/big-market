@@ -217,7 +217,7 @@ public interface IStrategyRepository {
      * @param strategyId
      * @return
      */
-    Integer queryActivityAccountTotalUseCount(String userId, Long strategyId);
+    Long queryActivityAccountTotalUseCount(String userId, Long strategyId);
 
     /**
      * 查询运行的抽奖策略奖品列表

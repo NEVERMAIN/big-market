@@ -39,6 +39,9 @@ public class Constants {
 
         public static String USER_CREDIT_ACCOUNT_LOCK = "big_market_user_credit_account_lock_";
 
+        public static String RAFFLE_DAY_COUNT = "big_market_raffle_day_count_";
+
+
     }
 
 

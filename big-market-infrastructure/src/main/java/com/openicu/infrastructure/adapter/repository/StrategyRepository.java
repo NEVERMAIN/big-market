@@ -18,9 +18,13 @@ import com.openicu.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
+import org.redisson.api.RScript;
+import org.redisson.api.RedissonClient;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -72,6 +76,9 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Resource
     private StrategyAwardStockZeroMessageEvent strategyAwardStockZeroMessageEvent;
+
+    @Resource
+    private RedissonClient redissonClient;
 
 
     @Override
@@ -501,16 +508,35 @@ public class StrategyRepository implements IStrategyRepository {
     }
 
 
+    /**
+     * 从 redis 中查询用户参与抽奖次数
+     * @param userId
+     * @param strategyId
+     * @return
+     */
     @Override
-    public Integer queryActivityAccountTotalUseCount(String userId, Long strategyId) {
+    public Long queryActivityAccountTotalUseCount(String userId, Long strategyId) {
 
-        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
-        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(RaffleActivityAccount.builder()
-                .userId(userId)
-                .activityId(activityId)
-                .build());
-        // 返回计算使用量
-        return raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus();
+        // 1.获取到当前日期
+        LocalDate today = LocalDate.now();
+        // 创建缓存键
+        String cacheKey = Constants.RedisKey.RAFFLE_DAY_COUNT + userId  + Constants.UNDERLINE + strategyId + Constants.UNDERLINE + today;
+        List<Object> keys = new ArrayList<>();
+        keys.add(cacheKey);
+        // Lua 脚本
+        String luaScript =
+                "local key = KEYS[1] " +
+                        "local current = redis.call('get', key) " +
+                        "if current == false then " +
+                        "    redis.call('set', key, 0, 'EX', 86400) " +
+                        "    current = 0 " +
+                        "end " +
+                        "current = tonumber(current) " +
+                        "current = current + 1 " +
+                        "redis.call('set', key, current, 'EX', 86400) " +
+                        "return current";
+        // 执行 Lua 脚本
+        return redissonClient.getScript().eval(RScript.Mode.READ_WRITE, luaScript, RScript.ReturnType.INTEGER, keys);
 
     }
 

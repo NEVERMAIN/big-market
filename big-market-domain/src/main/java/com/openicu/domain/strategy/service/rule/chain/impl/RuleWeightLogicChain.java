@@ -60,7 +60,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
         }
 
         // 2. 用户分值
-        Integer userScore = repository.queryActivityAccountTotalUseCount(userId, strategyId);
+        Long userScore = repository.queryActivityAccountTotalUseCount(userId, strategyId);
 
         // 3.获取权重对应的 key
         String analyticalValue = analytical.getAnalyticalValue(analyticalValueGroup, userScore);
@@ -119,7 +119,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
          * @param userScore
          * @return
          */
-        String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Integer userScore);
+        String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Long userScore);
     }
 
     /**
@@ -128,7 +128,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
     static class AnalyticalEqual implements IAnalytical {
 
         @Override
-        public String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Integer userScore) {
+        public String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Long userScore) {
             return analyticalValueGroup.get(userScore);
         }
     }
@@ -139,7 +139,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
     static class AnalyticalNotEqual implements IAnalytical {
 
         @Override
-        public String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Integer userScore) {
+        public String getAnalyticalValue(Map<Integer, String> analyticalValueGroup, Long userScore) {
 
             // 1. 转换 Keys 值,并默认排序
             List<Integer> analyticalSortedKeys = new ArrayList<>(analyticalValueGroup.keySet());

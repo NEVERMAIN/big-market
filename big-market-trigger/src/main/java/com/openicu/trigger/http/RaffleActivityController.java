@@ -43,6 +43,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @description:
@@ -84,6 +87,10 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Resource
     private ICreditAdjustService creditAdjustService;
+
+    @Resource
+    private ThreadPoolExecutor threadPoolExecutor;
+
 
     /**
      * dcc 统一配置中心动态配置降级开关
@@ -221,16 +228,67 @@ public class RaffleActivityController implements IRaffleActivityService {
     @Override
     public Response<List<ActivityDrawResponseDTO>> drawTen(ActivityDrawRequestDTO request) {
 
-        // 1.参数校验
-        if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+        try {
+            // 1.参数校验
+            if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
+            // 2. 参与活动,创建活动参与单并扣减可抽奖次数
+            UserTenRaffleOrderEntity tenRaffleOrderEntity = raffleActivityPartakeService.createTenOrders(request.getUserId(), request.getActivityId());
+            log.info("活动抽奖,创建订单 userId:{}  activityId:{}  orderIds:{} ", request.getUserId(), request.getActivityId(), tenRaffleOrderEntity.getOrderIds());
+
+            // 3. 抽奖策略,执行抽奖
+            List<RaffleAwardEntity> raffleAwardEntityList = new CopyOnWriteArrayList<>();
+            List<Callable<RaffleAwardEntity>> tasks = new CopyOnWriteArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                final int index = i;
+                tasks.add(()->{
+                    RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
+                            .userId(tenRaffleOrderEntity.getUserId())
+                            .strategyId(tenRaffleOrderEntity.getStrategyId())
+                            .endDateTime(tenRaffleOrderEntity.getEndDateTime())
+                            .build());
+                    raffleAwardEntityList.add(raffleAwardEntity);
+
+                    // 4. 保存中奖结果
+                    UserAwardRecordEntity userAwardRecord = UserAwardRecordEntity.builder()
+                            .userId(tenRaffleOrderEntity.getUserId())
+                            .activityId(tenRaffleOrderEntity.getActivityId())
+                            .strategyId(tenRaffleOrderEntity.getStrategyId())
+                            .orderId(tenRaffleOrderEntity.getOrderIds().get(index))
+                            .awardId(raffleAwardEntity.getAwardId())
+                            .awardTitle(raffleAwardEntity.getAwardTitle())
+                            .awardTime(new Date())
+                            .awardState(AwardStateVO.create)
+                            .awardConfig(raffleAwardEntity.getAwardConfig())
+                            .build();
+                    awardService.saveUserAwardRecord(userAwardRecord);
+                    // 返回结果
+                    return null;
+                });
+            }
+            threadPoolExecutor.invokeAll(tasks);
+
+
+            // 4. 返回结果
+            List<ActivityDrawResponseDTO> activityDrawResponseDTOList = raffleAwardEntityList.stream().map(raffleAwardEntity -> ActivityDrawResponseDTO.builder()
+                    .awardTitle(raffleAwardEntity.getAwardTitle())
+                    .awardIndex(raffleAwardEntity.getSort())
+                    .build()).collect(Collectors.toList());
+            return  Response.<List<ActivityDrawResponseDTO>>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(activityDrawResponseDTOList)
+                    .build();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return Response.<List<ActivityDrawResponseDTO>>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
         }
-
-        // 2. 参与活动,创建活动参与单并扣减可抽奖次数
-        UserTenRaffleOrderEntity tenRaffleOrderEntity = raffleActivityPartakeService.createTenOrders(request.getUserId(), request.getActivityId());
-        log.info("活动抽奖,创建订单 userId:{}  activityId:{}  orderIds:{} ", request.getUserId(), request.getActivityId(), tenRaffleOrderEntity.getOrderIds());
-
-        return null;
     }
 
     public Response<ActivityDrawResponseDTO> drawRateLimiterError(@RequestBody ActivityDrawRequestDTO request) {

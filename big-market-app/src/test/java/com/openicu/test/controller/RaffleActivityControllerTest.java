@@ -60,6 +60,8 @@ public class RaffleActivityControllerTest {
         log.info("请求参数:{}",JSON.toJSONString(request));
         log.info("测试结果:{}",JSON.toJSONString(response));
 
+        new CountDownLatch(1).await();
+
     }
 
     @Test
