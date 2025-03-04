@@ -50,9 +50,22 @@ public class RaffleActivityControllerTest {
     }
 
     @Test
+    public void test_draw_ten() throws InterruptedException {
+
+        ActivityDrawRequestDTO request = new ActivityDrawRequestDTO();
+        request.setActivityId(100301L);
+        request.setUserId("cursor");
+        Response<List<ActivityDrawResponseDTO>> response = raffleActivityService.drawTen(request);
+
+        log.info("请求参数:{}",JSON.toJSONString(request));
+        log.info("测试结果:{}",JSON.toJSONString(response));
+
+    }
+
+    @Test
     public void test_calendarSignRebate() throws InterruptedException {
 
-        Response<Boolean> response = raffleActivityService.calendarSignRebate("Hbase");
+        Response<Boolean> response = raffleActivityService.calendarSignRebate("cursor");
         log.info("测试结果：{}", JSON.toJSONString(response));
 
         new CountDownLatch(1).await();

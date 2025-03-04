@@ -230,7 +230,6 @@ public class RaffleActivityController implements IRaffleActivityService {
         UserTenRaffleOrderEntity tenRaffleOrderEntity = raffleActivityPartakeService.createTenOrders(request.getUserId(), request.getActivityId());
         log.info("活动抽奖,创建订单 userId:{}  activityId:{}  orderIds:{} ", request.getUserId(), request.getActivityId(), tenRaffleOrderEntity.getOrderIds());
 
-
         return null;
     }
 

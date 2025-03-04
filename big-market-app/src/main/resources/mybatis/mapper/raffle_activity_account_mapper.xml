@@ -57,7 +57,7 @@
     <update id="updateActivityAccountMonthSurplusImageQuota">
         update raffle_activity_account
         set
-            month_count_surplus = #{monthCountSurplus} - #{times},
+            month_count_surplus = #{raffleActivityAccount.monthCountSurplus} - #{times},
             update_time = now()
         where user_id = #{raffleActivityAccount.userId} AND activity_id = #{raffleActivityAccount.activityId}
     </update>
@@ -65,7 +65,7 @@
     <update id="updateActivityAccountDaySurplusImageQuota">
         update raffle_activity_account
         set
-            day_count_surplus = #{dayCountSurplus} - #{times},
+            day_count_surplus = #{raffleActivityAccount.dayCountSurplus} - #{times},
             update_time = now()
         where user_id = #{raffleActivityAccount.userId} AND activity_id = #{raffleActivityAccount.activityId}
     </update>

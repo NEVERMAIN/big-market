@@ -785,13 +785,12 @@ public class ActivityRepository implements IActivityRepository {
                 if (userTenRaffleOrderEntity != null) {
                     userRaffleOrderDao.batchInsert(
                             UserRaffleOrder.builder()
-                                    .userId(userRaffleOrderEntity.getUserId())
-                                    .activityId(userRaffleOrderEntity.getActivityId())
-                                    .activityName(userRaffleOrderEntity.getActivityName())
-                                    .strategyId(userRaffleOrderEntity.getStrategyId())
-                                    .orderId(userRaffleOrderEntity.getOrderId())
-                                    .orderTime(userRaffleOrderEntity.getOrderTime())
-                                    .orderState(userRaffleOrderEntity.getOrderState().getCode())
+                                    .userId(userTenRaffleOrderEntity.getUserId())
+                                    .activityId(userTenRaffleOrderEntity.getActivityId())
+                                    .activityName(userTenRaffleOrderEntity.getActivityName())
+                                    .strategyId(userTenRaffleOrderEntity.getStrategyId())
+                                    .orderTime(userTenRaffleOrderEntity.getOrderTime())
+                                    .orderState(userTenRaffleOrderEntity.getOrderState().getCode())
                                     .build(), userTenRaffleOrderEntity.getOrderIds());
                 }
 
