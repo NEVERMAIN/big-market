@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @description: 消息发送
+ * @description: 消息发送组件
  * @author: 云奇迹
  * @date: 2024/7/14
  */
@@ -25,12 +25,11 @@ public class EventPublisher {
 
             String messageJson = JSON.toJSONString(eventMessage);
             rabbitTemplate.convertAndSend(topic,messageJson);
-            log.info("发送MQ消息 topic:{} message:{}", topic, messageJson);
+            log.info("发送 MQ 消息 topic:{} message:{}", topic, messageJson);
 
         }catch (Exception e){
-            log.error("发送MQ消息失败 topic:{} message:{}", topic, JSON.toJSONString(eventMessage), e);
+            log.error("发送 MQ 消息失败 topic:{} message:{}", topic, JSON.toJSONString(eventMessage), e);
             throw e;
-
         }
     }
 

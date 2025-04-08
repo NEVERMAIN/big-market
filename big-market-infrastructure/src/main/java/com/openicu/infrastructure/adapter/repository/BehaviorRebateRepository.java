@@ -87,16 +87,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
 
                         BehaviorRebateOrderEntity behaviorRebateOrderEntity = behaviorRebateAggregate.getBehaviorRebateOrderEntity();
                         // 用户行为返利订单对象
-                        UserBehaviorRebateOrder userBehaviorRebateOrder = new UserBehaviorRebateOrder();
-                        userBehaviorRebateOrder.setUserId(behaviorRebateAggregate.getUserId());
-                        userBehaviorRebateOrder.setOrderId(behaviorRebateOrderEntity.getOrderId());
-                        userBehaviorRebateOrder.setBehaviorType(behaviorRebateOrderEntity.getBehaviorType());
-                        userBehaviorRebateOrder.setRebateType(behaviorRebateOrderEntity.getRebateType());
-                        userBehaviorRebateOrder.setRebateDesc(behaviorRebateOrderEntity.getRebateDesc());
-                        userBehaviorRebateOrder.setRebateConfig(behaviorRebateOrderEntity.getRebateConfig());
-                        userBehaviorRebateOrder.setOutBusinessNo(behaviorRebateOrderEntity.getOutBusinessNo());
-                        userBehaviorRebateOrder.setBizId(behaviorRebateOrderEntity.getBizId());
-
+                        UserBehaviorRebateOrder userBehaviorRebateOrder = getUserBehaviorRebateOrder(behaviorRebateOrderEntity);
                         // 保存用户行为返利流水
                         userBehaviorRebateOrderDao.insert(userBehaviorRebateOrder);
 
@@ -134,7 +125,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
 
             TaskEntity taskEntity = behaviorRebateAggregate.getTaskEntity();
             Task task = new Task();
-            task.setUserId(task.getUserId());
+            task.setUserId(taskEntity.getUserId());
             task.setMessageId(taskEntity.getMessageId());
             try {
 
@@ -151,6 +142,19 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
             }
         }
 
+    }
+
+    private static UserBehaviorRebateOrder getUserBehaviorRebateOrder(BehaviorRebateOrderEntity behaviorRebateOrderEntity) {
+        UserBehaviorRebateOrder userBehaviorRebateOrder = new UserBehaviorRebateOrder();
+        userBehaviorRebateOrder.setUserId(behaviorRebateOrderEntity.getUserId());
+        userBehaviorRebateOrder.setOrderId(behaviorRebateOrderEntity.getOrderId());
+        userBehaviorRebateOrder.setBehaviorType(behaviorRebateOrderEntity.getBehaviorType());
+        userBehaviorRebateOrder.setRebateType(behaviorRebateOrderEntity.getRebateType());
+        userBehaviorRebateOrder.setRebateDesc(behaviorRebateOrderEntity.getRebateDesc());
+        userBehaviorRebateOrder.setRebateConfig(behaviorRebateOrderEntity.getRebateConfig());
+        userBehaviorRebateOrder.setOutBusinessNo(behaviorRebateOrderEntity.getOutBusinessNo());
+        userBehaviorRebateOrder.setBizId(behaviorRebateOrderEntity.getBizId());
+        return userBehaviorRebateOrder;
     }
 
     @Override
